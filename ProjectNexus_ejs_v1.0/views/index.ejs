@@ -1,0 +1,189 @@
+<!-- logica
+  sistema de rotas
+
+  se primeira vez no index:    <<<<<<<<< PARTE 1 >>>>>>>>>>> COMPLETED
+    {
+      como saber quando vai ser a primeira vez do usuario?
+        no json generic, nao terá nada no objeto "main", o que implica que o sistema
+        vai verificar se aquilo estiver vazio, caso esteja, o sistema indentifica
+        que será a primeira vez
+    }
+    redirecionar para index creator, para criar o primeiro index;
+    quando criado:
+      redirecionar para index novamente;
+      {
+        o sistema atualiza o json generic com os dados da main, e envia novamente para o index.
+      }
+  se ja criou a main:        <<<<<<<<< PARTE 2 >>>>>>>>>>> COMPLETED
+    {
+      o sistema identifica que há dados no json gereric, o que significa que nao sera mais a primeira vez,
+      e exibirá os dados.
+    }
+    exibe o index ja modificado;
+    aparece uma mensagemzinha embaixo pedindo pra criar o primeiro tema;
+    {
+      o sistema identifica que o json generic no objeto "themes" estará vazio, mostrando essa mensagem
+    }
+    se clicar na mensagem de criar tema:
+      redireciona para o editor, onde o user vai criar o primeiro tema;
+      quando terminar de criar o primeiro tema:
+        redirecionar para index novamente;
+        {
+          o sistema entende que o objeto "themes" não estará mais vazio, e redireciona para o tema.
+        }
+  se ja criou a main: <<<<<<<<< PARTE 3 >>>>>>>>>>>  COMPLETED
+    aparece do lado o menu de editor;
+    aparece o menu do tema criado;
+    {
+      observação: isso so vai aparecer caso o "themes" NAO ESTEJA VAZIO, pois o user pode muito bem
+      apagar o tema criado.
+      caso ele nao tenha mais nenhum, aparece a mensagem de criar tema novamente.
+    }
+endlogica -->
+
+<!-- title 
+subtitle
+description1
+description 2 -->
+
+<%- include('components/layout_sup') %>
+
+  <h5 class="mb-5">Dica: Dê uma olhadinha no <a href="/editor">editor</a> para ter acesso a personalização de suas coisas!</h5>
+
+  <div class="text-center">
+    <h3 class="display-4 fw-bold">
+      <%= db_main.title %> 👋
+    </h3>
+    <h3 class="lead">
+      <%= db_main.subtitle %>
+    </h3>
+  </div>
+
+  <div class="mt-5 mb-5">
+    <p class="lead">
+      <%= db_main.description %>
+    </p>
+  </div>
+
+  <% if(final_verification){ %>
+    <br>
+    <br>
+    <div class="text-center mb-4 my-4">
+      <h4 class="mb-4 my-4">Não tem nenhuma categoria? Adicione alguma!</h4>
+      <form action="/theme/create" method="get">
+        <button type="submit" class="btn btn-outline-primary">
+          Adicionar Nova Categoria
+        </button>
+      </form>
+    </div>
+    <% } else { %>
+      <div class="row mt-5">
+        <div class="col">
+          <h2 class="mb-3">Suas Categorias</h2>
+
+          <% themes_foreach.forEach(f=> { %>
+            <% if(f.is_deleted==false) { %>
+              <div class="card mb-4 shadow-sm">
+                <!-- Banner de Fundo -->
+                <div class="banner <% if(f.image === null) { %> no-image <% } %>">
+                  <% if(f.image !==null) { %>
+                    <img src="<%= f.image %>" alt="Profile">
+                    <% } %>
+                      <div class="overlay">
+                        <h4 class="card-title text-white title">
+                          <%= f.title %>
+                        </h4>
+                        <div>
+                          <form action="/theme/show/<%= f.id %>" method="get">
+                            <button type="submit" class="btn btn-dark">
+                              Ver Categoria
+                            </button>
+                          </form>
+                        </div>
+                      </div>
+                </div>
+              </div>
+
+              <style>
+                .banner {
+                  width: 100%;
+                  height: 140px;
+                  /* Banner mais fino */
+                  overflow: hidden;
+                  position: relative;
+                  border-radius: 8px;
+                  /* Arredondamento opcional */
+                  background-color: white;
+                  /* Cor de fundo padrão */
+                }
+
+                .banner img {
+                  width: 100%;
+                  height: 100%;
+                  object-fit: cover;
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                }
+
+                .overlay {
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  width: 100%;
+                  height: 100%;
+                  display: flex;
+                  align-items: center;
+                  /* Centraliza verticalmente */
+                  justify-content: space-between;
+                  /* Mantém o título à esquerda e o botão à direita */
+                  padding: 0 20px;
+                  background: rgba(0, 0, 0, 0.5);
+                  /* Escurece um pouco a imagem */
+                  color: white;
+                }
+
+                .title {
+                  margin: 0;
+                  font-size: 1.2rem;
+                  font-weight: bold;
+                  text-shadow: 2px 2px 4px rgba(0, 0, 0, 1);
+                  /* Sombra preta forte */
+                }
+
+                /* Se não houver imagem, o fundo fica branco e o texto preto */
+                .no-image {
+                  background-color: #f0f0f0 !important;
+                  /* Cinza bem claro */
+                }
+
+                .no-image .overlay {
+                  background: none;
+                  /* Remove a camada escura */
+                  color: black !important;
+                  /* Texto preto */
+                  text-shadow: none;
+                  /* Remove a sombra do texto */
+                }
+
+                .btn-dark {
+                  background-color: #343a40;
+                  /* Cor mais escura */
+                  border-color: #23272b;
+                }
+
+                .btn-dark:hover {
+                  background-color: #23272b;
+                  /* Ainda mais escuro no hover */
+                  border-color: #1d2124;
+                }
+              </style>
+
+
+
+              <% } %>
+                <% }) %>
+                  <% } %>
+
+
+                    <%- include('components/layout_inf') %>
