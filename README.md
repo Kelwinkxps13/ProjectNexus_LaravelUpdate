@@ -54,25 +54,31 @@ Cada **bloco de conteúdo** consiste basicamente três elementos:
 
 ### Ferramentas
 - Visual Studio Code
+- Composer
+- Xampp
 
 ### Linguagem de Programação
-- JavaScript
+- PHP
 
 ### Framework
-- Node.js
+- Laravel
 
 ### Linguagem de Marcação
-- Express ejs
+- Blade
 
 ---
 
+
 ### Tutorial de Execução
+- Ainda sem tutorial para execução.
+<!--
 - caso não tenha, instale o node.js clicando [aqui](https://nodejs.org/en/download);
 - baixe esse repositório;
 - pelo terminal, entre na pasta raíz do projeto, (onde se localiza o **package.json**);
 - no terminal, execute **npm install** para baixar as dependências;
 - no terminal, execute **npm start** para executar o app;
 - no seu navegador, digite na url **localhost:3000** para entrar no site.
+-->
 
 
 ---
