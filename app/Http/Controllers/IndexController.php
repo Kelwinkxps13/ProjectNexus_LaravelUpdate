@@ -27,4 +27,30 @@ class IndexController extends Controller
             'themes_foreach' => $themes_foreach
         ]);
     }
+
+    function create () {
+        return view('indexcreator', [
+
+        ]);
+    }
+
+    function store () {
+        return redirect('/');
+    }
+
+    function edit () {
+        return view('indexeditor', [
+
+        ]);
+    }
+
+    function update () {
+        return redirect('/');
+    }
+
+    function editor () {
+        return view('editor', [
+
+        ]);
+    }
 }
