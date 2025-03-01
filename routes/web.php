@@ -23,7 +23,19 @@ Route::middleware('auth')->group(function () {
 
 // adicionado pelo dev
 
+// rotas do index
 Route::get('/', [IndexController::class, 'index']);
+Route::get('/create', [IndexController::class, 'create']);
+Route::post('/store', [IndexController::class, 'store']);
+Route::get('/edit', [IndexController::class, 'edit']);
+Route::post('/update', [IndexController::class, 'update']);
+Route::post('/editor', [IndexController::class, 'editor']);
+
+// rotas de theme
+
+Route::post('/theme/store', [ThemeController::class, 'store']);
+Route::post('/theme/update', [ThemeController::class, 'store']);
+Route::post('/theme/destroy{id}', [ThemeController::class, 'destroy']);
 
 
 require __DIR__.'/auth.php';
