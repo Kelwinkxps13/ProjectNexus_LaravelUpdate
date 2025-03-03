@@ -20,31 +20,31 @@
             <div class="col">
                 <h2 class="mb-3">categorias</h2>
 
-                @if(final_verification)
+                @if($final_verification)
                     <h4>sem categorias!</h4>
                     @else
-                        @foreach (themes_foreach as f)
+                        @foreach ($themes_foreach as $f)
                             
                         
-                            @ if(f->is_deleted==false)
+                            @ if($f->is_deleted==false)
 
                                 <div class="card mb-4 shadow-sm">
                                     <!-- Banner de Fundo -->
                                     <div class="banner {{ $f->image === null ? 'no-image' : '' }}">
-                                      @if(f->image !==null)
+                                      @if($f->image !==null)
                                         <img src="{{f->image}}" alt="Profile">
                                         @endif
                                           <div class="overlay">
                                             <h4 class="card-title text-white title">
-                                              {{f->title}}
+                                              {{$f->title}}
                                             </h4>
                                             <div class="d-flex justify-content-end gap-2">
-                                                <form action="/theme/edit/{{f->id}}" method="get">
+                                                <form action="/theme/edit/{{$f->id}}" method="get">
                                                     <button type="submit" class="btn btn-warning">
                                                         Editar
                                                     </button>
                                                 </form>
-                                                <form action="/theme/destroy/{{f->id}}" method="post">
+                                                <form action="/theme/destroy/{{$f->id}}" method="post">
                                                     <button type="submit" class="btn btn-danger">
                                                         Excluir
                                                     </button>
