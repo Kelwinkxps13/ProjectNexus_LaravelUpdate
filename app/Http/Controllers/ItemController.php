@@ -23,8 +23,25 @@ class ItemController extends Controller
     }
 
     function show () {
-        return view('modulos.veja', [
+        // qunatos itens no bd que estao marcados com is_deleted
+        $is_deleted = false;
+        // total de itens
+        $total = false;
+        // contents daquele item daquela category
+        $db_url = false;
 
+        //id da categoria
+        $id = false;
+
+        // id do item
+        $id_item = false;
+
+        return view('modulos.veja', [
+            'is_deleted' => $is_deleted,
+            'total' => $total,
+            'db_url' => $db_url,
+            'id' => $id,
+            'id_item' => $id_item
         ]);
     }
 
