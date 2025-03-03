@@ -49,8 +49,10 @@ class IndexController extends Controller
     }
 
     function editor () {
+        // pega todas as categorys registradas
+        $themes_foreach = false;
         return view('editor', [
-
+            'themes_foreach' => $themes_foreach
         ]);
     }
 }
