@@ -39,8 +39,10 @@ class IndexController extends Controller
     }
 
     function edit () {
+        // pega os dados da tela inicial
+        $main = false;
         return view('indexeditor', [
-
+            'main' => $main
         ]);
     }
 

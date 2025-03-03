@@ -15,18 +15,18 @@
                             <div class="mb-4">
                                 <label for="title" class="form-label">Título</label>
                                 <input name="title" type="text" class="form-control custom-input" id="title"
-                                    placeholder="ex: olá mundo!" value="<%= main.title %>" required>
+                                    placeholder="ex: olá mundo!" value="{{$main->title}}" required>
                             </div>
                             <div class="mb-4">
                                 <label for="subtitle" class="form-label">Subtítulo</label>
                                 <input name="subtitle" type="text" class="form-control custom-input" id="subtitle"
-                                    placeholder="ex: seja bem vindo(a) à minha página!" value="<%= main.subtitle %>">
+                                    placeholder="ex: seja bem vindo(a) à minha página!" value="{{$main->subtitle}}">
                             </div>
                             <div class="mb-4">
                                 <label for="description" class="form-label">Descrição</label>
                                 <textarea name="description" rows="4" class="form-control custom-input" id="description"
                                     placeholder="ex: aqui vou postar algumas coisas que acho interessante."
-                                    required><%= main.description %></textarea>
+                                    required>{{$main->description}}</textarea>
                             </div>
 
                             <div class="text-center mt-4">
