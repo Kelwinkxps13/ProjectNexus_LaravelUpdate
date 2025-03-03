@@ -17,8 +17,16 @@ class ThemeController extends Controller
     }
 
     function show () {
+        // filtra pra encontrar uma category em especifico
+        $db_theme = true;
+        // condicional caso o tanto de temas deletados seja igual o tanto de temas totais
+        $final_verification = true;
+        // pegando os dados dos itens do tema escolhido
+        $db_url = true;
         return view('generic', [
-
+            'db_theme' => $db_theme,
+            'final_verification' => $final_verification,
+            'db_url' => $db_url
         ]);
     }
 
