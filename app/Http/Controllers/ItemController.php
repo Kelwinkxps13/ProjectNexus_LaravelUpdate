@@ -7,8 +7,14 @@ use Illuminate\Http\Request;
 class ItemController extends Controller
 {
     function create () {
-        return view('modulos.base.create', [
+        // nome da categoria que vai ser adicionada um item
+        $page = true;
+        // id da categoria (theme)
+        $id = true;
 
+        return view('modulos.base.create', [
+            'page' => $page,
+            'id' => $id
         ]);
     }
 
