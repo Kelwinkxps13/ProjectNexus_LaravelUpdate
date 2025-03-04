@@ -28,16 +28,16 @@ Route::middleware('auth')->group(function () {
 
 // rotas do index
 Route::get('/', [IndexController::class, 'index']); // falta a logica do controller
-Route::get('/create', [IndexController::class, 'create']); // falta tudo
+Route::get('/create', [IndexController::class, 'create']); // falta a logica do controller
 Route::post('/store', [IndexController::class, 'store']); // falta tudo
-Route::get('/edit', [IndexController::class, 'edit']); // falta tudo
+Route::get('/edit', [IndexController::class, 'edit']); // falta a logica do controller
 Route::post('/update', [IndexController::class, 'update']); // falta tudo
-Route::post('/editor', [IndexController::class, 'editor']); // falta tudo
+Route::post('/editor', [IndexController::class, 'editor']); // falta a logica do controller
 
 // rotas de theme
 Route::get('/theme/create', [ThemeController::class, 'create']); // falta tudo
 Route::post('/theme/store', [ThemeController::class, 'store']); // falta tudo
-Route::get('/theme/show/{id}', [ThemeController::class, 'show']); // falta tudo
+Route::get('/theme/show/{id}', [ThemeController::class, 'show']); // falta a logica do controller
 Route::get('/theme/edit', [ThemeController::class, 'edit']); // falta tudo
 Route::post('/theme/update', [ThemeController::class, 'store']); // falta tudo
 Route::post('/theme/destroy{id}', [ThemeController::class, 'destroy']); // falta tudo
@@ -46,11 +46,11 @@ Route::post('/theme/destroy{id}', [ThemeController::class, 'destroy']); // falta
 Route::get('/theme/{id}', [ItemController::class, 'index']); // falta tudo
 Route::get('/theme/{id}/create', [ItemController::class, 'create']); // falta tudo
 Route::post('/theme/{id}/store', [ItemController::class, 'store']); // falta tudo
-Route::get('/theme/{id}/{id_item}', [ItemController::class, 'show']); // falta tudo
+Route::get('/theme/{id}/{id_item}', [ItemController::class, 'show']); // falta a logica do controller
 Route::get('/theme/{id}/edit/{id_item}', [ItemController::class, 'edit']); // falta tudo
 Route::post('/theme/{id}/update', [ItemController::class, 'update']); // falta tudo
 Route::post('/theme/{id}/destroy/{id_item}', [ItemController::class, 'destroy']); // falta tudo
-Route::get('/theme/{id}/show/{id_item}/editor', [ItemController::class, 'editor']); // falta tudo
+Route::get('/theme/{id}/show/{id_item}/editor', [ItemController::class, 'editor']); // falta a logica do controller
 
 //rotas dos blocos (conteudo) de cada item
 Route::get('/theme/{id}/createblock/{id_item}', [ContentController::class, 'create']); // falta tudo
