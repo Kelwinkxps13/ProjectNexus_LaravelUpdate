@@ -46,7 +46,7 @@ class ItemController extends Controller
     }
 
     function edit () {
-        return view('modulos.vejaeditor', [
+        return view('modulos.base.create', [
 
         ]);
     }
@@ -58,5 +58,29 @@ class ItemController extends Controller
     function destroy () {
         $id = true;
         return redirect('/theme/show/'.$id);
+    }
+    function editor () {
+        // titulo do item
+        $title = true;
+
+        // verifica a quantidade de contents deletados
+        $is_deleted = true;
+        // verifica o total de contents
+        $total = true;
+        // todos os contents daquele item
+        $db_url = true;
+        // id da categoria (theme)
+        $id = true;
+        //id do item escolhido
+        $id_item = true;
+
+        return view('modulos.vejaeditor', [
+            'title' => $title,
+            'is_deleted' => $is_deleted,
+            'total' => $total,
+            'db_url' => $db_url,
+            'id' => $id,
+            'id_item' => $id_item
+        ]);
     }
 }

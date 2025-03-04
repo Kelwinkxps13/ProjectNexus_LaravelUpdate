@@ -50,7 +50,7 @@ Route::get('/theme/{id}/{id_item}', [ItemController::class, 'show']); // falta t
 Route::get('/theme/{id}/edit/{id_item}', [ItemController::class, 'edit']); // falta tudo
 Route::post('/theme/{id}/update', [ItemController::class, 'update']); // falta tudo
 Route::post('/theme/{id}/destroy/{id_item}', [ItemController::class, 'destroy']); // falta tudo
-Route::get('/theme/{id}/{id_item}/editor', [ItemController::class, 'editor']); // falta tudo
+Route::get('/theme/{id}/show/{id_item}/editor', [ItemController::class, 'editor']); // falta tudo
 
 //rotas dos blocos (conteudo) de cada item
 Route::get('/theme/{id}/createblock/{id_item}', [ContentController::class, 'create']); // falta tudo
