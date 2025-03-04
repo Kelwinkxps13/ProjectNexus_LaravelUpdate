@@ -10,6 +10,7 @@
     <div class="row mt-4">
         <div class="col text-end">
             <form action="/theme/{{$id}}/createblock/{{$id_item}}" method="get">
+                @csrf
                 <button type="submit" class="btn btn-outline-primary">Adicionar Novo Bloco de Conteúdo</button>
             </form>
         </div>
@@ -64,6 +65,7 @@
         <a href="/theme/{{$id}}/show/{{$id_item}}/editor"
             class="btn btn-outline-primary">Editor</a>
         <form action="/theme/{{$id}}/createblock/{{$id_item}}" method="get">
+            @csrf
             <button type="submit" class="btn btn-outline-primary">Adicionar
                 Novo Conteúdo</button>
         </form>

@@ -24,6 +24,7 @@
 <div class="text-center mb-4 my-4">
     <h4 class="mb-4 my-4">Não tem nenhuma categoria? Adicione alguma!</h4>
     <form action="/theme/create" method="get">
+        @csrf
         <button type="submit" class="btn btn-outline-primary">
             Adicionar Nova Categoria
         </button>
@@ -48,6 +49,7 @@
                     </h4>
                     <div>
                         <form action="/theme/show/{{$f->id}}" method="get">
+                            @csrf
                             <button type="submit" class="btn btn-dark">
                                 Ver Categoria
                             </button>
