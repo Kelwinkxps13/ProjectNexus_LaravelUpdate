@@ -6,11 +6,6 @@ use Illuminate\Http\Request;
 
 class ItemController extends Controller
 {
-    function index () {
-        return view('modulos.generic', [
-
-        ]);
-    }
     function create () {
         return view('modulos.base.create', [
 

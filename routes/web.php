@@ -43,7 +43,6 @@ Route::post('/theme/update', [ThemeController::class, 'store']); // falta tudo
 Route::post('/theme/destroy{id}', [ThemeController::class, 'destroy']); // falta tudo
 
 //rotas do registro de theme (os itens)
-Route::get('/theme/{id}', [ItemController::class, 'index']); // falta tudo
 Route::get('/theme/{id}/create', [ItemController::class, 'create']); // falta tudo
 Route::post('/theme/{id}/store', [ItemController::class, 'store']); // falta tudo
 Route::get('/theme/{id}/{id_item}', [ItemController::class, 'show']); // falta a logica do controller
