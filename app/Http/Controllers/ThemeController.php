@@ -31,8 +31,10 @@ class ThemeController extends Controller
     }
 
     function edit () {
+        // dados da categoria (theme)
+        $db = true;
         return view('modulos.generic.edit', [
-
+            'db' => $db
         ]);
     }
 
