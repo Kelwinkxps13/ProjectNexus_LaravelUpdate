@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 
 class ItemController extends Controller
 {
-    function create () {
+    function create()
+    {
         // nome da categoria que vai ser adicionada um item
         $page = true;
         // id da categoria (theme)
@@ -18,12 +19,14 @@ class ItemController extends Controller
         ]);
     }
 
-    function store () {
+    function store()
+    {
         $id = true;
-        return redirect('/theme/show/'.$id);
+        return redirect('/theme/show/' . $id);
     }
 
-    function show () {
+    function show()
+    {
         // qunatos itens no bd que estao marcados com is_deleted
         $is_deleted = false;
         // total de itens
@@ -46,21 +49,33 @@ class ItemController extends Controller
         ]);
     }
 
-    function edit () {
-        return view('modulos.base.create', [
-
+    function edit()
+    {
+        // nome da categoria que vai ser adicionada um item
+        $page = true;
+        // id da categoria (theme)
+        $id = true;
+        // informações sobre aquele item
+        $db = true;
+        return view('modulos.base.edit', [
+            'page' => $page,
+            'id' => $id,
+            'db' => $db
         ]);
     }
 
-    function update () {
+    function update()
+    {
         $id = true;
-        return redirect('/theme/show/'.$id);
+        return redirect('/theme/show/' . $id);
     }
-    function destroy () {
+    function destroy()
+    {
         $id = true;
-        return redirect('/theme/show/'.$id);
+        return redirect('/theme/show/' . $id);
     }
-    function editor () {
+    function editor()
+    {
         // titulo do item
         $title = true;
 
