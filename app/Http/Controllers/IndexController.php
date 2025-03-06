@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
-    function index () {
+    public function index() {
         $db_main = (object) [
             "id"=> 1,
             "title"=> "Ola mundo",
@@ -18,42 +18,23 @@ class IndexController extends Controller
         $final_verification = true; 
 
         // foreach de todos os temas!
-        $themes_foreach = false;
-
+        $themes_foreach = [
+            (object)[
+                'id' => 1,
+                'name' => 'teste',
+                'description' => 'teste1',
+                'image' => null
+            ],
+            (object)[
+                'id' => 2,
+                'name' => 'teste',
+                'description' => 'teste2',
+                'image' => null
+            ]
+        ];
 
         return view('index', [
-            'db_main' => $db_main,
             'final_verification' => $final_verification,
-            'themes_foreach' => $themes_foreach
-        ]);
-    }
-
-    function create () {
-        return view('indexcreator', [
-
-        ]);
-    }
-
-    function store () {
-        return redirect('/');
-    }
-
-    function edit () {
-        // pega os dados da tela inicial
-        $main = false;
-        return view('indexeditor', [
-            'main' => $main
-        ]);
-    }
-
-    function update () {
-        return redirect('/');
-    }
-
-    function editor () {
-        // pega todas as categorys registradas
-        $themes_foreach = false;
-        return view('editor', [
             'themes_foreach' => $themes_foreach
         ]);
     }

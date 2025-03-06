@@ -1,55 +1,32 @@
 @extends('layouts.main')
 @section('title', 'Página Inicial')
 @section('content')
-<h5 class="mb-5">Dica: Dê uma olhadinha no <a href="/editor">editor</a> para ter acesso a personalização de suas coisas!</h5>
 
-<div class="text-center">
-    <h3 class="display-4 fw-bold">
-        {{$db_main->title}} 👋
-    </h3>
-    <h3 class="lead">
-        {{$db_main->subtitle}}
-    </h3>
-</div>
+@guest
+<h4 class="text-center">Olá, Visitante!</h4>
+@endguest
+@auth
+<h4 class="text-center">Olá, {{Auth::user()->name}}!</h4>
+@endauth
 
-<div class="mt-5 mb-5">
-    <p class="lead">
-        {{$db_main->description}}
-    </p>
-</div>
 
-@if($final_verification)
-<br>
-<br>
-<div class="text-center mb-4 my-4">
-    <h4 class="mb-4 my-4">Não tem nenhuma categoria? Adicione alguma!</h4>
-    <form action="/theme/create" method="get">
-        @csrf
-        <button type="submit" class="btn btn-outline-primary">
-            Adicionar Nova Categoria
-        </button>
-    </form>
-</div>
-@else
 <div class="row mt-5">
     <div class="col">
-        <h2 class="mb-3">Suas Categorias</h2>
+        <h2 class="mb-3">Veja categorias criadas pela comunidade!</h2>
 
         @foreach ($themes_foreach as $f)
-        @if ($f->is_deleted==false)
         <div class="card mb-4 shadow-sm">
             <!-- Banner de Fundo -->
-            <div class="banner {{ $f->image === null ? 'no-image' : '' }}">
-                @if ($f->image !== null)
-                <img src="{{ $f->image }}" alt="Profile">
+            <div class="banner {{($f->image === null)?'no-image':''}} %>">
+                @if($f->image !==null)
+                <img src="{{$f->image}}" alt="Profile">
                 @endif
                 <div class="overlay">
                     <h4 class="card-title text-white title">
-                        {{$f->title}}
+                        {{$f->name}}
                     </h4>
                     <div>
                         <form action="/theme/show/{{$f->id}}" method="get">
-                            @csrf
                             <button type="submit" class="btn btn-dark">
                                 Ver Categoria
                             </button>
@@ -133,10 +110,7 @@
                 border-color: #1d2124;
             }
         </style>
-
-
-
-        @endif
         @endforeach
-        @endif
+
+
         @endsection
