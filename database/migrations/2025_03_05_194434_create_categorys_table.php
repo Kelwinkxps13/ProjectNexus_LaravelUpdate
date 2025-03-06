@@ -17,6 +17,8 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('image')->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');  // Chave estrangeira
+            $table->string('user_nickname');
+            $table->foreign('user_nickname')->references('nickname')->on('users')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();  // Soft delete
         });
