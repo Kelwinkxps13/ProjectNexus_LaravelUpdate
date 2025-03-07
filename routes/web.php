@@ -6,6 +6,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\IsCreator;
 use Illuminate\Support\Facades\Route;
 
 require __DIR__.'/auth.php';
