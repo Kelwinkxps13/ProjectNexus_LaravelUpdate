@@ -16,8 +16,12 @@ class IsCreator
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && $request->route('nickname') == Auth::user()->nickname) {
-            return redirect(route('index'));
+        if (!Auth::check()) {
+            return redirect((route('index')));
+        } else {
+            if ($request->route('nickname') != Auth::user()->nickname) {
+                return redirect(route('index'));
+            }
         }
         return $next($request);
     }
