@@ -31,7 +31,7 @@ Route::get('/', [IndexController::class, 'index']); // feito com sucesso!
 // rotas do user
 Route::get('/{nickname}', [UserController::class, 'index']); // feito com sucesso!
 Route::get('/{nickname}/create', [UserController::class, 'create'])->middleware('iscreator'); // falta a logica do controller
-Route::post('/{nickname}/store', [UserController::class, 'store'])->middleware('iscreator'); // falta a logica do controller
+Route::post('/{nickname}', [UserController::class, 'store'])->middleware('iscreator'); // falta a logica do controller
 Route::get('/{nickname}/edit', [UserController::class, 'edit'])->middleware('iscreator'); // falta a logica do controller
 Route::post('/{nickname}/update', [UserController::class, 'update'])->middleware('iscreator'); // falta a logica do controller
 Route::post('/{nickname}/editor', [UserController::class, 'editor'])->middleware('iscreator'); // falta a logica do controller
