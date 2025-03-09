@@ -5,7 +5,7 @@
 
 <div class="text-center">
     <h3 class="display-4 fw-bold">
-        {{$db_main->title}} 👋
+        {{$db_main->name}} 👋
     </h3>
     <h3 class="lead">
         {{$db_main->subtitle}}
@@ -18,17 +18,24 @@
     </p>
 </div>
 
-@if($final_verification)
+@if($db_main == null && Auth::user()->nickname == $nickname)
 <br>
 <br>
 <div class="text-center mb-4 my-4">
     <h4 class="mb-4 my-4">Não tem nenhuma categoria? Adicione alguma!</h4>
-    <form action="/theme/create" method="get">
+    <form action="{{$nickname}}/theme/create" method="get">
         @csrf
         <button type="submit" class="btn btn-outline-primary">
             Adicionar Nova Categoria
         </button>
     </form>
+</div>
+@elseif ($db_main == null)
+<br>
+<br>
+<div class="text-center mb-4 my-4">
+    <h4 class="mb-4 my-4">Usuário Sem categorias!</h4>
+    
 </div>
 @else
 <div class="row mt-5">

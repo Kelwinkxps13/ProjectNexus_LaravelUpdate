@@ -2,28 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Main;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    function index () {
-        $db_main = (object) [
-            "id"=> 1,
-            "title"=> "Ola mundo",
-            "subtitle"=> "seja bem vindo a minha pagina",
-            "description"=> "aqui vou postar algumas coisas que acho interessante"
-          ]; // ainda sem contato com o banco de dados!
+    function index ($nickname) {
+        // pegar os dados da pessoa que tem aquele nickname
+        $db_main = Main::where('nickname', $nickname)->first();
 
-        // variavel caso o tanto de temas deletados seja igual o tanto de temas totais
-        $final_verification = true; 
-
-        // foreach de todos os temas!
-        $themes_foreach = false;
-
+        // foreach de todos os temas desse usuario!
+        $themes_foreach = Category::where('user_nickname', $nickname)->get();
 
         return view('main', [
             'db_main' => $db_main,
-            'final_verification' => $final_verification,
+            'nickname' => $nickname,
             'themes_foreach' => $themes_foreach
         ]);
     }
