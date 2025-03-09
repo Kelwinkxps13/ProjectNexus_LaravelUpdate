@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class ItemController extends Controller
 {
-    function create()
+    function create($nickname, $category)
     {
         // nome da categoria que vai ser adicionada um item
         $page = true;
@@ -15,7 +15,9 @@ class ItemController extends Controller
 
         return view('modulos.base.create', [
             'page' => $page,
-            'id' => $id
+            'id' => $id,
+            'nickname' => $nickname,
+            'category' => $category
         ]);
     }
 
@@ -25,7 +27,7 @@ class ItemController extends Controller
         return redirect('/theme/show/' . $id);
     }
 
-    function show()
+    function index($nickname, $category)
     {
         // qunatos itens no bd que estao marcados com is_deleted
         $is_deleted = false;
@@ -45,11 +47,13 @@ class ItemController extends Controller
             'total' => $total,
             'db_url' => $db_url,
             'id' => $id,
-            'id_item' => $id_item
+            'id_item' => $id_item,
+            'nickname' => $nickname,
+            'category' => $category
         ]);
     }
 
-    function edit()
+    function edit($nickname, $category)
     {
         // nome da categoria que vai ser adicionada um item
         $page = true;
@@ -60,21 +64,23 @@ class ItemController extends Controller
         return view('modulos.base.edit', [
             'page' => $page,
             'id' => $id,
-            'db' => $db
+            'db' => $db,
+            'nickname' => $nickname,
+            'category' => $category
         ]);
     }
 
-    function update()
+    function update($nickname, $category)
     {
         $id = true;
         return redirect('/theme/show/' . $id);
     }
-    function destroy()
+    function destroy($nickname, $category)
     {
         $id = true;
         return redirect('/theme/show/' . $id);
     }
-    function editor()
+    function editor($nickname, $category)
     {
         // titulo do item
         $title = true;
@@ -96,7 +102,9 @@ class ItemController extends Controller
             'total' => $total,
             'db_url' => $db_url,
             'id' => $id,
-            'id_item' => $id_item
+            'id_item' => $id_item,
+            'nickname' => $nickname,
+            'category' => $category
         ]);
     }
 }

@@ -16,7 +16,7 @@ class ThemeController extends Controller
         return redirect('/');
     }
 
-    function show () {
+    function index () {
         // filtra pra encontrar uma category em especifico
         $db_theme = true;
         // condicional caso o tanto de temas deletados seja igual o tanto de temas totais

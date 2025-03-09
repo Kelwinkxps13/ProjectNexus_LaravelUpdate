@@ -6,24 +6,26 @@ use Illuminate\Http\Request;
 
 class ContentController extends Controller
 {
-    function create () {
+    function create ($nickname, $category) {
         // id da category
         $id = true;
         // id do item que vai ser adicionado um bloco
         $id_item = true;
         return view('modulos.block.create', [
             'id' => $id,
-            'id_item' => $id_item
+            'id_item' => $id_item,
+            'nickname' => $nickname,
+            'category' => $category
         ]);
     }
 
-    function store () {
+    function store ($nickname, $category) {
         $id = true;
         $id_item = true;
         return redirect('/theme/'.$id.'/show/'.$id_item);
     }
 
-    function edit () {
+    function edit ($nickname, $category) {
         // id da category
         $id = true;
         // id do item que vai ser adicionado um bloco
@@ -33,16 +35,18 @@ class ContentController extends Controller
         return view('modulos.block.edit', [
             'id' => $id,
             'id_item' => $id_item,
-            'db' => $db
+            'db' => $db,
+            'nickname' => $nickname,
+            'category' => $category
         ]);
     }
 
-    function update () {
+    function update ($nickname, $category) {
         $id = true;
         $id_item = true;
         return redirect('/theme/'.$id.'/show/'.$id_item);
     }
-    function destroy () {
+    function destroy ($nickname, $category) {
         $id = true;
         $id_item = true;
         return redirect('/theme/'.$id.'/show/'.$id_item);
