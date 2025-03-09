@@ -22,17 +22,17 @@ class UserController extends Controller
         ]);
     }
 
-    function create () {
+    function create ($nickname) {
         return view('indexcreator', [
-
+            'nickname' => $nickname
         ]);
     }
 
-    function store () {
+    function store ($nickname) {
         return redirect('/');
     }
 
-    function edit () {
+    function edit ($nickname) {
         // pega os dados da tela inicial
         $main = false;
         return view('indexeditor', [
@@ -40,11 +40,11 @@ class UserController extends Controller
         ]);
     }
 
-    function update () {
+    function update ($nickname) {
         return redirect('/');
     }
 
-    function editor () {
+    function editor ($nickname) {
         // pega todas as categorys registradas
         $themes_foreach = false;
         return view('editor', [

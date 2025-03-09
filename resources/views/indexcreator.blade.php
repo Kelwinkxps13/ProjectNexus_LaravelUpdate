@@ -14,11 +14,11 @@
                     <strong>Formulário de Criação da Tela Inicial</strong>
                 </div>
                 <div class="card-body p-5">
-                    <form action="/store" method="POST">
+                    <form action="/($nickname)" method="POST">
                         @csrf
                         <div class="mb-4">
-                            <label for="title" class="form-label">Título</label>
-                            <input name="title" type="text" class="form-control custom-input" id="title"
+                            <label for="name" class="form-label">Título</label>
+                            <input name="name" type="text" class="form-control custom-input" id="name"
                                 placeholder="ex: olá mundo!" required>
                         </div>
                         <div class="mb-4">
