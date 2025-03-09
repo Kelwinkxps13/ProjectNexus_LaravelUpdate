@@ -27,9 +27,9 @@ Route::middleware('auth')->group(function () {
 
 
 // adicionado pelo dev
-Route::get('/', [IndexController::class, 'index']); // falta a logica do controller
+Route::get('/', [IndexController::class, 'index']); // feito com sucesso!
 // rotas do user
-Route::get('/{nickname}', [UserController::class, 'index']); // falta a logica do controller
+Route::get('/{nickname}', [UserController::class, 'index']); // feito com sucesso!
 Route::get('/{nickname}/create', [UserController::class, 'create'])->middleware('iscreator'); // falta a logica do controller
 Route::post('/{nickname}/store', [UserController::class, 'store'])->middleware('iscreator'); // falta a logica do controller
 Route::get('/{nickname}/edit', [UserController::class, 'edit'])->middleware('iscreator'); // falta a logica do controller
