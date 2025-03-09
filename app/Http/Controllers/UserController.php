@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Main;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -28,8 +29,20 @@ class UserController extends Controller
         ]);
     }
 
-    function store ($nickname) {
-        return redirect('/');
+    function store (Request $request, $nickname) {
+        $request->validate([
+            'name' => 'required|string|min:1|max:50',
+            'subtitle' =>  'nullable|string|max:100',
+            'description' => 'required|string|max:255'
+        ]);
+        Main::create([
+            'name' => $request->name,
+            'subtitle' => $request->subtitle,
+            'description' => $request->description,
+            'user_id' => Auth::id()
+        ]);
+        return redirect('/'.$nickname)
+        ->with('msg-success', 'Pagina Inicial Criada com Sucesso!');
     }
 
     function edit ($nickname) {
