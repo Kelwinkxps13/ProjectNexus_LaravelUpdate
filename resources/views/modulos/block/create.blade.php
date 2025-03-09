@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Criar Item')
+@section('name', 'Criar Bloco')
 @section('content')
 
 <div class="container my-5">
@@ -10,12 +10,12 @@
                     <strong> Formulário de Criação de Conteúdos</strong>
                 </div>
                 <div class="card-body p-5">
-                    <form action="/theme/{{$id}}/storeblock" method="POST" enctype="multipart/form-data">
+                    <form action="/{{$nickname}}/{{$category}}/storeblock" method="POST" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="id_item" value="{{$id_item}}">
                         <div class="mb-4">
-                            <label for="title" class="form-label">Nome</label>
-                            <input name="title" type="text" class="form-control custom-input" id="title"
+                            <label for="name" class="form-label">Nome</label>
+                            <input name="name" type="text" class="form-control custom-input" id="name"
                                 placeholder="ex: Introdução" required>
                         </div>
                         <div class="mb-4">

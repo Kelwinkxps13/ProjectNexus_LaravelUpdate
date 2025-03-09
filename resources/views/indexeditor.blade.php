@@ -10,12 +10,13 @@
                     <strong>Formulário de Edição da Tela Inicial</strong>
                 </div>
                 <div class="card-body p-5">
-                    <form action="/update" method="POST">
+                    <form action="/{{$nickname}}" method="POST">
                         @csrf
+                        @method('PATCH')
                         <div class="mb-4">
-                            <label for="title" class="form-label">Título</label>
-                            <input name="title" type="text" class="form-control custom-input" id="title"
-                                placeholder="ex: olá mundo!" value="{{$main->title}}" required>
+                            <label for="name" class="form-label">Título</label>
+                            <input name="name" type="text" class="form-control custom-input" id="name"
+                                placeholder="ex: olá mundo!" value="{{$main->name}}" required>
                         </div>
                         <div class="mb-4">
                             <label for="subtitle" class="form-label">Subtítulo</label>

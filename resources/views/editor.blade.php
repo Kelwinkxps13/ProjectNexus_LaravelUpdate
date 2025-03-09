@@ -7,7 +7,7 @@
     <div class="col">
       <h2 class="mb-3">Menu</h2>
       <div class="d-flex justify-content-end">
-        <form action="/edit" method="get">
+        <form action="/{{$nickname}}/edit" method="get">
           @csrf
           <button type="submit" class="btn btn-warning">
             Editar menu
@@ -40,14 +40,15 @@
               {{$f->title}}
             </h4>
             <div class="d-flex justify-content-end gap-2">
-              <form action="/theme/edit/{{$f->id}}" method="get">
+              <form action="/{{$nickname}}/{{$category}}/edit" method="get">
                 @csrf
                 <button type="submit" class="btn btn-warning">
                   Editar
                 </button>
               </form>
-              <form action="/theme/destroy/{{$f->id}}" method="post">
+              <form action="/{{$nickname}}/{{$category}}" method="post">
                 @csrf
+                @method('DELETE')
                 <button type="submit" class="btn btn-danger">
                   Excluir
                 </button>

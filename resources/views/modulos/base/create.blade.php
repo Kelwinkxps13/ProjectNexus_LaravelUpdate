@@ -10,12 +10,12 @@
                         <strong>Formulário de Criação de {{$page}}</strong>
                     </div>
                     <div class="card-body p-5">
-                        <form action="/theme/{{$id}}/store" method="POST" enctype="multipart/form-data">
+                        <form action="/{{$nickname}}/{{$category}}/{{$id_item}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="id" value="{{$id}}">
                             <div class="mb-4">
-                                <label for="title" class="form-label">Nome</label>
-                                <input name="title" type="text" class="form-control custom-input" id="title"
+                                <label for="name" class="form-label">Nome</label>
+                                <input name="name" type="text" class="form-control custom-input" id="name"
                                     placeholder="ex: Red Dead Redemption 2" required>
                             </div>
                             <div class="mb-4">

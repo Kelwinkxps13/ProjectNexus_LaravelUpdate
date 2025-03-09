@@ -23,7 +23,7 @@
 <br>
 <div class="text-center mb-4 my-4">
     <h4 class="mb-4 my-4">Não tem nenhuma categoria? Adicione alguma!</h4>
-    <form action="{{$nickname}}/theme/create" method="get">
+    <form action="/{{$$nickname}}/{{$category}}/create" method="get">
         @csrf
         <button type="submit" class="btn btn-outline-primary">
             Adicionar Nova Categoria

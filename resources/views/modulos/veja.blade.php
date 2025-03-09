@@ -9,7 +9,7 @@
     <h2 class="text-center text-dark">Não tem nenhum Conteúdo? Adicione algum!</h2>
     <div class="row mt-4">
         <div class="col text-end">
-            <form action="/theme/{{$id}}/createblock/{{$id_item}}" method="get">
+            <form action="/{{$nickname}}/{{$category}}/createblock/{{$id_item}}" method="get">
                 @csrf
                 <button type="submit" class="btn btn-outline-primary">Adicionar Novo Bloco de Conteúdo</button>
             </form>
@@ -64,7 +64,7 @@
     <div class="d-flex justify-content-center gap-3 float-end my-4">
         <a href="/theme/{{$id}}/show/{{$id_item}}/editor"
             class="btn btn-outline-primary">Editor</a>
-        <form action="/theme/{{$id}}/createblock/{{$id_item}}" method="get">
+        <form action="/{{$nickname}}/{{$category}}/createblock/{{$id_item}}" method="get">
             @csrf
             <button type="submit" class="btn btn-outline-primary">Adicionar
                 Novo Conteúdo</button>

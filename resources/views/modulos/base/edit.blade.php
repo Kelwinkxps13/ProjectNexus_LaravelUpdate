@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Tela Veja')
+@section('name', 'Editar Item')
 @section('content')
 
 <div class="container my-5">
@@ -10,15 +10,16 @@
                     <strong>Formulário de Edição de {{$page}}</strong>
                 </div>
                 <div class="card-body p-5">
-                    <form action="/theme/{{$id}}/update" method="POST" enctype="multipart/form-data">
+                    <form action="/{{$nickname}}/{{$category}}/{{$id_item}}" method="POST" enctype="multipart/form-data">
                         @csrf
+                        @method('PATCH')
                         <input type="hidden" name="id_item" value="{{$db->id}}">
                         <input type="hidden" name="id" value="{{$id}}">
 
                         <div class="mb-4">
-                            <label for="title" class="form-label">Nome</label>
-                            <input name="title" type="text" class="form-control custom-input"
-                                value="{{$db->title}}" placeholder="ex: Red Dead Redemption 2" required>
+                            <label for="name" class="form-label">Nome</label>
+                            <input name="name" type="text" class="form-control custom-input"
+                                value="{{$db->name}}" placeholder="ex: Red Dead Redemption 2" required>
                         </div>
 
                         <div class="mb-4">
@@ -32,7 +33,7 @@
                             <input name="image" type="file" class="form-control custom-input">
                             @if ($db->image)
                             <div class="mt-2">
-                                <img src="{{db->image}}" alt="Imagem Atual" class="img-fluid"
+                                <img src="{{$db->image}}" alt="Imagem Atual" class="img-fluid"
                                     style="max-width: 200px; border-radius: 10px;">
                             </div>
                             @endif

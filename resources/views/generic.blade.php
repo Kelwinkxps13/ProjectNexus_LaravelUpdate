@@ -18,7 +18,7 @@
 
     <div class="row mt-4">
         <div class="col">
-            <form action="/theme/{{$db_theme->id}}/create" method="get">
+            <form action="/{{$nickname}}/category/create" method="get">
                 @csrf
                 <button type="submit" class="btn btn-outline-primary float-end">
                     Adicionar
@@ -50,13 +50,14 @@
                         {{ $f->description }}
                     </p>
                     <div class="d-flex justify-content-center gap-3">
-                        <a href="/theme/{{$db_theme->id}}/show/{{$f->id}}" class="btn btn-primary">Veja!</a>
-                        <form action="/theme/{{$db_theme->id}}/edit/{{$f->id}}" method="get">
+                        <a href="/{{$$nickname}}/{{$category}}/{{$f->id}}" class="btn btn-primary">Veja!</a>
+                        <form action="/{{$$nickname}}/{{$category}}/edit/{{$f->id}}" method="get">
                             @csrf
                             <button type="submit" class="btn btn-warning">Editar</button>
                         </form>
-                        <form action="/theme/{{$db_theme->id}}/destroy/{{$f->id}}" method="post">
+                        <form action="/{{$$nickname}}/{{$category}}/{{$f->id}}" method="post">
                             @csrf
+                            @method('DELETE')
                             <button type="submit" class="btn btn-danger">Excluir</button>
                         </form>
                     </div>
@@ -70,7 +71,7 @@
     </div>
     <div class="row mt-4">
         <div class="col">
-            <form action="/theme/{{$db_theme->id}}/create" method="get">
+            <form action="/{{$$nickname}}/{{$category}}/create" method="get">
                 @csrf
                 <button type="submit" class="btn btn-outline-primary float-end">
                     Adicionar

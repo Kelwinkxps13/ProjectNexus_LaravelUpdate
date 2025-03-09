@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Criar Item')
+@section('name', 'Editar Bloco')
 @section('content')
 
 <div class="container my-5">
@@ -10,15 +10,16 @@
                     <strong>Formulário de Edição de Conteúdos</strong>
                 </div>
                 <div class="card-body p-5">
-                    <form action="/theme/{{$id}}/updateblock" method="POST" enctype="multipart/form-data">
+                    <form action="/{{$nickname}}/{{$category}}/updateblock" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <input type="hidden" name="id_item" value="{{id_item}}">
+                        @method('PATCH')
+                        <input type="hidden" name="id_item" value="{{$id_item}}">
                         <input type="hidden" name="idblock" value="{{$db->id}}">
 
                         <div class="mb-4">
-                            <label for="title" class="form-label">Nome</label>
-                            <input name="title" type="text" class="form-control custom-input"
-                                value="{{db->title}}" placeholder="ex: Introdução" required>
+                            <label for="name" class="form-label">Nome</label>
+                            <input name="name" type="text" class="form-control custom-input"
+                                value="{{$db->name}}" placeholder="ex: Introdução" required>
                         </div>
 
                         <div class="mb-4">
