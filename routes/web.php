@@ -34,7 +34,7 @@ Route::get('/{nickname}/create', [UserController::class, 'create'])->middleware(
 Route::post('/{nickname}', [UserController::class, 'store'])->middleware('iscreator'); // feito com sucesso!
 Route::get('/{nickname}/edit', [UserController::class, 'edit'])->middleware('iscreator'); // feito com sucesso!
 Route::patch('/{nickname}', [UserController::class, 'update'])->middleware('iscreator'); // feito com sucesso!
-Route::post('/{nickname}/editor', [UserController::class, 'editor'])->middleware('iscreator'); // falta a logica do controller
+Route::post('/{nickname}/editor', [UserController::class, 'editor'])->middleware('iscreator'); // feito com sucesso!
 
 // rotas de theme
 Route::get('/{nickname}/{category}', [ThemeController::class, 'index']); // falta a logica do controller
