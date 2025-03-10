@@ -40,7 +40,7 @@ Route::post('/{nickname}/editor', [UserController::class, 'editor'])->middleware
 Route::get('/{nickname}/{category}', [ThemeController::class, 'index']); // feito com sucesso!
 Route::get('/{nickname}/category/create', [ThemeController::class, 'create'])->middleware('iscreator'); // feito com sucesso!
 Route::post('/{nickname}/category', [ThemeController::class, 'store'])->middleware('iscreator'); // feito com sucesso!
-Route::get('/{nickname}/{category}/edit', [ThemeController::class, 'edit'])->middleware('iscreator'); // falta a logica do controller
+Route::get('/{nickname}/{category}/edit', [ThemeController::class, 'edit'])->middleware('iscreator'); // feito com sucesso!
 Route::patch('/{nickname}/category', [ThemeController::class, 'update'])->middleware('iscreator'); // falta tudo
 Route::delete('/{nickname}/category', [ThemeController::class, 'destroy'])->middleware('iscreator'); // falta tudo
 

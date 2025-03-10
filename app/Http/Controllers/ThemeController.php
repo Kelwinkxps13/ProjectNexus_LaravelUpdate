@@ -68,16 +68,20 @@ class ThemeController extends Controller
 
         }
 
+        $cat->save();
+
         return redirect('/'.$nickname)
         ->with('msg-success', "Categoria criada com sucesso!");
     }
 
 
-    function edit () {
+    function edit ($nickname, $category) {
         // dados da categoria (theme)
-        $db = true;
+        $db = Category::find($category)->first();
         return view('modulos.generic.edit', [
-            'db' => $db
+            'db' => $db,
+            'nickname' => $nickname,
+            'category' => $category
         ]);
     }
 
