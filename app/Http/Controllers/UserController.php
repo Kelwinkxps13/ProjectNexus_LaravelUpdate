@@ -54,8 +54,22 @@ class UserController extends Controller
         ]);
     }
 
-    function update ($nickname) {
-        return redirect('/');
+    function update (Request $request, $nickname) {
+        $main = Main::where('user_id', Auth::id())->first();
+
+        // validação dos dados
+        $request->validate([
+            'name' => 'required|string|min:1|max:50',
+            'subtitle' =>  'nullable|string|max:100',
+            'description' => 'required|string|max:255'
+        ]);
+
+        $main->name = $request->name ?? $main->name;
+        $main->subtitle = $request->subtitle ?? $main->subtitle;
+        $main->description = $request->description ?? $main->description;
+        $main->save();
+        return redirect('/'.$nickname)
+        ->with('msg-success', 'Página inicial atualizada com sucesso!');
     }
 
     function editor ($nickname) {
