@@ -49,7 +49,8 @@ class UserController extends Controller
         // pega os dados da tela inicial
         $main = false;
         return view('indexeditor', [
-            'main' => $main
+            'main' => $main,
+            'nickname' => $nickname
         ]);
     }
 
