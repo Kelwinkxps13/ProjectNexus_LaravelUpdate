@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Item;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ThemeController extends Controller
@@ -34,8 +35,41 @@ class ThemeController extends Controller
         ]);
     }
 
-    function store () {
-        return redirect('/');
+    function store (Request $request, $nickname) {
+
+        // name, description, image
+
+        $request
+        ->validate([
+            'name' => 'required|string|max:20',
+            'description' => 'required|string|max:255',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg'
+        ]);
+
+
+        // cadastrando a categoy
+        $cat = new User();
+        $cat->name = $request->name;
+        $cat->description = $request->description;
+
+        // validando a imagem
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            //vamos fazer a imagem ser unica
+
+            // peguemos a extensao do arquivo
+            $extension = $request->image;
+            // peguemos a data atual
+            $data = strtotime('now');
+            $path_image = md5($request->image->getClienteOriginalName()).'_'.$data.'.'.$extension;
+
+            $request->image->move(public_path('/images/'.$nickname.'categories/banners'), $path_image);
+
+            $cat->image = $path_image;
+
+        }
+
+        return redirect('/'.$nickname)
+        ->with('msg-success', "Categoria criada com sucesso!");
     }
 
 
