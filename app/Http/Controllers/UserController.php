@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Main;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -73,10 +74,14 @@ class UserController extends Controller
     }
 
     function editor ($nickname) {
-        // pega todas as categorys registradas
-        $themes_foreach = false;
+        // pega o usuario
+        $user = User::find(Auth::id());
+        // proximo passo, é pegar as categories em si daquele usuario
+        $themes_foreach = $user->categorys();
+
         return view('editor', [
-            'themes_foreach' => $themes_foreach
+            'themes_foreach' => $themes_foreach,
+            'nickname' => $nickname
         ]);
     }
 }

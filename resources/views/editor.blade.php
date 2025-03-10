@@ -21,7 +21,7 @@
     <div class="col">
       <h2 class="mb-3">categorias</h2>
 
-      @if($final_verification)
+      @if($themes_foreach == null)
       <h4>sem categorias!</h4>
       @else
       @foreach ($themes_foreach as $f)
@@ -40,13 +40,13 @@
               {{$f->title}}
             </h4>
             <div class="d-flex justify-content-end gap-2">
-              <form action="/{{$nickname}}/{{$category}}/edit" method="get">
+              <form action="/{{$nickname}}/{{$f->id}}/edit" method="get">
                 @csrf
                 <button type="submit" class="btn btn-warning">
                   Editar
                 </button>
               </form>
-              <form action="/{{$nickname}}/{{$category}}" method="post">
+              <form action="/{{$nickname}}/{{$f->id}}" method="post">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-danger">
@@ -139,7 +139,7 @@
 </div>
 <div class="row my-5">
   <div class="d-flex justify-content-center gap-3 float-end my-4">
-    <form action="/theme/create" method="get">
+    <form action="/{{$nickname}}/category/create" method="get">
       @csrf
       <button type="submit" class="btn btn-outline-primary">
         Adicionar Nova Categoria
