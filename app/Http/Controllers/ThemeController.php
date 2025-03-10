@@ -119,7 +119,13 @@ class ThemeController extends Controller
         return redirect('/')
         ->with('msg-success', 'Categoria Atualizada com Sucesso!');
     }
-    function destroy () {
-        return redirect('/editor');
+    function destroy (Request $request, $nickname) {
+
+        $cat = Category::find($request->id)->first();
+
+        $cat->delete();
+
+        return redirect('/'.$nickname.'/editor')
+        ->with('msg-success', "Categoria excluída com sucesso!");
     }
 }

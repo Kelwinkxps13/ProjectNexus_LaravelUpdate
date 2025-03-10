@@ -46,9 +46,10 @@
                   Editar
                 </button>
               </form>
-              <form action="/{{$nickname}}/{{$f->id}}" method="post">
+              <form action="/{{$nickname}}/category" method="post">
                 @csrf
                 @method('DELETE')
+                <input type="hidden" name="id" value="{{$f->id}}">
                 <button type="submit" class="btn btn-danger">
                   Excluir
                 </button>
