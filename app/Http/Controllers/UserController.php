@@ -47,7 +47,7 @@ class UserController extends Controller
 
     function edit ($nickname) {
         // pega os dados da tela inicial
-        $main = false;
+        $main = Main::where('user_id', Auth::id())->first();
         return view('indexeditor', [
             'main' => $main,
             'nickname' => $nickname
