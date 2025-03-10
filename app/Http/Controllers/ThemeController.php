@@ -62,7 +62,7 @@ class ThemeController extends Controller
             $data = strtotime('now');
             $path_image = md5($request->image->getClienteOriginalName()).'_'.$data.'.'.$extension;
 
-            $request->image->move(public_path('/images/'.$nickname.'categories/banners'), $path_image);
+            $request->image->move(public_path('images/'.$nickname.'/categories/banners'), $path_image);
 
             $cat->image = $path_image;
 
@@ -85,15 +85,41 @@ class ThemeController extends Controller
         ]);
     }
 
-    function update () {
-        return redirect('/');
+    function update (Request $request, $nickname) {
+
+        // name, description, image
+
+        $request
+        ->validate([
+            'name' => 'required|string|max:20',
+            'description' => 'required|string|max:255',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg'
+        ]);
+
+        $cat = Category::find($request->id);
+
+        $cat->name = $request->name ?? $cat->name;
+        $cat->description = $request->description ?? $cat->description;
+
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            # code...
+            $extension = $request->extension;
+            $data = strtotime('now');
+
+            $path_image = md5($request->image->getClientOriginalName()).'_'.$data.'.'.$extension;
+
+            $request->image->move(public_path('images'.$nickname.'categories/banners'));
+
+            $cat->image = $path_image;
+        }
+
+        $cat->save();
+
+
+        return redirect('/')
+        ->with('msg-success', 'Categoria Atualizada com Sucesso!');
     }
     function destroy () {
         return redirect('/editor');
-    }
-    function editor () {
-        return view('editor', [
-
-        ]);
     }
 }
