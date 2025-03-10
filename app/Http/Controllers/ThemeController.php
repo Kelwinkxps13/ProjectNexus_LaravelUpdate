@@ -2,13 +2,35 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Item;
 use Illuminate\Http\Request;
 
 class ThemeController extends Controller
 {
-    function create () {
-        return view('modulos.generic.create', [
+    function index ($nickname, $category) {
+        // filtra pra encontrar uma category em especifico
+        $db_theme = Category::where('id', $category)->where('user_nickname', $nickname)->first();
+        // condicional caso o tanto de temas deletados seja igual o tanto de temas totais
+        if (!$db_theme) {
+            $final_verification = true;
+        }
+        
+        // pegando os dados dos itens do tema escolhido
+        $db_url = $db_theme->items();
 
+        return view('generic', [
+            'db_theme' => $db_theme,
+            'final_verification' => $final_verification,
+            'db_url' => $db_url,
+            'nickname' => $nickname,
+            'category' => $category
+        ]);
+    }
+
+    function create ($nickname) {
+        return view('modulos.generic.create', [
+            'nickname' => $nickname
         ]);
     }
 
@@ -16,19 +38,6 @@ class ThemeController extends Controller
         return redirect('/');
     }
 
-    function index () {
-        // filtra pra encontrar uma category em especifico
-        $db_theme = true;
-        // condicional caso o tanto de temas deletados seja igual o tanto de temas totais
-        $final_verification = true;
-        // pegando os dados dos itens do tema escolhido
-        $db_url = true;
-        return view('generic', [
-            'db_theme' => $db_theme,
-            'final_verification' => $final_verification,
-            'db_url' => $db_url
-        ]);
-    }
 
     function edit () {
         // dados da categoria (theme)

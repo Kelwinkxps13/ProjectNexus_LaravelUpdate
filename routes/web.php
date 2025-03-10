@@ -37,8 +37,8 @@ Route::patch('/{nickname}', [UserController::class, 'update'])->middleware('iscr
 Route::post('/{nickname}/editor', [UserController::class, 'editor'])->middleware('iscreator'); // feito com sucesso!
 
 // rotas de theme
-Route::get('/{nickname}/{category}', [ThemeController::class, 'index']); // falta a logica do controller
-Route::get('/{nickname}/category/create', [ThemeController::class, 'create'])->middleware('iscreator'); // falta a logica do controller
+Route::get('/{nickname}/{category}', [ThemeController::class, 'index']); // feito com sucesso!
+Route::get('/{nickname}/category/create', [ThemeController::class, 'create'])->middleware('iscreator'); // feito com sucesso!
 Route::post('/{nickname}/category', [ThemeController::class, 'store'])->middleware('iscreator'); // falta tudo
 Route::get('/{nickname}/{category}/edit', [ThemeController::class, 'edit'])->middleware('iscreator'); // falta a logica do controller
 Route::patch('/{nickname}/category', [ThemeController::class, 'update'])->middleware('iscreator'); // falta tudo
