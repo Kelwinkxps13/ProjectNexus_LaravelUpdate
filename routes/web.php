@@ -45,7 +45,7 @@ Route::patch('/{nickname}/category', [ThemeController::class, 'update'])->middle
 Route::delete('/{nickname}/category', [ThemeController::class, 'destroy'])->middleware('iscreator'); // feito com sucesso!
 
 //rotas do registro de theme (os itens)
-Route::get('/{nickname}/{category}/{id_item}', [ItemController::class, 'index']); // falta a logica do controller
+Route::get('/{nickname}/{category}/{id_item}', [ItemController::class, 'index']); // feito com sucesso!
 Route::get('/{nickname}/{category}/create', [ItemController::class, 'create'])->middleware('iscreator'); // falta a logica do controller
 Route::post('/{nickname}/{category}/{id_item}', [ItemController::class, 'store'])->middleware('iscreator'); // falta tudo
 Route::get('/{nickname}/{category}/edit/{id_item}', [ItemController::class, 'edit'])->middleware('iscreator'); // falta a logica do controller

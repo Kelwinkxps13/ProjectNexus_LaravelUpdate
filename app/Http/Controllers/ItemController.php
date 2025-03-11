@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class ItemController extends Controller
@@ -9,9 +10,17 @@ class ItemController extends Controller
     function create($nickname, $category)
     {
         // nome da categoria que vai ser adicionada um item
-        $page = true;
+        $cat = Category::find($category)->first();
+
+        if (!$cat) {
+            # code...
+            return redirect('/'.$nickname)
+            ->with('msg-warning', "categoria não encontrada!");
+        }
+        $page = $cat->name;
+
         // id da categoria (theme)
-        $id = true;
+        $id = $cat->id;
 
         return view('modulos.base.create', [
             'page' => $page,
