@@ -59,9 +59,10 @@
                             @csrf
                             <button type="submit" class="btn btn-warning">Editar</button>
                         </form>
-                        <form action="/{{$$nickname}}/{{$category}}/{{$f->id}}" method="post">
+                        <form action="/{{$$nickname}}/{{$category}}" method="post">
                             @csrf
                             @method('DELETE')
+                            <input type="hidden" name="id_item" value="{{$f->id}}">
                             <button type="submit" class="btn btn-danger">Excluir</button>
                         </form>
                     </div>

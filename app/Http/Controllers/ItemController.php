@@ -161,10 +161,14 @@ class ItemController extends Controller
         return redirect('/'.$nickname.'/'.$category)
             ->with('msg-success', "Item editado com sucesso!");
     }
-    function destroy($nickname, $category)
+    function destroy(Request $request, $nickname, $category)
     {
-        $id = true;
-        return redirect('/theme/show/' . $id);
+        $item = Item::find($request->id_item);
+
+        $item->delete();
+        
+        return redirect('/'.$nickname.'/'.$category)
+            ->with('msg-success', "Item excluído com sucesso!");
     }
     function editor($nickname, $category)
     {
