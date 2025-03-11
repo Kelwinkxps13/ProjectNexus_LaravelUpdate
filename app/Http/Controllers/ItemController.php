@@ -101,14 +101,22 @@ class ItemController extends Controller
     }
 
 
-    function edit($nickname, $category)
+    function edit($nickname, $category, $id_item)
     {
-        // nome da categoria que vai ser adicionada um item
-        $page = true;
+        // nome da categoria que vai ser modificada um item
+        $cat = Category::find($category)->first();
+        if (!$cat) {
+            # code...
+            return redirect('/'.$nickname)
+            ->with('msg-warning', "categoria não encontrada!");
+        }
+        $page = $cat->name;
         // id da categoria (theme)
-        $id = true;
+        $id = $cat->id;
+
         // informações sobre aquele item
-        $db = true;
+        $db = Item::find($id_item);
+        
         return view('modulos.base.edit', [
             'page' => $page,
             'id' => $id,
