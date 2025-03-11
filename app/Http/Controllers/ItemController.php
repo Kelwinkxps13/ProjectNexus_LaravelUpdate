@@ -87,7 +87,7 @@ class ItemController extends Controller
 
             $path_image = md5($request->image->getClientOriginalName()).'_'.$data.'.'.$extension;
 
-            $request->image->move(public_path('images/'.$nickname.'/categories/'.$request->id.'/items'));
+            $request->image->move(public_path('images/'.$nickname.'/categories/'.$request->id.'/items'), $path_image);
 
             $item->image = $path_image;
 
@@ -151,7 +151,7 @@ class ItemController extends Controller
 
             $path_image = md5($request->image->getClientOriginalName()).'_'.$data.'.'.$extension;
 
-            $request->image->move(public_path('images/'.$nickname.'/categories/'.$request->id.'/items'));
+            $request->image->move(public_path('images/'.$nickname.'/categories/'.$request->id.'/items'), $path_image);
 
             $item->image = $path_image ?? $item->image;
 
