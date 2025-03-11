@@ -43,7 +43,7 @@ class ThemeController extends Controller
         $request->validate([
             'name' => 'required|string|max:20',
             'description' => 'required|string|max:255',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg'
         ]);
 
 
@@ -57,7 +57,7 @@ class ThemeController extends Controller
             //vamos fazer a imagem ser unica
 
             // peguemos a extensao do arquivo
-            $extension = $request->image;
+            $extension = $request->image->extension;
             // peguemos a data atual
             $data = strtotime('now');
             $path_image = md5($request->image->getClienteOriginalName()).'_'.$data.'.'.$extension;
@@ -94,7 +94,7 @@ class ThemeController extends Controller
         ->validate([
             'name' => 'required|string|max:20',
             'description' => 'required|string|max:255',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg'
         ]);
 
         $cat = Category::find($request->id);
@@ -104,12 +104,12 @@ class ThemeController extends Controller
 
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
             # code...
-            $extension = $request->extension;
+            $extension = $request->image->extension;
             $data = strtotime('now');
 
             $path_image = md5($request->image->getClientOriginalName()).'_'.$data.'.'.$extension;
 
-            $request->image->move(public_path('images'.$nickname.'categories/banners'));
+            $request->image->move(public_path('images/'.$nickname.'/categories/banners'));
 
             $cat->image = $path_image;
         }
