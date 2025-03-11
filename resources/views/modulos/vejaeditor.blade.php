@@ -20,12 +20,19 @@
                         {{$f->title}}
                     </h4>
                     <div class="d-flex justify-content-end gap-2">
-                        <form action="/theme/{{$id}}/editblock/{{$id_item}}/{{$f->id}}"
+                        <form action="/{{$nickname}}/{{$category}}/editblock"
                             method="get">
+                            @csrf
+                            <input type="hidden" name="id_item" value="{{$id_item}}">
+                            <input type="hidden" name="idblock" value="{{$f->id}}">
                             <button type="submit" class="btn btn-warning">Editar</button>
                         </form>
-                        <form action="/theme/{{$id}}/destroyblock/{{$id_item}}/{{$f->id}}"
+                        <form action="/{{$nickname}}/{{$category}}/destroyblock"
                             method="post">
+                            @csrf
+                            @method('DELETE')
+                            <input type="hidden" name="id_item" value="{{$id_item}}">
+                            <input type="hidden" name="idblock" value="{{$f->id}}">
                             <button type="submit" class="btn btn-danger">Excluir</button>
                         </form>
                     </div>
