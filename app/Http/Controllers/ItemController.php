@@ -3,10 +3,41 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Item;
 use Illuminate\Http\Request;
 
 class ItemController extends Controller
 {
+
+    function index($nickname, $category, $id_item)
+    {
+       
+        // contents daquele item daquela category
+        $item = Item::find($id_item)->first();
+
+        if (!$item) {
+            # code...
+            return redirect('/'.$nickname.'/'.$category)
+            ->with('msg-warning', "Item não encontrado!");
+        }
+
+        $db_url = $item->contents();
+
+        //id da categoria
+        $id = $item->category_id;
+
+        // id do item
+        $id_item = $id_item;
+
+        return view('modulos.veja', [
+            'db_url' => $db_url,
+            'id' => $id,
+            'id_item' => $id_item,
+            'nickname' => $nickname,
+            'category' => $category
+        ]);
+    }
+
     function create($nickname, $category)
     {
         // nome da categoria que vai ser adicionada um item
@@ -36,31 +67,6 @@ class ItemController extends Controller
         return redirect('/theme/show/' . $id);
     }
 
-    function index($nickname, $category)
-    {
-        // qunatos itens no bd que estao marcados com is_deleted
-        $is_deleted = false;
-        // total de itens
-        $total = false;
-        // contents daquele item daquela category
-        $db_url = false;
-
-        //id da categoria
-        $id = false;
-
-        // id do item
-        $id_item = false;
-
-        return view('modulos.veja', [
-            'is_deleted' => $is_deleted,
-            'total' => $total,
-            'db_url' => $db_url,
-            'id' => $id,
-            'id_item' => $id_item,
-            'nickname' => $nickname,
-            'category' => $category
-        ]);
-    }
 
     function edit($nickname, $category)
     {
