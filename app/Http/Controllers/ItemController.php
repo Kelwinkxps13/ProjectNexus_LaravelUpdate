@@ -61,10 +61,43 @@ class ItemController extends Controller
         ]);
     }
 
-    function store()
+    function store(Request $request, $nickname, $category)
     {
-        $id = true;
-        return redirect('/theme/show/' . $id);
+
+        //  protected $fillable = ['name', 'description', 'image', 'category_id'];]
+
+        $request->validate([
+            'name' => 'required|string|max:50',
+            'description' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:png,jpg,svg,jpeg,gif'
+        ]);
+
+        $item = new Item;
+        $item->name = $request->name;
+        $item->description = $request->description;
+
+
+        // validando a imagem
+
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            # code...
+
+            $extension = $request->image->extension;
+            $data = strtotime('now');
+
+            $path_image = md5($request->image->getClientOriginalName()).'_'.$data.'.'.$extension;
+
+            $request->image->move(public_path('images/'.$nickname.'/categories/'.$request->id.'/items'));
+
+            $item->image = $path_image;
+
+        }
+
+        $item->category_id = $request->id;
+
+
+        return redirect('/'.$nickname.'/'.$category)
+            ->with('msg-success', "Item criado com sucesso!");
     }
 
 
