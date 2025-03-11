@@ -163,33 +163,29 @@ class ItemController extends Controller
     }
     function destroy(Request $request, $nickname, $category)
     {
-        $item = Item::find($request->id_item);
+        $item = Item::find($request->id_item)->first();
 
         $item->delete();
         
         return redirect('/'.$nickname.'/'.$category)
             ->with('msg-success', "Item excluído com sucesso!");
     }
-    function editor($nickname, $category)
+    function editor($nickname, $category, $id_item)
     {
         // titulo do item
-        $title = true;
+        $item = Item::find($id_item)->first();
 
-        // verifica a quantidade de contents deletados
-        $is_deleted = true;
-        // verifica o total de contents
-        $total = true;
+        $title = $item->name;
+
         // todos os contents daquele item
-        $db_url = true;
+        $db_url = $item->contents();
         // id da categoria (theme)
-        $id = true;
+        $id = $item->category_id;
         //id do item escolhido
-        $id_item = true;
+        $id_item = $item->id;
 
         return view('modulos.vejaeditor', [
             'title' => $title,
-            'is_deleted' => $is_deleted,
-            'total' => $total,
             'db_url' => $db_url,
             'id' => $id,
             'id_item' => $id_item,

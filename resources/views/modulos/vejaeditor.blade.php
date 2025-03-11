@@ -7,7 +7,7 @@
         <div class="col">
             <h2 class="mb-3">Conteúdo(s) de {{$title}}</h2>
 
-            @if ($is_deleted==$total)
+            @if (!db_url)
             <h2 class="text-center text-dark">Sem Conteúdos para editar!</h2>
             @else
             @foreach ($db_url as $f)
