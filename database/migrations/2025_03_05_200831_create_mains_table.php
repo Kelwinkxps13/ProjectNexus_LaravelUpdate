@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('mains', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('title');
+            $table->string('name');
             $table->text('subtitle')->nullable();
             $table->text('description');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');

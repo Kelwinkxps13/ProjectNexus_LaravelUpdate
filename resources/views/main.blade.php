@@ -18,7 +18,7 @@
     </p>
 </div>
 
-@if($db_main == null && Auth::user()->nickname == $nickname)
+@if(!$themes_foreach && Auth::user()->nickname == $nickname)
 <br>
 <br>
 <div class="text-center mb-4 my-4">
@@ -30,7 +30,7 @@
         </button>
     </form>
 </div>
-@elseif ($db_main == null)
+@elseif (!$themes_foreach)
 <br>
 <br>
 <div class="text-center mb-4 my-4">
@@ -40,7 +40,11 @@
 @else
 <div class="row mt-5">
     <div class="col">
+        if (Auth::user()->nickname == $nickname)
         <h2 class="mb-3">Suas Categorias</h2>
+        @else
+        <h2 class="mb-3">Categorias de {{$nickname}}</h2>
+        @endif
 
         @foreach ($themes_foreach as $f)
         <div class="card mb-4 shadow-sm">
@@ -54,7 +58,7 @@
                         {{$f->name}}
                     </h4>
                     <div>
-                        <form action="/theme/show/{{$f->id}}" method="get">
+                        <form action="/{{$nickname}}/{{$f->id}}" method="get">
                             <button type="submit" class="btn btn-dark">
                                 Ver Categoria
                             </button>

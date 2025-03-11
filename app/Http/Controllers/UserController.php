@@ -14,8 +14,13 @@ class UserController extends Controller
         // pegar os dados da pessoa que tem aquele nickname
         $db_main = Main::where('nickname', $nickname)->first();
 
+        if (!$db_main) {
+            return redirect('/')
+            ->with('msg-warning', "Página Não Encontrada");
+        }
+
         // foreach de todos os temas desse usuario!
-        $themes_foreach = Category::where('user_nickname', $nickname)->get();
+        $themes_foreach = $db_main->categories();
 
         return view('main', [
             'db_main' => $db_main,
@@ -49,6 +54,12 @@ class UserController extends Controller
     function edit ($nickname) {
         // pega os dados da tela inicial
         $main = Main::where('user_id', Auth::id())->first();
+
+        if (!$main) {
+            # code...
+            return redirect('/'.$nickname)
+            ->with('msg-warning', "Página Inicial ainda nao criada!");
+        }
         return view('indexeditor', [
             'main' => $main,
             'nickname' => $nickname
@@ -57,6 +68,11 @@ class UserController extends Controller
 
     function update (Request $request, $nickname) {
         $main = Main::where('user_id', Auth::id())->first();
+        if (!$main) {
+            # code...
+            return redirect('/'.$nickname)
+            ->with('msg-warning', "Página Inicial ainda nao criada!");
+        }
 
         // validação dos dados
         $request->validate([

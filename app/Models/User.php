@@ -46,7 +46,7 @@ class User extends Authenticatable
         ];
     }
 
-    public function categorys(){
+    public function categories(){
         return $this->hasMany(Category::class);
     }
     public function main(){

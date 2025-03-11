@@ -12,7 +12,7 @@ class Main extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'title',
+        'name',
         'subtitle',
         'description',
         'user_id'

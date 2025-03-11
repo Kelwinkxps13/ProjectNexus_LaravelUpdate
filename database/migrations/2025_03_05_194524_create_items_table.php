@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->string('image')->nullable();
-            $table->foreignId('category_id')->constrained('categorys')->onDelete('cascade');  // Chave estrangeira
+            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');  // Chave estrangeira
             $table->timestamps();
             $table->softDeletes();  // Soft delete
         });

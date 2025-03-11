@@ -17,10 +17,12 @@ class IsCreator
     public function handle(Request $request, Closure $next): Response
     {
         if (!Auth::check()) {
-            return redirect((route('index')));
+            return redirect('/')
+            ->with('msg-danger', 'Você não tem permissão para acessar essa página!');
         } else {
             if ($request->route('nickname') != Auth::user()->nickname) {
-                return redirect(route('index'));
+                return redirect('/')
+                ->with('msg-danger', 'Você não tem permissão para acessar essa página!');
             }
         }
         return $next($request);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Item;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class ThemeController extends Controller
@@ -39,8 +40,7 @@ class ThemeController extends Controller
 
         // name, description, image
 
-        $request
-        ->validate([
+        $request->validate([
             'name' => 'required|string|max:20',
             'description' => 'required|string|max:255',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg'
@@ -48,7 +48,7 @@ class ThemeController extends Controller
 
 
         // cadastrando a categoy
-        $cat = new User();
+        $cat = new Category();
         $cat->name = $request->name;
         $cat->description = $request->description;
 
@@ -68,6 +68,7 @@ class ThemeController extends Controller
 
         }
 
+        $cat->user_id = Auth::id();
         $cat->save();
 
         return redirect('/'.$nickname)

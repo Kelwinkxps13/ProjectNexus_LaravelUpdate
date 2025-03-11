@@ -14,6 +14,8 @@
     <div class="col">
         <h2 class="mb-3">Veja categorias criadas pela comunidade!</h2>
 
+        @if ($themes_foreach != null)
+
         @foreach ($themes_foreach as $f)
         <div class="card mb-4 shadow-sm">
             <!-- Banner de Fundo -->
@@ -111,6 +113,12 @@
             }
         </style>
         @endforeach
+
+        @else
+
+        <h4 class="text-center">Ainda sem categorias criadas pela comunidade</h4>
+
+        @endif
 
 
         @endsection

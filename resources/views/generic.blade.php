@@ -14,6 +14,7 @@
 
 <div class="container">
     @if ($final_verification)
+    @if(Auth::user()->nickname == $nickname)
     <h2 class="text-center"> Não há nada para mostrar? Adicione algo!</h2>
 
     <div class="row mt-4">
@@ -26,6 +27,9 @@
             </form>
         </div>
     </div>
+    @else
+    <h4 class="text-center"> Categoria sem nada para mostrar</h2>
+    @endif
     @else
     <div class="row row-cols-1 row-cols-md-3 g-4">
         @foreach ($db_url as $f)
