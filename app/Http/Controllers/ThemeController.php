@@ -111,7 +111,7 @@ class ThemeController extends Controller
 
             $request->image->move(public_path('images/'.$nickname.'/categories/banners'));
 
-            $cat->image = $path_image;
+            $cat->image = $path_image ?? $cat->image;
         }
 
         $cat->save();
