@@ -95,10 +95,37 @@ class ContentController extends Controller
         ]);
     }
 
-    function update ($nickname, $category) {
-        $id = true;
-        $id_item = true;
-        return redirect('/theme/'.$id.'/show/'.$id_item);
+    function update (Request $request, $nickname, $category) {
+        // protected $fillable = ['name', 'description', 'image', 'item_id'];
+
+        $request->validate([
+            'name' => 'required|string|max:50',
+            'description' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:png,jpg,jpeg,svg,gif'
+        ]);
+       
+        $content = Content::find($request->idblock);
+        $content->name = $request->name ?? $content->name;
+        $content->description = $request->description ?? $content->description;
+
+        // validação de imagem
+
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $extension = $request->image->extension;
+            $data = strtotime('now');
+
+            $path_image = md5($request->image->getClientOriginalName).'_'.$data.'.'.$extension;
+
+            // salvar local
+
+            $request->image->move(public_path('images/'.$nickname.'/categories/'.$request->id.'/item/'.$request->id_item), $path_image);
+
+            $content->image = $path_image ?? $content->image;
+        }
+        
+
+        return redirect('/'.$nickname.'/'.$category.'/'.$request->id_item)
+            ->with('msg-success', "Conteúdo editado com sucesso!");
     }
     function destroy ($nickname, $category) {
         $id = true;

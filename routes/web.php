@@ -57,5 +57,5 @@ Route::get('/{nickname}/{category}/{id_item}/editor', [ItemController::class, 'e
 Route::get('/{nickname}/{category}/createblock/{id_item}', [ContentController::class, 'create'])->middleware('iscreator'); // feito com sucesso!
 Route::post('/{nickname}/{category}/storeblock', [ContentController::class, 'store'])->middleware('iscreator'); // feito com sucesso!
 Route::get('/{nickname}/{category}/editblock/', [ContentController::class, 'edit'])->middleware('iscreator'); // feito com sucesso!
-Route::patch('/{nickname}/{category}/updateblock', [ContentController::class, 'update'])->middleware('iscreator'); // falta tudo
+Route::patch('/{nickname}/{category}/updateblock', [ContentController::class, 'update'])->middleware('iscreator'); // feito com sucesso!
 Route::delete('/{nickname}/{category}/destroyblock', [ContentController::class, 'destroy'])->middleware('iscreator'); // falta tudo
