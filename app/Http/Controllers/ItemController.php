@@ -116,7 +116,7 @@ class ItemController extends Controller
 
         // informações sobre aquele item
         $db = Item::find($id_item);
-        
+
         return view('modulos.base.edit', [
             'page' => $page,
             'id' => $id,
@@ -126,10 +126,40 @@ class ItemController extends Controller
         ]);
     }
 
-    function update($nickname, $category)
+    function update(Request $request, $nickname, $category)
     {
-        $id = true;
-        return redirect('/theme/show/' . $id);
+        //  protected $fillable = ['name', 'description', 'image', 'category_id'];]
+
+        $request->validate([
+            'name' => 'required|string|max:50',
+            'description' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:png,jpg,svg,jpeg,gif'
+        ]);
+
+        $item = Item::find($request->id_item);
+        $item->name = $request->name ?? $item->name;
+        $item->description = $request->description ?? $item->description;
+
+
+        // validando a imagem
+
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            # code...
+
+            $extension = $request->image->extension;
+            $data = strtotime('now');
+
+            $path_image = md5($request->image->getClientOriginalName()).'_'.$data.'.'.$extension;
+
+            $request->image->move(public_path('images/'.$nickname.'/categories/'.$request->id.'/items'));
+
+            $item->image = $path_image ?? $item->image;
+
+        }
+
+
+        return redirect('/'.$nickname.'/'.$category)
+            ->with('msg-success', "Item editado com sucesso!");
     }
     function destroy($nickname, $category)
     {
