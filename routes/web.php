@@ -51,7 +51,7 @@ Route::post('/{nickname}/{category}/{id_item}', [ItemController::class, 'store']
 Route::get('/{nickname}/{category}/edit/{id_item}', [ItemController::class, 'edit'])->middleware('iscreator'); // feito com sucesso!
 Route::patch('/{nickname}/{category}/{id_item}', [ItemController::class, 'update'])->middleware('iscreator'); // feito com sucesso!
 Route::delete('/{nickname}/{category}/{id_item}', [ItemController::class, 'destroy'])->middleware('iscreator'); // feito com sucesso!
-Route::get('/{nickname}/{category}/{id_item}/editor', [ItemController::class, 'editor'])->middleware('iscreator'); // falta a logica do controller
+Route::get('/{nickname}/{category}/{id_item}/editor', [ItemController::class, 'editor'])->middleware('iscreator'); // feito com sucesso!
 
 //rotas dos blocos (conteudo) de cada item
 Route::get('/{nickname}/{category}/createblock/{id_item}', [ContentController::class, 'create'])->middleware('iscreator'); // falta a logica do controller
