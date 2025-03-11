@@ -54,8 +54,8 @@ Route::delete('/{nickname}/{category}/{id_item}', [ItemController::class, 'destr
 Route::get('/{nickname}/{category}/{id_item}/editor', [ItemController::class, 'editor'])->middleware('iscreator'); // feito com sucesso!
 
 //rotas dos blocos (conteudo) de cada item
-Route::get('/{nickname}/{category}/createblock/{id_item}', [ContentController::class, 'create'])->middleware('iscreator'); // falta a logica do controller
-Route::post('/{nickname}/{category}/storeblock', [ContentController::class, 'store'])->middleware('iscreator'); // falta tudo
+Route::get('/{nickname}/{category}/createblock/{id_item}', [ContentController::class, 'create'])->middleware('iscreator'); // feito com sucesso!
+Route::post('/{nickname}/{category}/storeblock', [ContentController::class, 'store'])->middleware('iscreator'); // feito com sucesso!
 Route::get('/{nickname}/{category}/editblock/{id_item}/{id_block}', [ContentController::class, 'edit'])->middleware('iscreator'); // falta a logica do controller
 Route::patch('/{nickname}/{category}/updateblock', [ContentController::class, 'update'])->middleware('iscreator'); // falta tudo
 Route::delete('/{nickname}/{category}/destroyblock/{id_item}/{idblock}', [ContentController::class, 'destroy'])->middleware('iscreator'); // falta tudo

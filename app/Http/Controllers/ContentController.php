@@ -2,15 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Content;
+use App\Models\Item;
 use Illuminate\Http\Request;
 
 class ContentController extends Controller
 {
-    function create ($nickname, $category) {
+    function create ($nickname, $category, $id_item) {
         // id da category
-        $id = true;
+        $item = Item::find($id_item);
+        if (!$item) {
+            # code...
+            return redirect('/'.$nickname.'/'.$category)
+            ->with('msg-warning', "Item não encontrado!");
+        }
+        $id = $item->category_id;
+
         // id do item que vai ser adicionado um bloco
-        $id_item = true;
+        $id_item = $item->id;
         return view('modulos.block.create', [
             'id' => $id,
             'id_item' => $id_item,
@@ -19,10 +28,40 @@ class ContentController extends Controller
         ]);
     }
 
-    function store ($nickname, $category) {
-        $id = true;
-        $id_item = true;
-        return redirect('/theme/'.$id.'/show/'.$id_item);
+    function store (Request $request, $nickname, $category) {
+        
+        // protected $fillable = ['name', 'description', 'image', 'item_id'];
+
+        $request->validate([
+            'name' => 'required|string|max:50',
+            'description' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:png,jpg,jpeg,svg,gif'
+        ]);
+       
+        $content = new Content();
+        $content->name = $request->name;
+        $content->description = $request->description;
+
+        // validação de imagem
+
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $extension = $request->image->extension;
+            $data = strtotime('now');
+
+            $path_image = md5($request->image->getClientOriginalName).'_'.$data.'.'.$extension;
+
+            // salvar local
+
+            $request->image->move(public_path('images/'.$nickname.'/categories/'.$request->id.'/item/'.$request->id_item), $path_image);
+
+            $content->image = $path_image;
+        }
+        
+
+        $id_item = $request->id_item;
+        
+        return redirect('/'.$nickname.'/'.$category.'/'.$id_item)
+            ->with('msg-success', "Conteúdo criado com sucesso!");
     }
 
     function edit ($nickname, $category) {
