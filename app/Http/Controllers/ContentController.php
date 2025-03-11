@@ -59,18 +59,33 @@ class ContentController extends Controller
         
 
         $id_item = $request->id_item;
-        
+
         return redirect('/'.$nickname.'/'.$category.'/'.$id_item)
             ->with('msg-success', "Conteúdo criado com sucesso!");
     }
 
-    function edit ($nickname, $category) {
+    function edit (Request $request, $nickname, $category) {
+
+        $content = Content::find($request->idblock);
+        if (!$content) {
+            # code...
+            return redirect('/'.$nickname.'/'.$category.'/'.$request->id_item)
+            ->with('msg-warning', "Conteúdo não encontrado!");
+        }
+
+        $item = Item::find($content->item_id);
+        if (!$item) {
+            # code...
+            return redirect('/'.$nickname.'/'.$category.'/'.$request->id_item)
+            ->with('msg-warning', "Item não encontrado!");
+        }
+
         // id da category
-        $id = true;
+        $id = $item->category_id;
         // id do item que vai ser adicionado um bloco
-        $id_item = true;
+        $id_item = $content->item_id;
         // dados do bloco (content) que irá ser modificado
-        $db = true;
+        $db = $content;
         return view('modulos.block.edit', [
             'id' => $id,
             'id_item' => $id_item,
