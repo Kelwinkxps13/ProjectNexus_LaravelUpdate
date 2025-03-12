@@ -88,7 +88,7 @@ e em seguida irá redirecionar pra pagina de perfil daquela pessoa
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <div class="d-flex align-items-center justify-content-center profile-icon">
-                                    <img src="/images/icon-profile-image.jpg" alt="Profile"
+                                    <img src="/images/default/icon-profile-image.jpg" alt="Profile"
                                         style="width: 100%; height: 100%; object-fit: cover;">
                                 </div>
                             </a>

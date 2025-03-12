@@ -39,7 +39,7 @@
                 <div class="d-flex align-items-center justify-content-center bg-secondary"
                     style="width: 286px; height: 286px; overflow: hidden;">
                     @ if($f->image===null)
-                    <img src="/images/no image.png" alt="Profile"
+                    <img src="/images/default/no image.png" alt="Profile"
                         style="width: 100%; height: 100%; object-fit: cover;">
                     @else
                     <img src="/images/{{$f->user_nickname}}/categories/{{$f->id}}/items/{{ $f->image }}" alt="Profile"
