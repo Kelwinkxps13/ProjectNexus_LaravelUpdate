@@ -33,7 +33,7 @@
                             <input name="image" type="file" class="form-control custom-input">
                             @if ($db->image)
                             <div class="mt-2">
-                                <img src="{{$db->image}}" alt="Imagem Atual" class="img-fluid"
+                                <img src="/images/{{$f->user_nickname}}/categories/{{$id}}/items/{{$db->image}}" alt="Imagem Atual" class="img-fluid"
                                     style="max-width: 200px; border-radius: 10px;">
                             </div>
                             @endif

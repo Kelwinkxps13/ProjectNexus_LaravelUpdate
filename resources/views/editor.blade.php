@@ -33,7 +33,7 @@
         <!-- Banner de Fundo -->
         <div class="banner {{ $f->image === null ? 'no-image' : '' }}">
           @if($f->image !==null)
-          <img src="{{f->image}}" alt="Profile">
+          <img src="/images/{{$f->user_nickname}}/categories/banners{{f->image}}" alt="Profile">
           @endif
           <div class="overlay">
             <h4 class="card-title text-white title">
