@@ -27,7 +27,7 @@ Route::middleware('auth')->group(function () {
 
 
 // adicionado pelo dev
-Route::get('/', [IndexController::class, 'index']); // feito com sucesso!
+Route::get('/', [IndexController::class, 'index'])->name('index'); // feito com sucesso!
 // rotas do user
 Route::get('/{nickname}', [UserController::class, 'index']); // feito com sucesso!
 Route::get('/{nickname}/create', [UserController::class, 'create'])->middleware('iscreator'); // feito com sucesso!
