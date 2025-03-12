@@ -10,7 +10,7 @@
                     <strong>Formulário de Edição de Categoria</strong>
                 </div>
                 <div class="card-body p-5">
-                    <form action="/{{$nickname}}/category" method="POST" enctype="multipart/form-data">
+                    <form action="{{route('category_update', ['nickname' => $nickname])}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PATCH')
                         <input type="hidden" name="id" value="{{$db->id}}">
@@ -30,7 +30,7 @@
                         <div class="mb-4">
                             <label for="image" class="form-label">Alterar Banner de fundo</label>
                             <input name="image" type="file" class="form-control custom-input">
-                            @ if ($db->image)
+                            @if ($db->image)
                             <div class="mt-2">
                                 <img src="/images/{{$f->user_nickname}}/categories/{{$id}}/items/{{$db->image}}" alt="Banner de fundo Atual" class="img-fluid"
                                     style="max-width: 200px; border-radius: 10px;">

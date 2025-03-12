@@ -17,7 +17,7 @@
 
 
 
-@if ($db->isEmpty())
+@if ($db_url->isEmpty())
 
     @if (!Auth::check())
     <h4 class="text-center">Sem conteúdos para mostrar</h4>
@@ -27,7 +27,7 @@
     <h2 class="text-center text-dark">Não tem nenhum Conteúdo? Adicione algum!</h2>
     <div class="row mt-4">
         <div class="col text-end">
-            <form action="/{{$nickname}}/{{$category}}/createblock/{{$id_item}}" method="get">
+            <form action="{{route('content_create', ['nickname' => $nickname, 'category' => $category, 'id_item' => $id_item])}}" method="get">
                 @csrf
                 <button type="submit" class="btn btn-outline-primary">Adicionar Novo Bloco de Conteúdo</button>
             </form>
@@ -81,9 +81,9 @@
     @endif
     @endforeach
     <div class="d-flex justify-content-center gap-3 float-end my-4">
-        <a href="/theme/{{$id}}/show/{{$id_item}}/editor"
+        <a href="{{route('item_editor', ['nickname' => $nickname, 'category' => $category, 'id_item' => $id_item])}}"
             class="btn btn-outline-primary">Editor</a>
-        <form action="/{{$nickname}}/{{$category}}/createblock/{{$id_item}}" method="get">
+        <form action="{{route('content_create', ['nickname' => $nickname, 'category' => $category, 'id_item' => $id_item])}}" method="get">
             @csrf
             <button type="submit" class="btn btn-outline-primary">Adicionar
                 Novo Conteúdo</button>

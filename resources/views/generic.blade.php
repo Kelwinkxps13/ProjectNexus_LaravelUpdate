@@ -3,7 +3,7 @@
 @section('content')
 
 <h2 class="text-center my-3">
-    {{$db_theme->title}}
+    {{$db_theme->name}}
 </h2>
 
 <div class="mt-4 text-center">
@@ -18,7 +18,7 @@
 
 
 
-@if ($db->isEmpty())
+@if ($db_url->isEmpty())
 
     @if (!Auth::check())
     <h4 class="text-center"> Categoria sem nada para mostrar</h2>
@@ -29,7 +29,7 @@
 
     <div class="row mt-4">
         <div class="col">
-            <form action="/{{$nickname}}/category/create" method="get">
+            <form action="{{route('item_create', ['nickname' => $nickname, 'category' => $category])}}" method="get">
                 @csrf
                 <button type="submit" class="btn btn-outline-primary float-end">
                     Adicionar
@@ -62,12 +62,12 @@
                         {{ $f->description }}
                     </p>
                     <div class="d-flex justify-content-center gap-3">
-                        <a href="/{{$$nickname}}/{{$category}}/{{$f->id}}" class="btn btn-primary">Veja!</a>
-                        <form action="/{{$$nickname}}/{{$category}}/edit/{{$f->id}}" method="get">
+                        <a href="{{route('item_index', ['nickname' => $nickname, 'category' => $category, 'id_item' => $f->id])}}" class="btn btn-primary">Veja!</a>
+                        <form action="{{route('item_edit', ['nickname' => $nickname, 'category' => $category, 'id_item' => $f->id])}}" method="get">
                             @csrf
                             <button type="submit" class="btn btn-warning">Editar</button>
                         </form>
-                        <form action="/{{$$nickname}}/{{$category}}" method="post">
+                        <form action="{{route('item_destroy', ['nickname' => $nickname, 'category' => $category])}}" method="post">
                             @csrf
                             @method('DELETE')
                             <input type="hidden" name="id_item" value="{{$f->id}}">
@@ -83,7 +83,7 @@
     </div>
     <div class="row mt-4">
         <div class="col">
-            <form action="/{{$$nickname}}/{{$category}}/create" method="get">
+            <form action="{{route('item_create', ['nickname' => $nickname, 'category' => $category])}}" method="get">
                 @csrf
                 <button type="submit" class="btn btn-outline-primary float-end">
                     Adicionar

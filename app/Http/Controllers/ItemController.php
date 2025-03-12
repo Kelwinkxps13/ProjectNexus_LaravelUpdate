@@ -14,7 +14,7 @@ class ItemController extends Controller
     {
        
         // contents daquele item daquela category
-        $item = Item::find($id_item)->first();
+        $item = Item::find($id_item);
 
         if (!$item) {
             # code...
@@ -42,7 +42,7 @@ class ItemController extends Controller
     function create($nickname, $category)
     {
         // nome da categoria que vai ser adicionada um item
-        $cat = Category::find($category)->first();
+        $cat = Category::find($category);
 
         if (!$cat) {
             # code...
@@ -105,7 +105,7 @@ class ItemController extends Controller
     function edit($nickname, $category, $id_item)
     {
         // nome da categoria que vai ser modificada um item
-        $cat = Category::find($category)->first();
+        $cat = Category::find($category);
         if (!$cat) {
             # code...
             return Redirect::to('/'.$nickname)
@@ -164,7 +164,7 @@ class ItemController extends Controller
     }
     function destroy(Request $request, $nickname, $category)
     {
-        $item = Item::find($request->id_item)->first();
+        $item = Item::find($request->id_item);
 
         $item->delete();
         
@@ -174,7 +174,7 @@ class ItemController extends Controller
     function editor($nickname, $category, $id_item)
     {
         // titulo do item
-        $item = Item::find($id_item)->first();
+        $item = Item::find($id_item);
 
         $title = $item->name;
 

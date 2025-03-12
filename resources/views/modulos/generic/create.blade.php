@@ -1,6 +1,6 @@
 @extends('layouts.main')
-@section('name', 'Criar Item')
-@section('content') %>
+@section('title', 'Criar Categoria')
+@section('content')
 
 <div class="container my-5">
     <div class="row justify-content-center">
@@ -10,7 +10,7 @@
                     <strong>Formulário de Criação de Categoria</strong>
                 </div>
                 <div class="card-body p-5">
-                    <form action="/{{$nickname}}/category" method="POST" enctype="multipart/form-data">
+                    <form action="{{route('category_store', ['nickname' => $nickname])}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-4">
                             <label for="name" class="form-label">Nome</label>

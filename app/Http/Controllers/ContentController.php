@@ -67,7 +67,7 @@ class ContentController extends Controller
 
     function edit (Request $request, $nickname, $category) {
 
-        $content = Content::find($request->idblock)->first();
+        $content = Content::find($request->idblock);
         if (!$content) {
             # code...
             return Redirect::to('/'.$nickname.'/'.$category.'/'.$request->id_item)
@@ -105,7 +105,7 @@ class ContentController extends Controller
             'image' => 'nullable|image|mimes:png,jpg,jpeg,svg,gif'
         ]);
        
-        $content = Content::find($request->idblock)->first();
+        $content = Content::find($request->idblock);
         $content->name = $request->name ?? $content->name;
         $content->description = $request->description ?? $content->description;
 
@@ -130,7 +130,7 @@ class ContentController extends Controller
     }
     function destroy (Request $request, $nickname, $category) {
 
-        $content = Content::find($request->idblock)->first();
+        $content = Content::find($request->idblock);
         $content->delete();
 
         return Redirect::to('/'.$nickname.'/'.$category.'/'.$request->id_item.'/editor')

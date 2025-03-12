@@ -14,7 +14,7 @@
                     <strong>Formulário de Criação da Tela Inicial</strong>
                 </div>
                 <div class="card-body p-5">
-                    <form action="/{{$nickname}}" method="POST">
+                    <form action="{{route('user_store', ['nickname' => $nickname])}}" method="POST">
                         @csrf
                         <div class="mb-4">
                             <label for="name" class="form-label">Título</label>

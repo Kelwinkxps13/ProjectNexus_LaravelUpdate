@@ -77,7 +77,7 @@ class ThemeController extends Controller
 
     function edit ($nickname, $category) {
         // dados da categoria (theme)
-        $db = Category::find($category)->first();
+        $db = Category::find($category);
         return view('modulos.generic.edit', [
             'db' => $db,
             'nickname' => $nickname,
@@ -96,7 +96,7 @@ class ThemeController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg'
         ]);
 
-        $cat = Category::find($request->id)->first();
+        $cat = Category::find($request->id);
 
         $cat->name = $request->name ?? $cat->name;
         $cat->description = $request->description ?? $cat->description;
@@ -121,7 +121,7 @@ class ThemeController extends Controller
     }
     function destroy (Request $request, $nickname) {
 
-        $cat = Category::find($request->id)->first();
+        $cat = Category::find($request->id);
 
         $cat->delete();
 

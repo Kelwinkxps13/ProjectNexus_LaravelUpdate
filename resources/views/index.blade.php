@@ -29,7 +29,7 @@
                         {{$f->name}}
                     </h4>
                     <div>
-                        <form action="/{{$f->user_nickname}}/{{$f->id}}" method="get">
+                        <form action="{{route('category_index', ['nickname' => $f->user_nickname, 'category' => $f->id'])}}" method="get">
                             <button type="submit" class="btn btn-dark">
                                 Ver Categoria
                             </button>

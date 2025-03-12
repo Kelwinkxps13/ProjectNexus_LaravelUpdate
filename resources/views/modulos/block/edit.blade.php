@@ -10,7 +10,7 @@
                     <strong>Formulário de Edição de Conteúdos</strong>
                 </div>
                 <div class="card-body p-5">
-                    <form action="/{{$nickname}}/{{$category}}/updateblock" method="POST" enctype="multipart/form-data">
+                    <form action="{{route('content_update', ['nickname' => $nickname, 'category' => $category])}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PATCH')
                         <input type="hidden" name="id_item" value="{{$id_item}}">

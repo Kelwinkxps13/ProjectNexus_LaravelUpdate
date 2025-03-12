@@ -91,7 +91,7 @@ class UserController extends Controller
         // pega o usuario
         $user = User::find(Auth::id());
         // proximo passo, é pegar as categories em si daquele usuario
-        $themes_foreach = $user->categories;
+        $themes_foreach = $user->categories()->get();
 
         return view('editor', [
             'themes_foreach' => $themes_foreach,

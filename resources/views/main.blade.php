@@ -2,7 +2,7 @@
 @section('title', 'Página Inicial')
 @section('content')
 @auth
-<h5 class="mb-5">Dica: Dê uma olhadinha no <a href="/{{$nickname}}/editor">editor</a> para ter acesso a personalização de suas coisas!</h5>
+<h5 class="mb-5">Dica: Dê uma olhadinha no <a href="{{route('user_editor', ['nickname' => $nickname])}}">editor</a> para ter acesso a personalização de suas coisas!</h5>
 @endauth
 
 
@@ -12,7 +12,7 @@
 
 <div class="row my-5">
     <div class="d-flex justify-content-center gap-3 float-end my-4">
-        <form action="/{{$nickname}}/create" method="get">
+        <form action="{{route('user_create', ['nickname' => $nickname])}}" method="get">
             @csrf
             <button type="submit" class="btn btn-outline-primary">
                 Criar tela inicial
@@ -60,7 +60,7 @@
         <br>
         <div class="text-center mb-4 my-4">
             <h4 class="mb-4 my-4">Não tem nenhuma categoria? Adicione alguma!</h4>
-            <form action="/{{$nickname}}/category/create" method="get">
+            <form action="{{route('category_create', ['nickname' => $nickname])}}" method="get">
                 @csrf
                 <button type="submit" class="btn btn-outline-primary">
                     Adicionar Nova Categoria
@@ -90,7 +90,7 @@
                         {{$f->name}}
                     </h4>
                     <div>
-                        <form action="/{{$nickname}}/{{$f->id}}" method="get">
+                        <form action="{{route('category_index', ['nickname' => $nickname, 'category' => $f->id])}}" method="get">
                             @csrf
                             <button type="submit" class="btn btn-dark">
                                 Ver Categoria

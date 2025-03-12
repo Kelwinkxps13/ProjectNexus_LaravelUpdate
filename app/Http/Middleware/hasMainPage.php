@@ -25,7 +25,7 @@ class hasMainPage
                 ->with('msg-danger', 'Você não tem permissão para acessar essa página!');
         } else {
 
-            if (!Auth::user()->nickname != $request->route('nickname')) {
+            if (Auth::user()->nickname != $request->route('nickname')) {
                 # code...
                 return redirect('/')
                     ->with('msg-danger', 'Você não tem permissão para acessar essa página!');

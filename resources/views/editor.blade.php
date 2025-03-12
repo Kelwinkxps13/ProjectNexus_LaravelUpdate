@@ -7,7 +7,7 @@
     <div class="col">
       <h2 class="mb-3">Menu</h2>
       <div class="d-flex justify-content-end">
-        <form action="/{{$nickname}}/edit" method="get">
+        <form action="{{route('user_edit', ['nickname' => $nickname])}}" method="get">
           @csrf
           <button type="submit" class="btn btn-warning">
             Editar menu
@@ -21,13 +21,13 @@
     <div class="col">
       <h2 class="mb-3">categorias</h2>
 
-      @if($themes_foreach->isEmpty())
-      <h4>sem categorias!</h4>
-      @else
-      @foreach ($themes_foreach as $f)
+
+    @if ($themes_foreach->isEmpty())
+    <h4 class="text-center">sem categorias!</h4>
+    @else
+    @foreach ($themes_foreach as $f)
 
 
-      @if($f->is_deleted==false)
 
       <div class="card mb-4 shadow-sm">
         <!-- Banner de Fundo -->
@@ -37,16 +37,16 @@
           @endif
           <div class="overlay">
             <h4 class="card-title text-white title">
-              {{$f->title}}
+              {{$f->name}}
             </h4>
             <div class="d-flex justify-content-end gap-2">
-              <form action="/{{$nickname}}/{{$f->id}}/edit" method="get">
+              <form action="{{route('category_edit', ['nickname' => $nickname, 'category' => $f->id])}}" method="get">
                 @csrf
                 <button type="submit" class="btn btn-warning">
                   Editar
                 </button>
               </form>
-              <form action="/{{$nickname}}/category" method="post">
+              <form action="{{route('category_destroy', ['nickname' => $nickname])}}" method="post">
                 @csrf
                 @method('DELETE')
                 <input type="hidden" name="id" value="{{$f->id}}">
@@ -132,15 +132,18 @@
           border-color: #1d2124;
         }
       </style>
-      @endif
       @endforeach
-      @endif
+    @endif
+
     </div>
   </div>
 </div>
+
+
+
 <div class="row my-5">
   <div class="d-flex justify-content-center gap-3 float-end my-4">
-    <form action="/{{$nickname}}/category/create" method="get">
+    <form action="{{route('category_create', ['nickname' => $nickname])}}" method="get">
       @csrf
       <button type="submit" class="btn btn-outline-primary">
         Adicionar Nova Categoria

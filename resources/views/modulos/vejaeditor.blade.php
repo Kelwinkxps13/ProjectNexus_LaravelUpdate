@@ -19,14 +19,14 @@
                         {{$f->title}}
                     </h4>
                     <div class="d-flex justify-content-end gap-2">
-                        <form action="/{{$nickname}}/{{$category}}/editblock"
+                        <form action="{{route('content_edit', ['nickname' => $nickname, 'category' => $category])}}"
                             method="get">
                             @csrf
                             <input type="hidden" name="id_item" value="{{$id_item}}">
                             <input type="hidden" name="idblock" value="{{$f->id}}">
                             <button type="submit" class="btn btn-warning">Editar</button>
                         </form>
-                        <form action="/{{$nickname}}/{{$category}}/destroyblock"
+                        <form action="{{route('content_destroy', ['nickname' => $nickname, 'category' => $category])}}"
                             method="post">
                             @csrf
                             @method('DELETE')

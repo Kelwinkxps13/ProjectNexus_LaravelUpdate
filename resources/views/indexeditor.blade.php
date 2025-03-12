@@ -10,7 +10,7 @@
                     <strong>Formulário de Edição da Tela Inicial</strong>
                 </div>
                 <div class="card-body p-5">
-                    <form action="/{{$nickname}}" method="POST">
+                    <form action="{{route('user_update', ['nickname' => $nickname])}}" method="POST">
                         @csrf
                         @method('PATCH')
                         <div class="mb-4">

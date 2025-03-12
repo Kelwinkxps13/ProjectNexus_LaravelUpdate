@@ -10,7 +10,7 @@
                     <strong> Formulário de Criação de Conteúdos</strong>
                 </div>
                 <div class="card-body p-5">
-                    <form action="/{{$nickname}}/{{$category}}/storeblock" method="POST" enctype="multipart/form-data">
+                    <form action="{{route('content_store', ['nickname' => $nickname, 'category' => $category])}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="id_item" value="{{$id_item}}">
                         <div class="mb-4">
