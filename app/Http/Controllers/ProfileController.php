@@ -56,6 +56,6 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/')
-        ->with('msg-success', 'Deslogado(a) com sucesso!');
+        ->with('msg-success', 'usuário excluído com sucesso!');
     }
 }
