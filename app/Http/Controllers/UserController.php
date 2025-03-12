@@ -7,6 +7,7 @@ use App\Models\Main;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
 {
@@ -15,7 +16,7 @@ class UserController extends Controller
         $db_main = Main::where('nickname', $nickname)->first();
 
         if (!$db_main) {
-            return redirect('/')
+            return Redirect::to('/')
             ->with('msg-warning', "Página Não Encontrada");
         }
 
@@ -47,7 +48,7 @@ class UserController extends Controller
             'description' => $request->description,
             'user_id' => Auth::id()
         ]);
-        return redirect('/'.$nickname)
+        return Redirect::to('/'.$nickname)
         ->with('msg-success', 'Pagina Inicial Criada com Sucesso!');
     }
 
@@ -57,7 +58,7 @@ class UserController extends Controller
 
         if (!$main) {
             # code...
-            return redirect('/'.$nickname)
+            return Redirect::to('/'.$nickname)
             ->with('msg-warning', "Página Inicial ainda nao criada!");
         }
         return view('indexeditor', [
@@ -70,7 +71,7 @@ class UserController extends Controller
         $main = Main::where('user_id', Auth::id())->first();
         if (!$main) {
             # code...
-            return redirect('/'.$nickname)
+            return Redirect::to('/'.$nickname)
             ->with('msg-warning', "Página Inicial ainda nao criada!");
         }
 
@@ -85,7 +86,7 @@ class UserController extends Controller
         $main->subtitle = $request->subtitle ?? $main->subtitle;
         $main->description = $request->description ?? $main->description;
         $main->save();
-        return redirect('/'.$nickname)
+        return Redirect::to('/'.$nickname)
         ->with('msg-success', 'Página inicial atualizada com sucesso!');
     }
 

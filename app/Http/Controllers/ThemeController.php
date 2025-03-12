@@ -7,6 +7,7 @@ use App\Models\Item;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class ThemeController extends Controller
 {
@@ -71,7 +72,7 @@ class ThemeController extends Controller
         $cat->user_id = Auth::id();
         $cat->save();
 
-        return redirect('/'.$nickname)
+        return Redirect::to('/'.$nickname)
         ->with('msg-success', "Categoria criada com sucesso!");
     }
 
@@ -117,7 +118,7 @@ class ThemeController extends Controller
         $cat->save();
 
 
-        return redirect('/')
+        return Redirect::to('/')
         ->with('msg-success', 'Categoria Atualizada com Sucesso!');
     }
     function destroy (Request $request, $nickname) {
@@ -126,7 +127,7 @@ class ThemeController extends Controller
 
         $cat->delete();
 
-        return redirect('/'.$nickname.'/editor')
+        return Redirect::to('/'.$nickname.'/editor')
         ->with('msg-success', "Categoria excluída com sucesso!");
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Content;
 use App\Models\Item;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class ContentController extends Controller
 {
@@ -13,7 +14,7 @@ class ContentController extends Controller
         $item = Item::find($id_item);
         if (!$item) {
             # code...
-            return redirect('/'.$nickname.'/'.$category)
+            return Redirect::to('/'.$nickname.'/'.$category)
             ->with('msg-warning', "Item não encontrado!");
         }
         $id = $item->category_id;
@@ -60,7 +61,7 @@ class ContentController extends Controller
 
         $id_item = $request->id_item;
 
-        return redirect('/'.$nickname.'/'.$category.'/'.$id_item)
+        return Redirect::to('/'.$nickname.'/'.$category.'/'.$id_item)
             ->with('msg-success', "Conteúdo criado com sucesso!");
     }
 
@@ -69,14 +70,14 @@ class ContentController extends Controller
         $content = Content::find($request->idblock)->first();
         if (!$content) {
             # code...
-            return redirect('/'.$nickname.'/'.$category.'/'.$request->id_item)
+            return Redirect::to('/'.$nickname.'/'.$category.'/'.$request->id_item)
             ->with('msg-warning', "Conteúdo não encontrado!");
         }
 
         $item = Item::find($content->item_id);
         if (!$item) {
             # code...
-            return redirect('/'.$nickname.'/'.$category.'/'.$request->id_item)
+            return Redirect::to('/'.$nickname.'/'.$category.'/'.$request->id_item)
             ->with('msg-warning', "Item não encontrado!");
         }
 
@@ -124,7 +125,7 @@ class ContentController extends Controller
         }
         
 
-        return redirect('/'.$nickname.'/'.$category.'/'.$request->id_item)
+        return Redirect::to('/'.$nickname.'/'.$category.'/'.$request->id_item)
             ->with('msg-success', "Conteúdo editado com sucesso!");
     }
     function destroy (Request $request, $nickname, $category) {
@@ -132,7 +133,7 @@ class ContentController extends Controller
         $content = Content::find($request->idblock)->first();
         $content->delete();
 
-        return redirect('/'.$nickname.'/'.$category.'/'.$request->id_item.'/editor')
+        return Redirect::to('/'.$nickname.'/'.$category.'/'.$request->id_item.'/editor')
             ->with('msg-success', "Conteúdo excluído com sucesso!");
     }
 }

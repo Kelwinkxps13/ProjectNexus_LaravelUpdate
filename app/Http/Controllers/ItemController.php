@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Item;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class ItemController extends Controller
 {
@@ -17,7 +18,7 @@ class ItemController extends Controller
 
         if (!$item) {
             # code...
-            return redirect('/'.$nickname.'/'.$category)
+            return Redirect::to('/'.$nickname.'/'.$category)
             ->with('msg-warning', "Item não encontrado!");
         }
 
@@ -45,7 +46,7 @@ class ItemController extends Controller
 
         if (!$cat) {
             # code...
-            return redirect('/'.$nickname)
+            return Redirect::to('/'.$nickname)
             ->with('msg-warning', "categoria não encontrada!");
         }
         $page = $cat->name;
@@ -96,7 +97,7 @@ class ItemController extends Controller
         $item->category_id = $request->id;
 
 
-        return redirect('/'.$nickname.'/'.$category)
+        return Redirect::to('/'.$nickname.'/'.$category)
             ->with('msg-success', "Item criado com sucesso!");
     }
 
@@ -107,7 +108,7 @@ class ItemController extends Controller
         $cat = Category::find($category)->first();
         if (!$cat) {
             # code...
-            return redirect('/'.$nickname)
+            return Redirect::to('/'.$nickname)
             ->with('msg-warning', "categoria não encontrada!");
         }
         $page = $cat->name;
@@ -158,7 +159,7 @@ class ItemController extends Controller
         }
 
 
-        return redirect('/'.$nickname.'/'.$category)
+        return Redirect::to('/'.$nickname.'/'.$category)
             ->with('msg-success', "Item editado com sucesso!");
     }
     function destroy(Request $request, $nickname, $category)
@@ -167,7 +168,7 @@ class ItemController extends Controller
 
         $item->delete();
         
-        return redirect('/'.$nickname.'/'.$category)
+        return Redirect::to('/'.$nickname.'/'.$category)
             ->with('msg-success', "Item excluído com sucesso!");
     }
     function editor($nickname, $category, $id_item)
