@@ -5,8 +5,25 @@
 <!-- forma padrao de um bloco, com titulo, texto e imagem -->
 <!-- ideia do leandro: ir alternando onde a imagem fica, uma vez na esquerda, outra na direita -->
 <div class="container-fluid my-4">
-    @if ($db_url->isEmpty())
-    @if(Auth::user()->nickname == $nickname)
+
+
+
+
+
+
+
+
+
+
+
+
+@if ($db->isEmpty())
+
+    @if (!Auth::check())
+    <h4 class="text-center">Sem conteúdos para mostrar</h4>
+    @elseif (Auth::user()->nickname != $nickname)
+    <h4 class="text-center">Sem conteúdos para mostrar</h4>
+    @else
     <h2 class="text-center text-dark">Não tem nenhum Conteúdo? Adicione algum!</h2>
     <div class="row mt-4">
         <div class="col text-end">
@@ -16,11 +33,11 @@
             </form>
         </div>
     </div>
-    @else
-    <h4 class="text-center">Sem conteúdos para mostrar</h4>
     @endif
-    @else
-    @foreach ($db_url as $f)
+    
+@else
+
+@foreach ($db_url as $f)
 
     @if ($f->image)
     <div class="row mb-4 my-4">
@@ -73,6 +90,7 @@
         </form>
     </div>
 
-    @endif
+@endif
+
 </div>
 @endsection

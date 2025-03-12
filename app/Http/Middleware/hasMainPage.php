@@ -24,11 +24,18 @@ class hasMainPage
             return redirect('/')
                 ->with('msg-danger', 'Você não tem permissão para acessar essa página!');
         } else {
-            $main = Main::where('user_id', Auth::id())->first();
-            if (!$main) {
+
+            if (!Auth::user()->nickname != $request->route('nickname')) {
                 # code...
-                return redirect('/' . Auth::user()->nickname . '/create')
-                    ->with('msg-warning', 'Você ainda não tem uma página Inicial!');
+                return redirect('/')
+                    ->with('msg-danger', 'Você não tem permissão para acessar essa página!');
+            } else {
+                $main = Main::where('user_id', Auth::id())->first();
+                if (!$main) {
+                    # code...
+                    return redirect('/' . Auth::user()->nickname . '/create')
+                        ->with('msg-warning', 'Você ainda não tem uma página Inicial!');
+                }
             }
         }
         return $next($request);

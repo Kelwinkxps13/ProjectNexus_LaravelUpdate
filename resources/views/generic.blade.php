@@ -13,8 +13,18 @@
 </div>
 
 <div class="container">
-    @if ($final_verification)
-    @if(Auth::user()->nickname == $nickname)
+
+
+
+
+
+@if ($db->isEmpty())
+
+    @if (!Auth::check())
+    <h4 class="text-center"> Categoria sem nada para mostrar</h2>
+    @elseif (Auth::user()->nickname != $nickname)
+    <h4 class="text-center"> Categoria sem nada para mostrar</h2>
+    @else
     <h2 class="text-center"> Não há nada para mostrar? Adicione algo!</h2>
 
     <div class="row mt-4">
@@ -27,13 +37,11 @@
             </form>
         </div>
     </div>
-    @else
-    <h4 class="text-center"> Categoria sem nada para mostrar</h2>
     @endif
-    @else
-    <div class="row row-cols-1 row-cols-md-3 g-4">
+    
+@else
+<div class="row row-cols-1 row-cols-md-3 g-4">
         @foreach ($db_url as $f)
-        @if($f->is_deleted===false)
         <div class="col-4 my-3">
             <div class="card" style="width: 18rem;">
                 <div class="d-flex align-items-center justify-content-center bg-secondary"
@@ -70,7 +78,6 @@
             </div>
 
         </div>
-        @endif
         @endforeach
 
     </div>
@@ -84,7 +91,6 @@
             </form>
         </div>
     </div>
-    @endif
-</div>
+@endif
 
 @endsection
