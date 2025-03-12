@@ -83,24 +83,6 @@ e em seguida irá redirecionar pra pagina de perfil daquela pessoa
                         <li class="nav-item">
                             <a class="nav-link" href="/editor">Editor</a>
                         </li>
-                        <!-- <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
-            aria-expanded="false">Meus Temas</a>
-          <ul class="dropdown-menu dropdown-menu-end">
-            <% if(themes_foreach.length==0 || themes_foreach.length==themes_foreach.filter(item=> item.is_deleted ===
-              true).length) { %>
-              <li><a class="dropdown-item">Ainda sem Temas!</a></li>
-              <% } else { %>
-                <% themes_foreach.forEach(f=> { %>
-                  <% if(!f.is_deleted){ %>
-                    <li><a class="dropdown-item" href="/theme/show/<%= f.id %>">
-                        <%= f.title %>
-                      </a></li>
-                    <% } %>
-                      <% }) %>
-                        <% } %>
-          </ul>
-        </li> -->
                     </ul>
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
@@ -111,17 +93,33 @@ e em seguida irá redirecionar pra pagina de perfil daquela pessoa
                                 </div>
                             </a>
                         </li>
-                        <!-- <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
-            aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
-          <ul class="dropdown-menu dropdown-menu-end">
-            <li><a class="dropdown-item" href="#">Ver Conta</a></li>
-            <li>
-              <hr class="dropdown-divider" />
-            </li>
-            <li><a class="dropdown-item" href="/users/login">Logout</a></li>
-          </ul>
-        </li> -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+
+                            @auth
+                                <li><a class="dropdown-item text-dark" href="route('profile.edit')">Ver Conta</a></li>
+                                <li>
+                                    <hr class="dropdown-divider" />
+                                </li>
+                                <form method="POST" action="{{ route('logout') }}" class="logout-form">
+                                    @csrf
+                                    <x-dropdown-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();" class="dropdown-item text-dark">
+                                        {{ __('Log Out') }}
+                                    </x-dropdown-link>
+                                </form>
+                            @endauth
+                            @guest
+
+                                <li><a class="dropdown-item text-dark" href="{{ route('login') }}">Login</a></li>
+                                <li>
+                                    <hr class="dropdown-divider" />
+                                </li>
+                                <li><a class="dropdown-item text-dark" href="{{ route('register') }}">Cadastrar</a></li>
+                            @endguest
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>

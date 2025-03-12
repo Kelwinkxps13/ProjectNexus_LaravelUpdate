@@ -14,7 +14,7 @@
     <div class="col">
         <h2 class="mb-3">Veja categorias criadas pela comunidade!</h2>
 
-        @if ($themes_foreach != null)
+        @if (!$themes_foreach)
 
         @foreach ($themes_foreach as $f)
         <div class="card mb-4 shadow-sm">
