@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\hasMainPage;
 use App\Http\Middleware\IsCreator;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -14,7 +15,8 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware
         ->alias([
-            'iscreator' => IsCreator::class
+            'is_creator' => IsCreator::class,
+            'has_main_page' => hasMainPage::class
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

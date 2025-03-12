@@ -31,7 +31,7 @@
                         <div class="mb-4">
                             <label for="image" class="form-label">Alterar Imagem</label>
                             <input name="image" type="file" class="form-control custom-input">
-                            @ if ($db->image)
+                            @if ($db->image)
                             <div class="mt-2">
                                 <img src="/images/{{$f->user_nickname}}/categories/{{$id}}/item/{{$id_item}}/{{$db->image}}" alt="Imagem Atual" class="img-fluid"
                                     style="max-width: 200px;">

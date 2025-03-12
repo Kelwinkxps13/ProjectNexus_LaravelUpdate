@@ -20,6 +20,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'nickname',
         'password',
     ];
 
@@ -50,7 +51,6 @@ class User extends Authenticatable
         return $this->hasMany(Category::class);
     }
     public function main(){
-        return $this
-        ->hasOne(Main::class);
+        return $this->hasOne(Main::class);
     }
 }

@@ -1,8 +1,28 @@
 @extends('layouts.main')
 @section('title', 'Página Inicial')
 @section('content')
-<h5 class="mb-5">Dica: Dê uma olhadinha no <a href="/editor">editor</a> para ter acesso a personalização de suas coisas!</h5>
+@auth
+<h5 class="mb-5">Dica: Dê uma olhadinha no <a href="/{{$nickname}}/editor">editor</a> para ter acesso a personalização de suas coisas!</h5>
+@endauth
 
+
+@if (Auth::check() && Auth::user()->nickname == $nickname && !$db_main)
+
+<h4 class="text-center">Você ainda não tem uma tela inicial, crie uma para dar início à sua jornada!</h4>
+
+<div class="row my-5">
+    <div class="d-flex justify-content-center gap-3 float-end my-4">
+        <form action="/{{$nickname}}/create" method="get">
+            @csrf
+            <button type="submit" class="btn btn-outline-primary">
+                Criar tela inicial
+            </button>
+        </form>
+    </div>
+</div>
+@elseif(!$db_main)
+<h4 class="text-center">Usuário ainda sem tela inicial</h4>
+@else
 <div class="text-center">
     <h3 class="display-4 fw-bold">
         {{$db_main->name}} 👋
@@ -18,29 +38,41 @@
     </p>
 </div>
 
-@if(!$themes_foreach && Auth::user()->nickname == $nickname)
-<br>
-<br>
-<div class="text-center mb-4 my-4">
-    <h4 class="mb-4 my-4">Não tem nenhuma categoria? Adicione alguma!</h4>
-    <form action="/{{$$nickname}}/{{$category}}/create" method="get">
-        @csrf
-        <button type="submit" class="btn btn-outline-primary">
-            Adicionar Nova Categoria
-        </button>
-    </form>
-</div>
-@elseif (!$themes_foreach)
-<br>
-<br>
-<div class="text-center mb-4 my-4">
-    <h4 class="mb-4 my-4">Usuário Sem categorias!</h4>
+
+@if ($themes_foreach->isEmpty())
+
+    @if (!Auth::check())
+        <br>
+        <br>
+        <div class="text-center mb-4 my-4">
+            <h4 class="mb-4 my-4">Usuário Sem categorias!</h4>
+
+        </div>
+    @elseif (Auth::user()->nickname != $nickname)
+        <br>
+        <br>
+        <div class="text-center mb-4 my-4">
+            <h4 class="mb-4 my-4">Usuário Sem categorias!</h4>
+
+        </div>
+    @else
+        <br>
+        <br>
+        <div class="text-center mb-4 my-4">
+            <h4 class="mb-4 my-4">Não tem nenhuma categoria? Adicione alguma!</h4>
+            <form action="/{{$nickname}}/category/create" method="get">
+                @csrf
+                <button type="submit" class="btn btn-outline-primary">
+                    Adicionar Nova Categoria
+                </button>
+            </form>
+        </div>
+    @endif
     
-</div>
 @else
 <div class="row mt-5">
     <div class="col">
-        if (Auth::user()->nickname == $nickname)
+        @if (Auth::user()->nickname == $nickname)
         <h2 class="mb-3">Suas Categorias</h2>
         @else
         <h2 class="mb-3">Categorias de {{$nickname}}</h2>
@@ -59,6 +91,7 @@
                     </h4>
                     <div>
                         <form action="/{{$nickname}}/{{$f->id}}" method="get">
+                            @csrf
                             <button type="submit" class="btn btn-dark">
                                 Ver Categoria
                             </button>
@@ -142,7 +175,12 @@
                 border-color: #1d2124;
             }
         </style>
-        @endforeach
+@endforeach
+@endif
+
+
+
+
 
         @endif
         @endsection

@@ -79,11 +79,28 @@ e em seguida irá redirecionar pra pagina de perfil daquela pessoa
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/editor">Editor</a>
+                
+                    @auth
+
+                    <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false"><i class="fas fa-user fa-fw"></i> Minha Área</a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+
+                                
+                                <li><a class="dropdown-item text-dark" href="/{{Auth::user()->nickname}}">Página Inicial</a></li>
+                                <li>
+                                    <hr class="dropdown-divider" />
+                                </li>
+                                <li><a class="dropdown-item text-dark" href="/{{Auth::user()->nickname}}/editor">Editor</a></li>
+                                
+                                
+                                
+                            </ul>
                         </li>
-                    </ul>
+
+                    @endauth
+
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
                             <a href="#" class="nav-link">
@@ -98,7 +115,7 @@ e em seguida irá redirecionar pra pagina de perfil daquela pessoa
                                 aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                             <ul class="dropdown-menu dropdown-menu-end">
 
-                            @auth
+                                @auth
                                 <li><a class="dropdown-item text-dark" href="route('profile.edit')">Ver Conta</a></li>
                                 <li>
                                     <hr class="dropdown-divider" />
@@ -109,15 +126,15 @@ e em seguida irá redirecionar pra pagina de perfil daquela pessoa
                                         {{ __('Log Out') }}
                                     </x-dropdown-link>
                                 </form>
-                            @endauth
-                            @guest
+                                @endauth
+                                @guest
 
                                 <li><a class="dropdown-item text-dark" href="{{ route('login') }}">Login</a></li>
                                 <li>
                                     <hr class="dropdown-divider" />
                                 </li>
                                 <li><a class="dropdown-item text-dark" href="{{ route('register') }}">Cadastrar</a></li>
-                            @endguest
+                                @endguest
                             </ul>
                         </li>
                     </ul>

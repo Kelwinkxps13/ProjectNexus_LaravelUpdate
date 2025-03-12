@@ -21,13 +21,13 @@
     <div class="col">
       <h2 class="mb-3">categorias</h2>
 
-      @if($themes_foreach == null)
+      @if($themes_foreach->isEmpty())
       <h4>sem categorias!</h4>
       @else
       @foreach ($themes_foreach as $f)
 
 
-      @ if($f->is_deleted==false)
+      @if($f->is_deleted==false)
 
       <div class="card mb-4 shadow-sm">
         <!-- Banner de Fundo -->

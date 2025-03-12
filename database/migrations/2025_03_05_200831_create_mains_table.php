@@ -18,6 +18,8 @@ return new class extends Migration
             $table->text('subtitle')->nullable();
             $table->text('description');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('user_nickname');
+            $table->foreign('user_nickname')->references('nickname')->on('users')->onDelete('cascade');
             $table->softDeletes();
         });
     }

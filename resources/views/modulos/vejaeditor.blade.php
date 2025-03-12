@@ -7,11 +7,10 @@
         <div class="col">
             <h2 class="mb-3">Conteúdo(s) de {{$title}}</h2>
 
-            @if (!db_url)
+            @if ($db_url->isEmpty())
             <h2 class="text-center text-dark">Sem Conteúdos para editar!</h2>
             @else
             @foreach ($db_url as $f)
-            @ if (!$f->is_deleted)
 
             <!-- ESTRUTURA -->
             <div class="card mb-4 shadow-sm">
@@ -38,7 +37,6 @@
                     </div>
                 </div>
             </div>
-            @endif
             @endforeach
             @endif
         </div>

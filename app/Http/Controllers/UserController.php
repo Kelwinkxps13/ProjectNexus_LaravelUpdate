@@ -13,15 +13,11 @@ class UserController extends Controller
 {
     function index ($nickname) {
         // pegar os dados da pessoa que tem aquele nickname
-        $db_main = Main::where('nickname', $nickname)->first();
-
-        if (!$db_main) {
-            return Redirect::to('/')
-            ->with('msg-warning', "Página Não Encontrada");
-        }
+        $db_main = Main::where('user_nickname', $nickname)->first();
 
         // foreach de todos os temas desse usuario!
-        $themes_foreach = $db_main->categories();
+        $user = User::where('nickname', $db_main->user_nickname)->first();
+        $themes_foreach = $user->categories()->get();
 
         return view('main', [
             'db_main' => $db_main,
@@ -46,7 +42,8 @@ class UserController extends Controller
             'name' => $request->name,
             'subtitle' => $request->subtitle,
             'description' => $request->description,
-            'user_id' => Auth::id()
+            'user_id' => Auth::id(),
+            'user_nickname' => Auth::user()->nickname
         ]);
         return Redirect::to('/'.$nickname)
         ->with('msg-success', 'Pagina Inicial Criada com Sucesso!');
@@ -94,11 +91,11 @@ class UserController extends Controller
         // pega o usuario
         $user = User::find(Auth::id());
         // proximo passo, é pegar as categories em si daquele usuario
-        $themes_foreach = $user->categorys();
+        $themes_foreach = $user->categories;
 
         return view('editor', [
             'themes_foreach' => $themes_foreach,
-            'nickname' => $nickname
+            'nickname' => $nickname,
         ]);
     }
 }

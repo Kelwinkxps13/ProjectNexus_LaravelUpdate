@@ -22,7 +22,7 @@ class ItemController extends Controller
             ->with('msg-warning', "Item não encontrado!");
         }
 
-        $db_url = $item->contents();
+        $db_url = $item->contents()->get();
 
         //id da categoria
         $id = $item->category_id;
@@ -179,7 +179,7 @@ class ItemController extends Controller
         $title = $item->name;
 
         // todos os contents daquele item
-        $db_url = $item->contents();
+        $db_url = $item->contents()->get();
         // id da categoria (theme)
         $id = $item->category_id;
         //id do item escolhido

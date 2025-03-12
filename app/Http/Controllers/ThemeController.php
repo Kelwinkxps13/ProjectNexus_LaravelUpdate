@@ -20,7 +20,7 @@ class ThemeController extends Controller
         }
         
         // pegando os dados dos itens do tema escolhido
-        $db_url = $db_theme->items();
+        $db_url = $db_theme->items()->get();
 
         return view('generic', [
             'db_theme' => $db_theme,
