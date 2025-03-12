@@ -66,7 +66,7 @@ class ContentController extends Controller
 
     function edit (Request $request, $nickname, $category) {
 
-        $content = Content::find($request->idblock);
+        $content = Content::find($request->idblock)->first();
         if (!$content) {
             # code...
             return redirect('/'.$nickname.'/'.$category.'/'.$request->id_item)
@@ -104,7 +104,7 @@ class ContentController extends Controller
             'image' => 'nullable|image|mimes:png,jpg,jpeg,svg,gif'
         ]);
        
-        $content = Content::find($request->idblock);
+        $content = Content::find($request->idblock)->first();
         $content->name = $request->name ?? $content->name;
         $content->description = $request->description ?? $content->description;
 
@@ -127,9 +127,12 @@ class ContentController extends Controller
         return redirect('/'.$nickname.'/'.$category.'/'.$request->id_item)
             ->with('msg-success', "Conteúdo editado com sucesso!");
     }
-    function destroy ($nickname, $category) {
-        $id = true;
-        $id_item = true;
-        return redirect('/theme/'.$id.'/show/'.$id_item);
+    function destroy (Request $request, $nickname, $category) {
+
+        $content = Content::find($request->idblock)->first();
+        $content->delete();
+
+        return redirect('/'.$nickname.'/'.$category.'/'.$request->id_item.'/editor')
+            ->with('msg-success', "Conteúdo excluído com sucesso!");
     }
 }
