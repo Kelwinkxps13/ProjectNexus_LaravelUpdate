@@ -70,6 +70,7 @@ class ThemeController extends Controller
         }
 
         $cat->user_id = Auth::id();
+        $cat->user_nickname = Auth::user()->nickname;
         $cat->save();
 
         return Redirect::to('/'.$nickname)
