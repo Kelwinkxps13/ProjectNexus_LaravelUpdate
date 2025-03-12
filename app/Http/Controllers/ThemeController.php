@@ -97,7 +97,7 @@ class ThemeController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg'
         ]);
 
-        $cat = Category::find($request->id);
+        $cat = Category::find($request->id)->first();
 
         $cat->name = $request->name ?? $cat->name;
         $cat->description = $request->description ?? $cat->description;
