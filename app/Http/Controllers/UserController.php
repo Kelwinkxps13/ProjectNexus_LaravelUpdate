@@ -45,7 +45,7 @@ class UserController extends Controller
             'user_id' => Auth::id(),
             'user_nickname' => Auth::user()->nickname
         ]);
-        return Redirect::to('/'.$nickname)
+        return Redirect::to(route('user_index', ['nickname' => $nickname]))
         ->with('msg-success', 'Pagina Inicial Criada com Sucesso!');
     }
 
@@ -55,7 +55,7 @@ class UserController extends Controller
 
         if (!$main) {
             # code...
-            return Redirect::to('/'.$nickname)
+            return Redirect::to(route('user_index', ['nickname' => $nickname]))
             ->with('msg-warning', "Página Inicial ainda nao criada!");
         }
         return view('indexeditor', [
@@ -68,7 +68,7 @@ class UserController extends Controller
         $main = Main::where('user_id', Auth::id())->first();
         if (!$main) {
             # code...
-            return Redirect::to('/'.$nickname)
+            return Redirect::to(route('user_index', ['nickname' => $nickname]))
             ->with('msg-warning', "Página Inicial ainda nao criada!");
         }
 
@@ -83,7 +83,7 @@ class UserController extends Controller
         $main->subtitle = $request->subtitle ?? $main->subtitle;
         $main->description = $request->description ?? $main->description;
         $main->save();
-        return Redirect::to('/'.$nickname)
+        return Redirect::to(route('user_index', ['nickname' => $nickname]))
         ->with('msg-success', 'Página inicial atualizada com sucesso!');
     }
 

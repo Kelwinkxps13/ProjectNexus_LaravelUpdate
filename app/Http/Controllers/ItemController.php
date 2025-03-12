@@ -18,7 +18,7 @@ class ItemController extends Controller
 
         if (!$item) {
             # code...
-            return Redirect::to('/'.$nickname.'/'.$category)
+            return Redirect::to(route('category_index', ['nickname' => $nickname, 'category' => $category]))
             ->with('msg-warning', "Item não encontrado!");
         }
 
@@ -46,7 +46,7 @@ class ItemController extends Controller
 
         if (!$cat) {
             # code...
-            return Redirect::to('/'.$nickname)
+            return Redirect::to(route('user_index', ['nickname' => $nickname]))
             ->with('msg-warning', "categoria não encontrada!");
         }
         $page = $cat->name;
@@ -97,7 +97,7 @@ class ItemController extends Controller
         $item->category_id = $request->id;
 
 
-        return Redirect::to('/'.$nickname.'/'.$category)
+        return Redirect::to(route('category_index', ['nickname' => $nickname, 'category' => $category]))
             ->with('msg-success', "Item criado com sucesso!");
     }
 
@@ -108,7 +108,7 @@ class ItemController extends Controller
         $cat = Category::find($category);
         if (!$cat) {
             # code...
-            return Redirect::to('/'.$nickname)
+            return Redirect::to(route('user_index', ['nickname' => $nickname]))
             ->with('msg-warning', "categoria não encontrada!");
         }
         $page = $cat->name;
@@ -159,7 +159,7 @@ class ItemController extends Controller
         }
 
 
-        return Redirect::to('/'.$nickname.'/'.$category)
+        return Redirect::to(route('category_index', ['nickname' => $nickname, 'category' => $category]))
             ->with('msg-success', "Item editado com sucesso!");
     }
     function destroy(Request $request, $nickname, $category)
@@ -168,7 +168,7 @@ class ItemController extends Controller
 
         $item->delete();
         
-        return Redirect::to('/'.$nickname.'/'.$category)
+        return Redirect::to(route('category_index', ['nickname' => $nickname, 'category' => $category]))
             ->with('msg-success', "Item excluído com sucesso!");
     }
     function editor($nickname, $category, $id_item)

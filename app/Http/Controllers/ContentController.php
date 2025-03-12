@@ -14,7 +14,7 @@ class ContentController extends Controller
         $item = Item::find($id_item);
         if (!$item) {
             # code...
-            return Redirect::to('/'.$nickname.'/'.$category)
+            return Redirect::to(route('category_index', ['nickname' => $nickname, 'category' => $category]))
             ->with('msg-warning', "Item não encontrado!");
         }
         $id = $item->category_id;
@@ -61,7 +61,7 @@ class ContentController extends Controller
 
         $id_item = $request->id_item;
 
-        return Redirect::to('/'.$nickname.'/'.$category.'/'.$id_item)
+        return Redirect::to(route('item_index', ['nickname' => $nickname, 'category' => $category, 'id_item' => $id_item]))
             ->with('msg-success', "Conteúdo criado com sucesso!");
     }
 
@@ -70,14 +70,14 @@ class ContentController extends Controller
         $content = Content::find($request->idblock);
         if (!$content) {
             # code...
-            return Redirect::to('/'.$nickname.'/'.$category.'/'.$request->id_item)
+            return Redirect::to(route('item_index', ['nickname' => $nickname, 'category' => $category, 'id_item' => $request->id_item]))
             ->with('msg-warning', "Conteúdo não encontrado!");
         }
 
         $item = Item::find($content->item_id);
         if (!$item) {
             # code...
-            return Redirect::to('/'.$nickname.'/'.$category.'/'.$request->id_item)
+            return Redirect::to(route('item_index', ['nickname' => $nickname, 'category' => $category, 'id_item' => $request->id_item]))
             ->with('msg-warning', "Item não encontrado!");
         }
 
@@ -125,7 +125,7 @@ class ContentController extends Controller
         }
         
 
-        return Redirect::to('/'.$nickname.'/'.$category.'/'.$request->id_item)
+        return Redirect::to(route('item_index', ['nickname' => $nickname, 'category' => $category, 'id_item' => $request->id_item]))
             ->with('msg-success', "Conteúdo editado com sucesso!");
     }
     function destroy (Request $request, $nickname, $category) {
@@ -133,7 +133,7 @@ class ContentController extends Controller
         $content = Content::find($request->idblock);
         $content->delete();
 
-        return Redirect::to('/'.$nickname.'/'.$category.'/'.$request->id_item.'/editor')
+        return Redirect::to(route('item_editor', ['nickname' => $nickname, 'category' => $category, 'id_item' => $request->id_item]))
             ->with('msg-success', "Conteúdo excluído com sucesso!");
     }
 }

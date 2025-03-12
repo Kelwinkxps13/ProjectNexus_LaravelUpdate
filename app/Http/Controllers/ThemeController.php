@@ -70,7 +70,7 @@ class ThemeController extends Controller
         $cat->user_nickname = Auth::user()->nickname;
         $cat->save();
 
-        return Redirect::to('/'.$nickname)
+        return Redirect::to(route('user_index', ['nickname' => $nickname]))
         ->with('msg-success', "Categoria criada com sucesso!");
     }
 
@@ -116,7 +116,7 @@ class ThemeController extends Controller
         $cat->save();
 
 
-        return Redirect::to('/')
+        return Redirect::to(route('index'))
         ->with('msg-success', 'Categoria Atualizada com Sucesso!');
     }
     function destroy (Request $request, $nickname) {
@@ -125,7 +125,7 @@ class ThemeController extends Controller
 
         $cat->delete();
 
-        return Redirect::to('/'.$nickname.'/editor')
+        return Redirect::to(route('user_editor', ['nickname' => $nickname]))
         ->with('msg-success', "Categoria excluída com sucesso!");
     }
 }
