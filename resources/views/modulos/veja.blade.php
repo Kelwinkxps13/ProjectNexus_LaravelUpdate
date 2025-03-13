@@ -43,7 +43,7 @@
     <div class="row mb-4 my-4">
         <div class="col-md-9 d-flex flex-column justify-content-center text-break">
             <h2 class="text-center text-dark">
-                {{$f->title}}
+                {{$f->name}}
             </h2>
             @php
             $paragraphs = preg_split('/\r\n|\n|\r/', $f->description);
@@ -57,7 +57,7 @@
         </div>
         <div class="col-md-3 d-flex align-items-center justify-content-center bg-light"
             style="max-width: 286px; max-height: 286px; overflow: hidden;">
-            <img src="{{$f->image}}" alt="Profile" class="img-fluid"
+            <img src="/images/{{$nickname}}/categories/{{$id}}/item/{{$id_item}}/{{$f->image}}" alt="Profile" class="img-fluid"
                 style="object-fit: cover;">
         </div>
     </div>
@@ -65,7 +65,7 @@
     <div class="row mb-4 my-4">
         <div class="col-md-12 d-flex flex-column justify-content-center text-break">
             <h2 class="text-center text-dark">
-                {{$f->title}}
+                {{$f->name}}
             </h2>
             @php
             $paragraphs = preg_split('/\r\n|\n|\r/', $f->description);
@@ -80,6 +80,7 @@
     </div>
     @endif
     @endforeach
+    @if (Auth::check() && Auth::user()->nickname == $nickname)
     <div class="d-flex justify-content-center gap-3 float-end my-4">
         <a href="{{route('item_editor', ['nickname' => $nickname, 'category' => $category, 'id_item' => $id_item])}}"
             class="btn btn-outline-primary">Editor</a>
@@ -89,7 +90,7 @@
                 Novo Conteúdo</button>
         </form>
     </div>
-
+    @endif
 @endif
 
 </div>

@@ -13,6 +13,7 @@
                     <form action="{{route('content_update', ['nickname' => $nickname, 'category' => $category])}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PATCH')
+                        <input type="hidden" name="id" value="{{$id}}">
                         <input type="hidden" name="id_item" value="{{$id_item}}">
                         <input type="hidden" name="idblock" value="{{$db->id}}">
 
@@ -33,7 +34,7 @@
                             <input name="image" type="file" class="form-control custom-input">
                             @if ($db->image)
                             <div class="mt-2">
-                                <img src="/images/{{$f->user_nickname}}/categories/{{$id}}/item/{{$id_item}}/{{$db->image}}" alt="Imagem Atual" class="img-fluid"
+                                <img src="/images/{{$nickname}}/categories/{{$id}}/item/{{$id_item}}/{{$db->image}}" alt="Imagem Atual" class="img-fluid"
                                     style="max-width: 200px;">
                             </div>
                             @endif

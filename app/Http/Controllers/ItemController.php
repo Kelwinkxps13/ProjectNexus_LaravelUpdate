@@ -12,14 +12,14 @@ class ItemController extends Controller
 
     function index($nickname, $category, $id_item)
     {
-       
+
         // contents daquele item daquela category
         $item = Item::find($id_item);
 
         if (!$item) {
             # code...
             return Redirect::to(route('category_index', ['nickname' => $nickname, 'category' => $category]))
-            ->with('msg-warning', "Item não encontrado!");
+                ->with('msg-warning', "Item não encontrado!");
         }
 
         $db_url = $item->contents()->get();
@@ -47,7 +47,7 @@ class ItemController extends Controller
         if (!$cat) {
             # code...
             return Redirect::to(route('user_index', ['nickname' => $nickname]))
-            ->with('msg-warning', "categoria não encontrada!");
+                ->with('msg-warning', "categoria não encontrada!");
         }
         $page = $cat->name;
 
@@ -81,20 +81,16 @@ class ItemController extends Controller
         // validando a imagem
 
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
-            # code...
-
-            $extension = $request->image->extension;
+            $image = $request->file('image');
+            $extension = $image->getClientOriginalExtension();
             $data = strtotime('now');
-
-            $path_image = md5($request->image->getClientOriginalName()).'_'.$data.'.'.$extension;
-
-            $request->image->move(public_path('images/'.$nickname.'/categories/'.$request->id.'/items'), $path_image);
-
+            $path_image = md5($image->getClientOriginalName()) . '_' . $data . '.' . $extension;
+            $image->move(public_path('images/' . $nickname . '/categories/' . $request->id . '/items'), $path_image);
             $item->image = $path_image;
-
         }
 
         $item->category_id = $request->id;
+        $item->save();
 
 
         return Redirect::to(route('category_index', ['nickname' => $nickname, 'category' => $category]))
@@ -109,7 +105,7 @@ class ItemController extends Controller
         if (!$cat) {
             # code...
             return Redirect::to(route('user_index', ['nickname' => $nickname]))
-            ->with('msg-warning', "categoria não encontrada!");
+                ->with('msg-warning', "categoria não encontrada!");
         }
         $page = $cat->name;
         // id da categoria (theme)
@@ -144,19 +140,18 @@ class ItemController extends Controller
 
         // validando a imagem
 
-        if ($request->hasFile('image') && $request->file('image')->isValid()) {
-            # code...
-
-            $extension = $request->image->extension;
+        if($request->remove_image){
+            $item->image = null;
+        }elseif ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $image = $request->file('image');
+            $extension = $image->getClientOriginalExtension();
             $data = strtotime('now');
-
-            $path_image = md5($request->image->getClientOriginalName()).'_'.$data.'.'.$extension;
-
-            $request->image->move(public_path('images/'.$nickname.'/categories/'.$request->id.'/items'), $path_image);
-
+            $path_image = md5($image->getClientOriginalName()) . '_' . $data . '.' . $extension;
+            $image->move(public_path('images/' . $nickname . '/categories/' . $request->id . '/items'), $path_image);
             $item->image = $path_image ?? $item->image;
-
         }
+
+        $item->save();
 
 
         return Redirect::to(route('category_index', ['nickname' => $nickname, 'category' => $category]))
@@ -167,7 +162,7 @@ class ItemController extends Controller
         $item = Item::find($request->id_item);
 
         $item->delete();
-        
+
         return Redirect::to(route('category_index', ['nickname' => $nickname, 'category' => $category]))
             ->with('msg-success', "Item excluído com sucesso!");
     }

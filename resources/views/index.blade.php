@@ -14,11 +14,11 @@
     <div class="col">
         <h2 class="mb-3">Veja categorias criadas pela comunidade!</h2>
 
-        @if (!$themes_foreach)
+        @if (!$themes_foreach->isEmpty())
 
         @foreach ($themes_foreach as $f)
         <div class="card mb-4 shadow-sm">
-            
+
             <!-- Banner de Fundo -->
             <div class="banner {{($f->image === null)?'no-image':''}} %>">
                 @if($f->image !==null)
@@ -29,7 +29,7 @@
                         {{$f->name}}
                     </h4>
                     <div>
-                        <form action="{{route('category_index', ['nickname' => $f->user_nickname, 'category' => $f->id'])}}" method="get">
+                        <form action="{{ route('category_index', ['nickname' => $f->user_nickname, 'category' => $f->id]) }}" method="get">
                             <button type="submit" class="btn btn-dark">
                                 Ver Categoria
                             </button>

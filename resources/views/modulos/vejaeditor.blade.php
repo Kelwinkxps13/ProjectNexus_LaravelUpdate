@@ -16,13 +16,13 @@
             <div class="card mb-4 shadow-sm">
                 <div class="card-body">
                     <h4 class="card-title">
-                        {{$f->title}}
+                        {{$f->name}}
                     </h4>
                     <div class="d-flex justify-content-end gap-2">
                         <form action="{{route('content_edit', ['nickname' => $nickname, 'category' => $category])}}"
                             method="get">
                             @csrf
-                            <input type="hidden" name="id_item" value="{{$id_item}}">
+                            <input type="hidden" name="id_item" value="{{$f->item_id}}">
                             <input type="hidden" name="idblock" value="{{$f->id}}">
                             <button type="submit" class="btn btn-warning">Editar</button>
                         </form>

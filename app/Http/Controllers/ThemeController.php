@@ -52,19 +52,14 @@ class ThemeController extends Controller
 
         // validando a imagem
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
-            //vamos fazer a imagem ser unica
-
-            // peguemos a extensao do arquivo
-            $extension = $request->image->extension;
-            // peguemos a data atual
+            $image = $request->file('image');
+            $extension = $image->getClientOriginalExtension();
             $data = strtotime('now');
-            $path_image = md5($request->image->getClienteOriginalName()).'_'.$data.'.'.$extension;
-
-            $request->image->move(public_path('images/'.$nickname.'/categories/banners'), $path_image);
-
+            $path_image = md5($image->getClientOriginalName()) . '_' . $data . '.' . $extension;
+            $image->move(public_path('images/' . $nickname . '/categories/banners'), $path_image);
             $cat->image = $path_image;
-
         }
+        
 
         $cat->user_id = Auth::id();
         $cat->user_nickname = Auth::user()->nickname;
@@ -81,7 +76,8 @@ class ThemeController extends Controller
         return view('modulos.generic.edit', [
             'db' => $db,
             'nickname' => $nickname,
-            'category' => $category
+            'category' => $category,
+            'id' => $db->id
         ]);
     }
 
@@ -101,15 +97,15 @@ class ThemeController extends Controller
         $cat->name = $request->name ?? $cat->name;
         $cat->description = $request->description ?? $cat->description;
 
-        if ($request->hasFile('image') && $request->file('image')->isValid()) {
-            # code...
-            $extension = $request->image->extension;
+
+        if($request->remove_image){
+            $cat->image = null;
+        }elseif ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $image = $request->file('image');
+            $extension = $image->getClientOriginalExtension();
             $data = strtotime('now');
-
-            $path_image = md5($request->image->getClientOriginalName()).'_'.$data.'.'.$extension;
-
-            $request->image->move(public_path('images/'.$nickname.'/categories/banners'));
-
+            $path_image = md5($image->getClientOriginalName()) . '_' . $data . '.' . $extension;
+            $image->move(public_path('images/' . $nickname . '/categories/banners'), $path_image);
             $cat->image = $path_image ?? $cat->image;
         }
 

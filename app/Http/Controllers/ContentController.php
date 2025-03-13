@@ -35,7 +35,7 @@ class ContentController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:50',
-            'description' => 'required|string|max:255',
+            'description' => 'required',
             'image' => 'nullable|image|mimes:png,jpg,jpeg,svg,gif'
         ]);
        
@@ -46,22 +46,21 @@ class ContentController extends Controller
         // validação de imagem
 
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
-            $extension = $request->image->extension;
+            $image = $request->file('image');
+            $extension = $image->getClientOriginalExtension();
             $data = strtotime('now');
-
-            $path_image = md5($request->image->getClientOriginalName).'_'.$data.'.'.$extension;
-
-            // salvar local
-
-            $request->image->move(public_path('images/'.$nickname.'/categories/'.$request->id.'/item/'.$request->id_item), $path_image);
-
+            $path_image = md5($image->getClientOriginalName()) . '_' . $data . '.' . $extension;
+        
+            $image->move(public_path('images/' . $nickname . '/categories/' . $request->id . '/item/' . $request->id_item), $path_image);
+        
             $content->image = $path_image;
         }
         
 
-        $id_item = $request->id_item;
+        $content->item_id = $request->id_item;
+        $content->save();
 
-        return Redirect::to(route('item_index', ['nickname' => $nickname, 'category' => $category, 'id_item' => $id_item]))
+        return Redirect::to(route('item_index', ['nickname' => $nickname, 'category' => $category, 'id_item' =>  $request->id_item]))
             ->with('msg-success', "Conteúdo criado com sucesso!");
     }
 
@@ -74,7 +73,7 @@ class ContentController extends Controller
             ->with('msg-warning', "Conteúdo não encontrado!");
         }
 
-        $item = Item::find($content->item_id);
+        $item = Item::find($request->id_item);
         if (!$item) {
             # code...
             return Redirect::to(route('item_index', ['nickname' => $nickname, 'category' => $category, 'id_item' => $request->id_item]))
@@ -101,7 +100,7 @@ class ContentController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:50',
-            'description' => 'required|string|max:255',
+            'description' => 'required',
             'image' => 'nullable|image|mimes:png,jpg,jpeg,svg,gif'
         ]);
        
@@ -111,18 +110,21 @@ class ContentController extends Controller
 
         // validação de imagem
 
-        if ($request->hasFile('image') && $request->file('image')->isValid()) {
-            $extension = $request->image->extension;
+        if($request->remove_image){
+            $content->image = null;
+        }elseif ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $image = $request->file('image');
+            $extension = $image->getClientOriginalExtension();
             $data = strtotime('now');
-
-            $path_image = md5($request->image->getClientOriginalName).'_'.$data.'.'.$extension;
-
-            // salvar local
-
-            $request->image->move(public_path('images/'.$nickname.'/categories/'.$request->id.'/item/'.$request->id_item), $path_image);
-
+            $path_image = md5($image->getClientOriginalName()) . '_' . $data . '.' . $extension;
+        
+            $image->move(public_path('images/' . $nickname . '/categories/' . $request->id . '/item/' . $request->id_item), $path_image);
+        
             $content->image = $path_image ?? $content->image;
         }
+
+
+        $content->save();
         
 
         return Redirect::to(route('item_index', ['nickname' => $nickname, 'category' => $category, 'id_item' => $request->id_item]))

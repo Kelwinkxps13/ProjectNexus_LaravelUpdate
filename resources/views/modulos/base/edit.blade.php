@@ -10,7 +10,7 @@
                     <strong>Formulário de Edição de {{$page}}</strong>
                 </div>
                 <div class="card-body p-5">
-                    <form action="{{route('item_update', ['nickname' => $nickname, 'category' => $category, 'id_item' => $id_item])}}" method="POST" enctype="multipart/form-data">
+                    <form action="{{route('item_update', ['nickname' => $nickname, 'category' => $category])}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PATCH')
                         <input type="hidden" name="id_item" value="{{$db->id}}">
@@ -33,7 +33,7 @@
                             <input name="image" type="file" class="form-control custom-input">
                             @if ($db->image)
                             <div class="mt-2">
-                                <img src="/images/{{$f->user_nickname}}/categories/{{$id}}/items/{{$db->image}}" alt="Imagem Atual" class="img-fluid"
+                                <img src="/images/{{$nickname}}/categories/{{$db->category_id}}/items/{{ $db->image }}" alt="Imagem Atual" class="img-fluid"
                                     style="max-width: 200px; border-radius: 10px;">
                             </div>
                             @endif

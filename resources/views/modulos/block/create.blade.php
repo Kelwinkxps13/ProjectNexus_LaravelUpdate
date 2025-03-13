@@ -12,6 +12,7 @@
                 <div class="card-body p-5">
                     <form action="{{route('content_store', ['nickname' => $nickname, 'category' => $category])}}" method="POST" enctype="multipart/form-data">
                         @csrf
+                        <input type="hidden" name="id" value="{{$id}}">
                         <input type="hidden" name="id_item" value="{{$id_item}}">
                         <div class="mb-4">
                             <label for="name" class="form-label">Nome</label>

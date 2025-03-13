@@ -10,7 +10,7 @@
                         <strong>Formulário de Criação de {{$page}}</strong>
                     </div>
                     <div class="card-body p-5">
-                        <form action="{{route('item_store', ['nickname' => $nickname, 'category' => $category, 'id_item' => $id_item])}}" method="POST" enctype="multipart/form-data">
+                        <form action="{{route('item_store', ['nickname' => $nickname, 'category' => $category])}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="id" value="{{$id}}">
                             <div class="mb-4">

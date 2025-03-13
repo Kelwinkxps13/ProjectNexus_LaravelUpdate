@@ -47,22 +47,24 @@
                 <div class="d-flex align-items-center justify-content-center bg-secondary"
                     style="width: 286px; height: 286px; overflow: hidden;">
                     @if($f->image===null)
-                    <img src="/images/default/no image.png" alt="Profile"
+                    <img src="/default/no image.png" alt="Profile"
                         style="width: 100%; height: 100%; object-fit: cover;">
                     @else
-                    <img src="/images/{{$f->user_nickname}}/categories/{{$f->id}}/items/{{ $f->image }}" alt="Profile"
+                    <img src="/images/{{$nickname}}/categories/{{$f->category_id}}/items/{{ $f->image }}" alt="Profile"
                         style="width: 100%; height: 100%; object-fit: cover;">
                     @endif
                 </div>
                 <div class="card-body">
                     <h5 class="card-title">
-                        {{ $f->title }}
+                        {{ $f->name }}
                     </h5>
                     <p class="card-text">
                         {{ $f->description }}
                     </p>
                     <div class="d-flex justify-content-center gap-3">
                         <a href="{{route('item_index', ['nickname' => $nickname, 'category' => $category, 'id_item' => $f->id])}}" class="btn btn-primary">Veja!</a>
+                        @if(Auth::check())
+                        @if (Auth::user()->nickname == $nickname)
                         <form action="{{route('item_edit', ['nickname' => $nickname, 'category' => $category, 'id_item' => $f->id])}}" method="get">
                             @csrf
                             <button type="submit" class="btn btn-warning">Editar</button>
@@ -73,6 +75,8 @@
                             <input type="hidden" name="id_item" value="{{$f->id}}">
                             <button type="submit" class="btn btn-danger">Excluir</button>
                         </form>
+                        @endif
+                        @endif
                     </div>
                 </div>
             </div>
@@ -81,6 +85,7 @@
         @endforeach
 
     </div>
+    @if (Auth::check() && Auth::user()->nickname == $nickname)
     <div class="row mt-4">
         <div class="col">
             <form action="{{route('item_create', ['nickname' => $nickname, 'category' => $category])}}" method="get">
@@ -91,6 +96,7 @@
             </form>
         </div>
     </div>
+    @endif
 @endif
 
 @endsection
