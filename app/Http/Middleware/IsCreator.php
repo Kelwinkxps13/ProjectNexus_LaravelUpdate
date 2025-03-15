@@ -17,7 +17,7 @@ class IsCreator
     public function handle(Request $request, Closure $next): Response
     {
         if (!Auth::check()) {
-            return redirect(route('index'))
+            return redirect(route('index', ['nickname', $request->route('nickname')]))
             ->with('msg-danger', 'Você não tem permissão para acessar essa página!');
         } else {
             if ($request->route('nickname') != Auth::user()->nickname) {

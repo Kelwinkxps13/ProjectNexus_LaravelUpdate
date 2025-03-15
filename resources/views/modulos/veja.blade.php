@@ -27,7 +27,7 @@
     <h2 class="text-center text-dark">Não tem nenhum Conteúdo? Adicione algum!</h2>
     <div class="row mt-4">
         <div class="col text-end">
-            <form action="{{route('content_create', ['nickname' => $nickname, 'category' => $category, 'id_item' => $id_item])}}" method="get">
+            <form action="{{route('content_create', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $item_name_slug])}}" method="get">
                 @csrf
                 <button type="submit" class="btn btn-outline-primary">Adicionar Novo Bloco de Conteúdo</button>
             </form>
@@ -57,7 +57,7 @@
         </div>
         <div class="col-md-3 d-flex align-items-center justify-content-center bg-light"
             style="max-width: 286px; max-height: 286px; overflow: hidden;">
-            <img src="/images/{{$nickname}}/categories/{{$id}}/item/{{$id_item}}/{{$f->image}}" alt="Profile" class="img-fluid"
+            <img src="/images/{{$nickname}}/categories/{{$id}}/item/{{$f->item_id}}/{{$f->image}}" alt="Profile" class="img-fluid"
                 style="object-fit: cover;">
         </div>
     </div>
@@ -82,9 +82,9 @@
     @endforeach
     @if (Auth::check() && Auth::user()->nickname == $nickname)
     <div class="d-flex justify-content-center gap-3 float-end my-4">
-        <a href="{{route('item_editor', ['nickname' => $nickname, 'category' => $category, 'id_item' => $id_item])}}"
+        <a href="{{route('item_editor', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $item_name_slug])}}"
             class="btn btn-outline-primary">Editor</a>
-        <form action="{{route('content_create', ['nickname' => $nickname, 'category' => $category, 'id_item' => $id_item])}}" method="get">
+        <form action="{{route('content_create', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $item_name_slug])}}" method="get">
             @csrf
             <button type="submit" class="btn btn-outline-primary">Adicionar
                 Novo Conteúdo</button>

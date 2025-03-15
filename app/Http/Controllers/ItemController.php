@@ -10,15 +10,15 @@ use Illuminate\Support\Facades\Redirect;
 class ItemController extends Controller
 {
 
-    function index($nickname, $category, $id_item)
+    function index($nickname, $category_name_slug, $item_name_slug)
     {
 
         // contents daquele item daquela category
-        $item = Item::find($id_item);
+        $item = Item::where('name_slug', $item_name_slug)->first();
 
         if (!$item) {
             # code...
-            return Redirect::to(route('category_index', ['nickname' => $nickname, 'category' => $category]))
+            return Redirect::to(route('category_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug]))
                 ->with('msg-warning', "Item não encontrado!");
         }
 
@@ -28,21 +28,21 @@ class ItemController extends Controller
         $id = $item->category_id;
 
         // id do item
-        $id_item = $id_item;
+        $item_name_slug = $item->name_slug;
 
         return view('modulos.veja', [
             'db_url' => $db_url,
             'id' => $id,
-            'id_item' => $id_item,
+            'item_name_slug' => $item_name_slug,
             'nickname' => $nickname,
-            'category' => $category
+            'category_name_slug' => $category_name_slug
         ]);
     }
 
-    function create($nickname, $category)
+    function create($nickname, $category_name_slug)
     {
         // nome da categoria que vai ser adicionada um item
-        $cat = Category::find($category);
+        $cat = Category::where('name_slug', $category_name_slug)->first();
 
         if (!$cat) {
             # code...
@@ -58,11 +58,11 @@ class ItemController extends Controller
             'page' => $page,
             'id' => $id,
             'nickname' => $nickname,
-            'category' => $category
+            'category_name_slug' => $category_name_slug
         ]);
     }
 
-    function store(Request $request, $nickname, $category)
+    function store(Request $request, $nickname, $category_name_slug)
     {
 
         //  protected $fillable = ['name', 'description', 'image', 'category_id'];]
@@ -75,6 +75,7 @@ class ItemController extends Controller
 
         $item = new Item;
         $item->name = $request->name;
+        $item->name_slug = str($request->name)->slug();
         $item->description = $request->description;
 
 
@@ -93,15 +94,15 @@ class ItemController extends Controller
         $item->save();
 
 
-        return Redirect::to(route('category_index', ['nickname' => $nickname, 'category' => $category]))
+        return Redirect::to(route('category_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug]))
             ->with('msg-success', "Item criado com sucesso!");
     }
 
 
-    function edit($nickname, $category, $id_item)
+    function edit($nickname, $category_name_slug, $item_name_slug)
     {
         // nome da categoria que vai ser modificada um item
-        $cat = Category::find($category);
+        $cat = Category::where('name_slug', $category_name_slug)->first();
         if (!$cat) {
             # code...
             return Redirect::to(route('user_index', ['nickname' => $nickname]))
@@ -112,18 +113,18 @@ class ItemController extends Controller
         $id = $cat->id;
 
         // informações sobre aquele item
-        $db = Item::find($id_item);
+        $db = Item::where('name_slug', $item_name_slug)->first();
 
         return view('modulos.base.edit', [
             'page' => $page,
             'id' => $id,
             'db' => $db,
             'nickname' => $nickname,
-            'category' => $category
+            'category_name_slug' => $category_name_slug
         ]);
     }
 
-    function update(Request $request, $nickname, $category)
+    function update(Request $request, $nickname, $category_name_slug)
     {
         //  protected $fillable = ['name', 'description', 'image', 'category_id'];]
 
@@ -133,8 +134,9 @@ class ItemController extends Controller
             'image' => 'nullable|image|mimes:png,jpg,svg,jpeg,gif'
         ]);
 
-        $item = Item::find($request->id_item);
+        $item = Item::where('name_slug', $request->item_name_slug)->first();
         $item->name = $request->name ?? $item->name;
+        $item->name_slug = str($request->name)->slug() ?? $item->name_slug;
         $item->description = $request->description ?? $item->description;
 
 
@@ -154,22 +156,22 @@ class ItemController extends Controller
         $item->save();
 
 
-        return Redirect::to(route('category_index', ['nickname' => $nickname, 'category' => $category]))
+        return Redirect::to(route('category_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug]))
             ->with('msg-success', "Item editado com sucesso!");
     }
-    function destroy(Request $request, $nickname, $category)
+    function destroy(Request $request, $nickname, $category_name_slug)
     {
-        $item = Item::find($request->id_item);
+        $item = Item::where('name_slug', $request->item_name_slug)->first();
 
         $item->delete();
 
-        return Redirect::to(route('category_index', ['nickname' => $nickname, 'category' => $category]))
+        return Redirect::to(route('category_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug]))
             ->with('msg-success', "Item excluído com sucesso!");
     }
-    function editor($nickname, $category, $id_item)
+    function editor($nickname, $category_name_slug, $item_name_slug)
     {
         // titulo do item
-        $item = Item::find($id_item);
+        $item = Item::where('name_slug', $item_name_slug)->first();
 
         $title = $item->name;
 
@@ -178,15 +180,15 @@ class ItemController extends Controller
         // id da categoria (theme)
         $id = $item->category_id;
         //id do item escolhido
-        $id_item = $item->id;
+        $item_name_slug = $item->name_slug;
 
         return view('modulos.vejaeditor', [
             'title' => $title,
             'db_url' => $db_url,
             'id' => $id,
-            'id_item' => $id_item,
+            'item_name_slug' => $item_name_slug,
             'nickname' => $nickname,
-            'category' => $category
+            'category_name_slug' => $category_name_slug
         ]);
     }
 }

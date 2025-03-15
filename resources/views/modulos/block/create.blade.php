@@ -10,10 +10,10 @@
                     <strong> Formulário de Criação de Conteúdos</strong>
                 </div>
                 <div class="card-body p-5">
-                    <form action="{{route('content_store', ['nickname' => $nickname, 'category' => $category])}}" method="POST" enctype="multipart/form-data">
+                    <form action="{{route('content_store', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug])}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="id" value="{{$id}}">
-                        <input type="hidden" name="id_item" value="{{$id_item}}">
+                        <input type="hidden" name="item_name_slug" value="{{$item_name_slug}}">
                         <div class="mb-4">
                             <label for="name" class="form-label">Nome</label>
                             <input name="name" type="text" class="form-control custom-input" id="name"

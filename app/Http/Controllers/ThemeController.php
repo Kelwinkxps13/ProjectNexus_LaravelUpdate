@@ -3,17 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use App\Models\Item;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
 class ThemeController extends Controller
 {
-    function index ($nickname, $category) {
+    function index ($nickname, $category_name_slug) {
         // filtra pra encontrar uma category em especifico
-        $db_theme = Category::where('id', $category)->where('user_nickname', $nickname)->first();
+        $db_theme = Category::where('name_slug', $category_name_slug)->where('user_nickname', $nickname)->first();
         // condicional caso o tanto de temas deletados seja igual o tanto de temas totais
         
         
@@ -24,7 +22,7 @@ class ThemeController extends Controller
             'db_theme' => $db_theme,
             'db_url' => $db_url,
             'nickname' => $nickname,
-            'category' => $category
+            'category_name_slug' => $category_name_slug
         ]);
     }
 
@@ -47,7 +45,11 @@ class ThemeController extends Controller
 
         // cadastrando a categoy
         $cat = new Category();
+
         $cat->name = $request->name;
+        // criando o slug
+        $cat->name_slug = str($request->name)->slug();
+
         $cat->description = $request->description;
 
         // validando a imagem
@@ -70,13 +72,13 @@ class ThemeController extends Controller
     }
 
 
-    function edit ($nickname, $category) {
+    function edit ($nickname, $category_name_slug) {
         // dados da categoria (theme)
-        $db = Category::find($category);
+        $db = Category::where('name_slug', $category_name_slug)->first();
         return view('modulos.generic.edit', [
             'db' => $db,
             'nickname' => $nickname,
-            'category' => $category,
+            'category_name_slug' => $category_name_slug,
             'id' => $db->id
         ]);
     }
@@ -95,6 +97,8 @@ class ThemeController extends Controller
         $cat = Category::find($request->id);
 
         $cat->name = $request->name ?? $cat->name;
+        // criando o slug
+        $cat->name_slug = str($request->name)->slug() ?? $cat->name_slug;
         $cat->description = $request->description ?? $cat->description;
 
 

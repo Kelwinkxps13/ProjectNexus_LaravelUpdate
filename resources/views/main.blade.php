@@ -90,7 +90,7 @@
                         {{$f->name}}
                     </h4>
                     <div>
-                        <form action="{{route('category_index', ['nickname' => $nickname, 'category' => $f->id])}}" method="get">
+                        <form action="{{route('category_index', ['nickname' => $nickname, 'category_name_slug' => $f->name_slug])}}" method="get">
                             @csrf
                             <button type="submit" class="btn btn-dark">
                                 Ver Categoria

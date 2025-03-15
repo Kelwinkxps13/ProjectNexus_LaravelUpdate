@@ -40,7 +40,7 @@
               {{$f->name}}
             </h4>
             <div class="d-flex justify-content-end gap-2">
-              <form action="{{route('category_edit', ['nickname' => $nickname, 'category' => $f->id])}}" method="get">
+              <form action="{{route('category_edit', ['nickname' => $nickname, 'category_name_slug' => $f->name_slug])}}" method="get">
                 @csrf
                 <button type="submit" class="btn btn-warning">
                   Editar

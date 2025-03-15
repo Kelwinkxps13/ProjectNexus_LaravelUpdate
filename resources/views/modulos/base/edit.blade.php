@@ -10,10 +10,10 @@
                     <strong>Formulário de Edição de {{$page}}</strong>
                 </div>
                 <div class="card-body p-5">
-                    <form action="{{route('item_update', ['nickname' => $nickname, 'category' => $category])}}" method="POST" enctype="multipart/form-data">
+                    <form action="{{route('item_update', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug])}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PATCH')
-                        <input type="hidden" name="id_item" value="{{$db->id}}">
+                        <input type="hidden" name="item_name_slug" value="{{$db->name_slug}}">
                         <input type="hidden" name="id" value="{{$id}}">
 
                         <div class="mb-4">

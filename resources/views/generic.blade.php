@@ -29,7 +29,7 @@
 
     <div class="row mt-4">
         <div class="col">
-            <form action="{{route('item_create', ['nickname' => $nickname, 'category' => $category])}}" method="get">
+            <form action="{{route('item_create', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug])}}" method="get">
                 @csrf
                 <button type="submit" class="btn btn-outline-primary float-end">
                     Adicionar
@@ -62,17 +62,17 @@
                         {{ $f->description }}
                     </p>
                     <div class="d-flex justify-content-center gap-3">
-                        <a href="{{route('item_index', ['nickname' => $nickname, 'category' => $category, 'id_item' => $f->id])}}" class="btn btn-primary">Veja!</a>
+                        <a href="{{route('item_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $f->name_slug])}}" class="btn btn-primary">Veja!</a>
                         @if(Auth::check())
                         @if (Auth::user()->nickname == $nickname)
-                        <form action="{{route('item_edit', ['nickname' => $nickname, 'category' => $category, 'id_item' => $f->id])}}" method="get">
+                        <form action="{{route('item_edit', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $f->name_slug])}}" method="get">
                             @csrf
                             <button type="submit" class="btn btn-warning">Editar</button>
                         </form>
-                        <form action="{{route('item_destroy', ['nickname' => $nickname, 'category' => $category])}}" method="post">
+                        <form action="{{route('item_destroy', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug])}}" method="post">
                             @csrf
                             @method('DELETE')
-                            <input type="hidden" name="id_item" value="{{$f->id}}">
+                            <input type="hidden" name="item_name_slug" value="{{$f->name_slug}}">
                             <button type="submit" class="btn btn-danger">Excluir</button>
                         </form>
                         @endif
@@ -88,7 +88,7 @@
     @if (Auth::check() && Auth::user()->nickname == $nickname)
     <div class="row mt-4">
         <div class="col">
-            <form action="{{route('item_create', ['nickname' => $nickname, 'category' => $category])}}" method="get">
+            <form action="{{route('item_create', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug])}}" method="get">
                 @csrf
                 <button type="submit" class="btn btn-outline-primary float-end">
                     Adicionar
