@@ -72,7 +72,7 @@
 @else
 <div class="row mt-5">
     <div class="col">
-        @if (Auth::user()->nickname == $nickname)
+        @if (Auth::check() && Auth::user()->nickname == $nickname)
         <h2 class="mb-3">Suas Categorias</h2>
         @else
         <h2 class="mb-3">Categorias de {{$nickname}}</h2>

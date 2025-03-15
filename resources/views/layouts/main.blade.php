@@ -82,20 +82,19 @@ e em seguida irá redirecionar pra pagina de perfil daquela pessoa
 
                     @auth
 
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="true"><i class="fas fa-user fa-fw"></i> Minha Área</a>
-                    <ul class="dropdown-menu dropdown-menu-end">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false"><i class="fas fa-user fa-fw"></i> Minha Área</a>
+                        <ul class="dropdown-menu dropdown-menu-end">
 
+                            <li><a class="dropdown-item text-dark" href="/{{Auth::user()->nickname}}">Página Inicial</a></li>
+                            <li>
+                                <hr class="dropdown-divider" />
+                            </li>
+                            <li><a class="dropdown-item text-dark" href="/{{Auth::user()->nickname}}/editor">Editor</a></li>
 
-                        <li><a class="dropdown-item text-dark" href="/{{Auth::user()->nickname}}">Página Inicial</a></li>
-                        <li>
-                            <hr class="dropdown-divider" />
-                        </li>
-                        <li><a class="dropdown-item text-dark" href="/{{Auth::user()->nickname}}/editor">Editor</a></li>
-
-
-
-                    </ul>
+                        </ul>
+                    </li>
 
                     @endauth
 

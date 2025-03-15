@@ -6,7 +6,7 @@
 <h4 class="text-center">Olá, Visitante!</h4>
 @endguest
 @auth
-<h4 class="text-center">Olá, {{Auth::user()->name}}!</h4>
+<h4 class="text-center">Olá, {{Auth::user()->nickname}}!</h4>
 @endauth
 
 
@@ -38,6 +38,33 @@
                 </div>
             </div>
         </div>
+
+
+        @endforeach
+
+        @else
+
+        <h4 class="text-center">Ainda sem categorias criadas pela comunidade</h4>
+
+        @endif
+
+        @if (!$users_foreach->isEmpty())
+        <h2 class="mb-3">Veja os ultimos 10 usuarios Criadores!</h2>
+
+        @foreach ($users_foreach as $f)
+
+        <h4>
+            <a href="{{route('user_index', ['nickname' => $f->user_nickname]) }}"> Usuário - {{$f->user_nickname}}</a>
+        </h4>
+
+        @endforeach
+        @else
+
+        @endif
+
+
+
+
 
         <style>
             .banner {
@@ -113,13 +140,5 @@
                 border-color: #1d2124;
             }
         </style>
-        @endforeach
-
-        @else
-
-        <h4 class="text-center">Ainda sem categorias criadas pela comunidade</h4>
-
-        @endif
-
 
         @endsection
