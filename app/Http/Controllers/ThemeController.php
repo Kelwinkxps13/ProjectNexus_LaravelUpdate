@@ -42,6 +42,12 @@ class ThemeController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg'
         ]);
 
+        // verificando se já existe uma category com esse slug
+        $verify = Category::where('name_slug', str($request->name)->slug())->where('user_nickname', $nickname)->first();;
+        if ($verify) {
+            return Redirect::to(route('category_create', ['nickname' => $nickname]))
+            ->with('msg-warning', 'Já existe uma categoria com esse nome!');
+        }
 
         // cadastrando a categoy
         $cat = new Category();
@@ -93,6 +99,13 @@ class ThemeController extends Controller
             'description' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg'
         ]);
+
+        // verificando se já existe uma category com esse slug
+        $verify = Category::where('name_slug', str($request->name)->slug())->where('user_nickname', $nickname)->first();;
+        if ($verify) {
+            return Redirect::to(route('category_create', ['nickname' => $nickname]))
+            ->with('msg-warning', 'Já existe uma categoria com esse nome!');
+        }
 
         $cat = Category::find($request->id);
 

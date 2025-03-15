@@ -73,6 +73,14 @@ class ItemController extends Controller
             'image' => 'nullable|image|mimes:png,jpg,svg,jpeg,gif'
         ]);
 
+        $cat = Category::where('name_slug', $category_name_slug)->first();
+
+        $verify = Item::where('name_slug', str($request->name)->slug())->where('category_id', $cat->id)->first();;
+        if ($verify) {
+            return Redirect::to(route('item_create', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug]))
+            ->with('msg-warning', 'Já existe um item com esse nome!');
+        }
+
         $item = new Item;
         $item->name = $request->name;
         $item->name_slug = str($request->name)->slug();
@@ -133,6 +141,15 @@ class ItemController extends Controller
             'description' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:png,jpg,svg,jpeg,gif'
         ]);
+
+        // verificando se já existe uma category com esse slug
+        $cat = Category::where('name_slug', $category_name_slug)->first();
+
+        $verify = Item::where('name_slug', str($request->name)->slug())->where('category_id', $cat->id)->first();;
+        if ($verify) {
+            return Redirect::to(route('item_create', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug]))
+            ->with('msg-warning', 'Já existe um item com esse nome!');
+        }
 
         $item = Item::where('name_slug', $request->item_name_slug)->first();
         $item->name = $request->name ?? $item->name;
