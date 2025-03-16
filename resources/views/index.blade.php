@@ -60,6 +60,8 @@
         @endforeach
         @else
 
+        <h4 class="text-center">Ainda sem usuarios criadores</h4>
+
         @endif
 
 
