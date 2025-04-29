@@ -9,12 +9,13 @@ use Illuminate\Support\Facades\Redirect;
 
 class ThemeController extends Controller
 {
-    function index ($nickname, $category_name_slug) {
+    function index($nickname, $category_name_slug)
+    {
         // filtra pra encontrar uma category em especifico
         $db_theme = Category::where('name_slug', $category_name_slug)->where('user_nickname', $nickname)->first();
         // condicional caso o tanto de temas deletados seja igual o tanto de temas totais
-        
-        
+
+
         // pegando os dados dos itens do tema escolhido
         $db_url = $db_theme->items()->get();
 
@@ -26,13 +27,15 @@ class ThemeController extends Controller
         ]);
     }
 
-    function create ($nickname) {
+    function create($nickname)
+    {
         return view('modulos.generic.create', [
             'nickname' => $nickname
         ]);
     }
 
-    function store (Request $request, $nickname) {
+    function store(Request $request, $nickname)
+    {
 
         // name, description, image
 
@@ -46,7 +49,7 @@ class ThemeController extends Controller
         $verify = Category::where('name_slug', str($request->name)->slug())->where('user_nickname', $nickname)->first();;
         if ($verify) {
             return Redirect::to(route('category_create', ['nickname' => $nickname]))
-            ->with('msg-warning', 'Já existe uma categoria com esse nome!');
+                ->with('msg-warning', 'Já existe uma categoria com esse nome!');
         }
 
         // cadastrando a categoy
@@ -67,20 +70,21 @@ class ThemeController extends Controller
             $image->move(public_path('images/' . $nickname . '/categories/banners'), $path_image);
             $cat->image = $path_image;
         }
-        
+
 
         $cat->user_id = Auth::id();
         $cat->user_nickname = Auth::user()->nickname;
         $cat->save();
 
         return Redirect::to(route('user_index', ['nickname' => $nickname]))
-        ->with('msg-success', "Categoria criada com sucesso!");
+            ->with('msg-success', "Categoria criada com sucesso!");
     }
 
 
-    function edit ($nickname, $category_name_slug) {
+    function edit($nickname, $category_name_slug)
+    {
         // dados da categoria (theme)
-        $db = Category::where('name_slug', $category_name_slug)->first();
+        $db = Category::where('name_slug', $category_name_slug)->where('user_nickname', $nickname)->first();
         return view('modulos.generic.edit', [
             'db' => $db,
             'nickname' => $nickname,
@@ -89,25 +93,32 @@ class ThemeController extends Controller
         ]);
     }
 
-    function update (Request $request, $nickname) {
+    function update(Request $request, $nickname)
+    {
 
         // name, description, image
 
         $request
-        ->validate([
-            'name' => 'required|string|max:20',
-            'description' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg'
-        ]);
+            ->validate([
+                'name' => 'required|string|max:20',
+                'description' => 'required|string|max:255',
+                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg'
+            ]);
 
-        // verificando se já existe uma category com esse slug
-        $verify = Category::where('name_slug', str($request->name)->slug())->where('user_nickname', $nickname)->first();;
-        if ($verify) {
-            return Redirect::to(route('category_create', ['nickname' => $nickname]))
-            ->with('msg-warning', 'Já existe uma categoria com esse nome!');
-        }
+
+        // buscar os dados do item no banco de dados
 
         $cat = Category::find($request->id);
+
+        if ($cat->name != $request->name) {
+            // verificando se já existe uma category com esse slug
+            $verify = Category::where('name_slug', str($request->name)->slug())->where('user_nickname', $nickname)->first();
+            if ($verify) {
+                return Redirect::to(route('user_editor', ['nickname' => $nickname]))
+                    ->with('msg-warning', 'Já existe uma categoria com esse nome!');
+            }
+        }
+
 
         $cat->name = $request->name ?? $cat->name;
         // criando o slug
@@ -115,9 +126,9 @@ class ThemeController extends Controller
         $cat->description = $request->description ?? $cat->description;
 
 
-        if($request->remove_image){
+        if ($request->remove_image) {
             $cat->image = null;
-        }elseif ($request->hasFile('image') && $request->file('image')->isValid()) {
+        } elseif ($request->hasFile('image') && $request->file('image')->isValid()) {
             $image = $request->file('image');
             $extension = $image->getClientOriginalExtension();
             $data = strtotime('now');
@@ -129,16 +140,17 @@ class ThemeController extends Controller
         $cat->save();
 
 
-        return Redirect::to(route('index'))
-        ->with('msg-success', 'Categoria Atualizada com Sucesso!');
+        return Redirect::to(route('user_editor', ['nickname' => $nickname]))
+            ->with('msg-success', 'Categoria Atualizada com Sucesso!');
     }
-    function destroy (Request $request, $nickname) {
+    function destroy(Request $request, $nickname)
+    {
 
         $cat = Category::find($request->id);
 
         $cat->delete();
 
         return Redirect::to(route('user_editor', ['nickname' => $nickname]))
-        ->with('msg-success', "Categoria excluída com sucesso!");
+            ->with('msg-success', "Categoria excluída com sucesso!");
     }
 }
