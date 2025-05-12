@@ -43,6 +43,8 @@ class ThemeController extends Controller
             'name' => 'required|string|max:20',
             'description' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg'
+        ], [
+            'name.max' => 'Tamanho máximo de 20 caracteres excedido!'
         ]);
 
         // verificando se já existe uma category com esse slug
@@ -103,6 +105,8 @@ class ThemeController extends Controller
                 'name' => 'required|string|max:20',
                 'description' => 'required|string|max:255',
                 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg'
+            ], [
+                'name.max' => 'Tamanho máximo de 20 caracteres excedido!'
             ]);
 
 

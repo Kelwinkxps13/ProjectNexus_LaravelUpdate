@@ -28,6 +28,7 @@ class ContentController extends Controller
             'id' => $id,
             'item_name_slug' => $item_name_slug,
             'nickname' => $nickname,
+            'item' => $item,
             'category_name_slug' => $category_name_slug
         ]);
     }
@@ -111,6 +112,7 @@ class ContentController extends Controller
             'id' => $id,
             'item_name_slug' => $request->item_name_slug,
             'db' => $db,
+            'item' => $item,
             'nickname' => $nickname,
             'category_name_slug' => $category_name_slug
         ]);

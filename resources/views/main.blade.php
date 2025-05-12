@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Página Inicial')
+@section('title', 'Página Inicial de '.$nickname)
 @section('content')
 @auth
 <h5 class="mb-5">Dica: Dê uma olhadinha no <a href="{{route('user_editor', ['nickname' => $nickname])}}">editor</a> para ter acesso a personalização de suas coisas!</h5>

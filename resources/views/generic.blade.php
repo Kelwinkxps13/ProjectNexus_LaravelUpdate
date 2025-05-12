@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Criar Tela Inicial')
+@section('title', 'Categoria '.$db_theme->name.' de '.$nickname)
 @section('content')
 
 <h2 class="text-center my-3">

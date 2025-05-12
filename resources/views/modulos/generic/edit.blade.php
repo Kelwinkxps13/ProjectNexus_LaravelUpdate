@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('name', 'Criar Item')
+@section('title', 'Editar categoria '.$db->name)
 @section('content')
 
 <div class="container my-5">
@@ -19,6 +19,9 @@
                             <label for="name" class="form-label">Nome</label>
                             <input name="name" type="text" class="form-control custom-input"
                                 value="{{$db->name}}" placeholder="ex: Jogos" required>
+                            @error('name')
+                            <div class="text-danger">{{$message}}</div>
+                            @enderror
                         </div>
 
                         <div class="mb-4">

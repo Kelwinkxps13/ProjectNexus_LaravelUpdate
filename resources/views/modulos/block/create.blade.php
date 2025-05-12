@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('name', 'Criar Bloco')
+@section('title', 'Criar Bloco do item '.$item->name)
 @section('content')
 
 <div class="container my-5">

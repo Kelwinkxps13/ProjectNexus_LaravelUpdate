@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Tela Veja')
+@section('title', 'Sobre '.$item->name)
 @section('content')
 
 <!-- forma padrao de um bloco, com titulo, texto e imagem -->

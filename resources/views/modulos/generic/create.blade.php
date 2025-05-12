@@ -16,6 +16,9 @@
                             <label for="name" class="form-label">Nome</label>
                             <input name="name" type="text" class="form-control custom-input" id="name"
                                 placeholder="ex: Jogos" required>
+                            @error('name')
+                                <div class="text-danger">{{$message}}</div>
+                            @enderror
                         </div>
                         <div class="mb-4">
                             <label for="description" class="form-label">Descrição</label>

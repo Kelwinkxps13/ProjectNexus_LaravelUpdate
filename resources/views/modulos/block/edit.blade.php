@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('name', 'Editar Bloco')
+@section('title', 'Editar Bloco '.$db->name.' do item '.$item->name)
 @section('content')
 
 <div class="container my-5">

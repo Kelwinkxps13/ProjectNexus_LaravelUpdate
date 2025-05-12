@@ -32,6 +32,7 @@ class ItemController extends Controller
         $item_name_slug = $item->name_slug;
 
         return view('modulos.veja', [
+            'item' => $item,
             'db_url' => $db_url,
             'id' => $id,
             'item_name_slug' => $item_name_slug,
@@ -59,6 +60,7 @@ class ItemController extends Controller
             'page' => $page,
             'id' => $id,
             'nickname' => $nickname,
+            'cat' => $cat,
             'category_name_slug' => $category_name_slug
         ]);
     }
@@ -129,6 +131,7 @@ class ItemController extends Controller
             'page' => $page,
             'id' => $id,
             'db' => $db,
+            'cat' => $cat,
             'nickname' => $nickname,
             'category_name_slug' => $category_name_slug
         ]);

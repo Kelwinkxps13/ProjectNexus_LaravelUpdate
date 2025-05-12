@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Editor')
+@section('title', 'Editor de '.$nickname)
 @section('content')
 
 <div class="container py-4">

@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Criar Item')
+@section('title', 'Criar Item da categoria '.$cat->name)
 @section('content')
 
     <div class="container my-5">
