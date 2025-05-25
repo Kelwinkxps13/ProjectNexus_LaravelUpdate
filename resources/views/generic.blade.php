@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Categoria '.$db_theme->name.' de '.$nickname)
+@section('title', 'Tema '.$db_theme->name.' de '.$nickname)
 @section('content')
 
 <h2 class="text-center my-3">
@@ -21,9 +21,9 @@
 @if ($db_url->isEmpty())
 
     @if (!Auth::check())
-    <h4 class="text-center"> Categoria sem nada para mostrar</h2>
+    <h4 class="text-center"> Tema sem nada para mostrar</h2>
     @elseif (Auth::user()->nickname != $nickname)
-    <h4 class="text-center"> Categoria sem nada para mostrar</h2>
+    <h4 class="text-center"> Tema sem nada para mostrar</h2>
     @else
     <h2 class="text-center"> Não há nada para mostrar? Adicione algo!</h2>
 

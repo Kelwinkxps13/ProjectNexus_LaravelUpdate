@@ -1,9 +1,9 @@
 @extends('layouts.main')
 @section('title', 'Página Inicial de '.$nickname)
 @section('content')
-@auth
+@if (Auth::check() && Auth::user()->nickname == $nickname)
 <h5 class="mb-5">Dica: Dê uma olhadinha no <a href="{{route('user_editor', ['nickname' => $nickname])}}">editor</a> para ter acesso a personalização de suas coisas!</h5>
-@endauth
+@endif
 
 
 @if (Auth::check() && Auth::user()->nickname == $nickname && !$db_main)
@@ -45,25 +45,25 @@
         <br>
         <br>
         <div class="text-center mb-4 my-4">
-            <h4 class="mb-4 my-4">Usuário Sem categorias!</h4>
+            <h4 class="mb-4 my-4">Usuário Sem Temas!</h4>
 
         </div>
     @elseif (Auth::user()->nickname != $nickname)
         <br>
         <br>
         <div class="text-center mb-4 my-4">
-            <h4 class="mb-4 my-4">Usuário Sem categorias!</h4>
+            <h4 class="mb-4 my-4">Usuário Sem Temas!</h4>
 
         </div>
     @else
         <br>
         <br>
         <div class="text-center mb-4 my-4">
-            <h4 class="mb-4 my-4">Não tem nenhuma categoria? Adicione alguma!</h4>
+            <h4 class="mb-4 my-4">Não tem nenhum Tema a ser discutido? Adicione algum!</h4>
             <form action="{{route('category_create', ['nickname' => $nickname])}}" method="get">
                 @csrf
                 <button type="submit" class="btn btn-outline-primary">
-                    Adicionar Nova Categoria
+                    Adicionar Novo Tema
                 </button>
             </form>
         </div>
@@ -73,9 +73,9 @@
 <div class="row mt-5">
     <div class="col">
         @if (Auth::check() && Auth::user()->nickname == $nickname)
-        <h2 class="mb-3">Suas Categorias</h2>
+        <h2 class="mb-3">Seus Temas</h2>
         @else
-        <h2 class="mb-3">Categorias de {{$nickname}}</h2>
+        <h2 class="mb-3">Temas de {{$nickname}}</h2>
         @endif
 
         @foreach ($themes_foreach as $f)
@@ -93,7 +93,7 @@
                         <form action="{{route('category_index', ['nickname' => $nickname, 'category_name_slug' => $f->name_slug])}}" method="get">
                             @csrf
                             <button type="submit" class="btn btn-dark">
-                                Ver Categoria
+                                Ver Tema
                             </button>
                         </form>
                     </div>

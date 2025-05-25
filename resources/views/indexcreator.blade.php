@@ -4,7 +4,7 @@
 
 
 <h4 class="text-center my-4">Crie sua pagina inicial para dar início a sua jornada!</h4>
-<h5 class="text-center">Crie suas proprias categorias, adicione e fale sobre itens de seu interesse, personalize eles, compartilhe com outras pessoas e muito mais!</h5>
+<h5 class="text-center">Crie seus próprios temas a serem discutidos, adicione e fale sobre itens de seu interesse, personalize eles, compartilhe com outras pessoas e muito mais!</h5>
 
 <div class="container my-5">
     <div class="row justify-content-center">

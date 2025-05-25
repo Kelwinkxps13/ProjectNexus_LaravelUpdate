@@ -19,11 +19,11 @@
 
   <div class="row mt-5">
     <div class="col">
-      <h2 class="mb-3">categorias</h2>
+      <h2 class="mb-3">Temas</h2>
 
 
     @if ($themes_foreach->isEmpty())
-    <h4 class="text-center">sem categorias!</h4>
+    <h4 class="text-center">Sem Temas!</h4>
     @else
     @foreach ($themes_foreach as $f)
 
@@ -146,7 +146,7 @@
     <form action="{{route('category_create', ['nickname' => $nickname])}}" method="get">
       @csrf
       <button type="submit" class="btn btn-outline-primary">
-        Adicionar Nova Categoria
+        Adicionar Novo Tema
       </button>
     </form>
   </div>

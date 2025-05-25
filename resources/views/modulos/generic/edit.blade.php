@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Editar categoria '.$db->name)
+@section('title', 'Editar Tema '.$db->name)
 @section('content')
 
 <div class="container my-5">
@@ -7,7 +7,7 @@
         <div class="col-lg-8 col-md-10 col-12">
             <div class="card custom-card">
                 <div class="card-header custom-header text-center fs-4 py-4">
-                    <strong>Formulário de Edição de Categoria</strong>
+                    <strong>Formulário de Edição de Temas</strong>
                 </div>
                 <div class="card-body p-5">
                     <form action="{{route('category_update', ['nickname' => $nickname])}}" method="POST" enctype="multipart/form-data">

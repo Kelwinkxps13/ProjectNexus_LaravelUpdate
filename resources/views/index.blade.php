@@ -12,7 +12,7 @@
 
 <div class="row mt-5">
     <div class="col">
-        <h2 class="mb-3">Veja categorias criadas pela comunidade!</h2>
+        <h2 class="mb-3">Veja os temas criados pela comunidade!</h2>
 
         @if (!$themes_foreach->isEmpty())
 
@@ -31,7 +31,7 @@
                     <div>
                         <form action="{{ route('category_index', ['nickname' => $f->user_nickname, 'category_name_slug' => $f->name_slug]) }}" method="get">
                             <button type="submit" class="btn btn-dark">
-                                Ver Categoria
+                                Ver Tema
                             </button>
                         </form>
                     </div>
@@ -44,7 +44,7 @@
 
         @else
 
-        <h4 class="text-center">Ainda sem categorias criadas pela comunidade</h4>
+        <h4 class="text-center">Ainda sem temas criados pela comunidade</h4>
 
         @endif
 
