@@ -26,6 +26,11 @@ class User extends Authenticatable
         'following'
     ];
 
+    protected $casts = [
+    'followers' => 'array',
+    'following' => 'array'
+];
+
     /**
      * The attributes that should be hidden for serialization.
      *

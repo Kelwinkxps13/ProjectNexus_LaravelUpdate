@@ -11,6 +11,9 @@ class Item extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = ['name', 'description', 'image', 'category_id', 'name_slug', 'likes'];
+    protected $casts = [
+    'likes' => 'array',
+];
 
     public function category()
     {

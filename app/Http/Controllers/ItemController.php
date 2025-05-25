@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Auth;
 
 class ItemController extends Controller
 {
@@ -102,6 +103,7 @@ class ItemController extends Controller
         }
 
         $item->category_id = $request->id;
+        $item->likes = [];
         $item->save();
 
 
@@ -135,6 +137,57 @@ class ItemController extends Controller
             'nickname' => $nickname,
             'category_name_slug' => $category_name_slug
         ]);
+    }
+
+    function like($nickname, $category_name_slug, $item_name_slug)
+    {
+        // nome da categoria que vai ser modificada um item
+        $cat = Category::where('name_slug', $category_name_slug)->where('user_nickname', $nickname)->first();
+        if (!$cat) {
+            # code...
+            return Redirect::to(route('user_index', ['nickname' => $nickname]))
+                ->with('msg-warning', "categoria não encontrada!");
+        }
+
+        // informações sobre aquele item
+        $cat = Category::where('name_slug', $category_name_slug)->where('user_nickname', $nickname)->first();
+        $item = Item::where('name_slug', $item_name_slug)->where('category_id', $cat->id)->first();
+
+        $likes = $item->likes;
+        $likes[] = Auth::user()->nickname;
+
+        $item->likes = $likes;
+        $item->save();
+
+        return Redirect::to(route('category_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug]))
+            ->with('msg-success', "Item curtido com sucesso!");
+    }
+    function unlike($nickname, $category_name_slug, $item_name_slug)
+    {
+        // nome da categoria que vai ser modificada um item
+        $cat = Category::where('name_slug', $category_name_slug)->where('user_nickname', $nickname)->first();
+        if (!$cat) {
+            # code...
+            return Redirect::to(route('user_index', ['nickname' => $nickname]))
+                ->with('msg-warning', "categoria não encontrada!");
+        }
+
+        // informações sobre aquele item
+        $cat = Category::where('name_slug', $category_name_slug)->where('user_nickname', $nickname)->first();
+        $item = Item::where('name_slug', $item_name_slug)->where('category_id', $cat->id)->first();
+
+        $likes = $item->likes;
+
+        $key = array_search(Auth::user()->nickname, $likes);
+        unset($likes[$key]);
+
+        $likes = array_values($likes);
+
+        $item->likes = $likes;
+        $item->save();
+
+        return Redirect::to(route('category_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug]))
+            ->with('msg-success', "Item descurtido com sucesso!");
     }
 
     function update(Request $request, $nickname, $category_name_slug)

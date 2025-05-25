@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Item;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -18,6 +19,25 @@ class ThemeController extends Controller
 
         // pegando os dados dos itens do tema escolhido
         $db_url = $db_theme->items()->get();
+
+        // devemos criar a variavel is_liked pra saber se o elemento curtiu ou não aquele item
+        // porem isso deve ser feito com cada item...
+
+        if (Auth::check()) {
+            foreach ($db_url as $key => $value) {
+                // se a pessoa já curtiu esse item
+                $verify = in_array(Auth::user()->nickname, $db_url[$key]->likes);
+
+                //caso tenha curtido, o sistema adicionará uma variável no item dizendo que a pessoa já curtiu
+                if ($verify) {
+                    $db_url[$key]->is_liked = true;
+                }
+
+                // dd($verify);
+
+            }
+        }
+
 
         return view('generic', [
             'db_theme' => $db_theme,
