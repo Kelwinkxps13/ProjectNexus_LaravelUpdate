@@ -26,7 +26,7 @@ class ThemeController extends Controller
         if (Auth::check()) {
             foreach ($db_url as $key => $value) {
                 // se a pessoa já curtiu esse item
-                $verify = in_array(Auth::user()->nickname, $db_url[$key]->likes);
+                $verify = in_array(Auth::id(), $db_url[$key]->likes);
 
                 //caso tenha curtido, o sistema adicionará uma variável no item dizendo que a pessoa já curtiu
                 if ($verify) {

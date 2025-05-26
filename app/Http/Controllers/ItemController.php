@@ -154,7 +154,7 @@ class ItemController extends Controller
         $item = Item::where('name_slug', $item_name_slug)->where('category_id', $cat->id)->first();
 
         $likes = $item->likes;
-        $likes[] = Auth::user()->nickname;
+        $likes[] = Auth::id();
 
         $item->likes = $likes;
         $item->save();
@@ -178,7 +178,7 @@ class ItemController extends Controller
 
         $likes = $item->likes;
 
-        $key = array_search(Auth::user()->nickname, $likes);
+        $key = array_search(Auth::id(), $likes);
         unset($likes[$key]);
 
         $likes = array_values($likes);
