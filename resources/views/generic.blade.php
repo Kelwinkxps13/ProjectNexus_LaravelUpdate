@@ -80,7 +80,7 @@
                                 @endif
                                 @endif
                             </div>
-                            <label for="">Likes: {{ count($f->likes) }} Dislikes: {{count($f->dislikes)}}</label><br>
+                            <!-- <label for="">Likes: {{ count($f->likes) }} Dislikes: {{count($f->dislikes)}}</label><br> -->
                             @if (Auth::check())
                             {{---
 
@@ -97,14 +97,14 @@
                                     <button type="submit"
                                         class="p-2 bg-transparent border-0 outline-none focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full">
                                         <i class="fa-solid fa-thumbs-up text-gray-700 hover:text-blue-600 transition-all duration-200"></i>
-                                    </button>
+                                    </button> {{ count($f->likes) }} 
                                 </form>
                                 <form action="{{route('item_dislike', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $f->name_slug])}}" method="post">
                                     @csrf
                                     <button type="submit"
                                         class="p-2 bg-transparent border-0 outline-none focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full">
                                         <i class="fa-regular fa-thumbs-down text-gray-700 hover:text-blue-600 transition-all duration-200"></i>
-                                    </button>
+                                    </button> {{ count($f->dislikes) }}
                                 </form>
                             </div>
                             @elseif ($f->like_type === 2)
@@ -114,14 +114,14 @@
                                     <button type="submit"
                                         class="p-2 bg-transparent border-0 outline-none focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full">
                                         <i class="fa-regular fa-thumbs-up text-gray-700 hover:text-blue-600 transition-all duration-200"></i>
-                                    </button>
+                                    </button> {{ count($f->likes) }}
                                 </form>
                                 <form action="{{route('item_undislike', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $f->name_slug])}}" method="post">
                                     @csrf
                                     <button type="submit"
                                         class="p-2 bg-transparent border-0 outline-none focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full">
                                         <i class="fa-solid fa-thumbs-down text-gray-700 hover:text-blue-600 transition-all duration-200"></i>
-                                    </button>
+                                    </button> {{ count($f->dislikes) }}
                                 </form>
                             </div>
                             @else
@@ -131,14 +131,14 @@
                                     <button type="submit"
                                         class="p-2 bg-transparent border-0 outline-none focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full">
                                         <i class="fa-regular fa-thumbs-up text-gray-700 hover:text-blue-600 transition-all duration-200"></i>
-                                    </button>
+                                    </button> {{ count($f->likes) }}
                                 </form>
                                 <form action="{{route('item_dislike', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $f->name_slug])}}" method="post">
                                     @csrf
                                     <button type="submit"
                                         class="p-2 bg-transparent border-0 outline-none focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full">
                                         <i class="fa-regular fa-thumbs-down text-gray-700 hover:text-blue-600 transition-all duration-200"></i>
-                                    </button>
+                                    </button> {{ count($f->dislikes) }}
                                 </form>
                             </div>
 
