@@ -13,6 +13,7 @@ class Item extends Model
     protected $fillable = ['name', 'description', 'image', 'category_id', 'name_slug', 'likes'];
     protected $casts = [
     'likes' => 'array',
+    'dislikes' => 'array',
 ];
 
     public function category()

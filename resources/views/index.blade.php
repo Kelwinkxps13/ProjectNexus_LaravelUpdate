@@ -9,7 +9,6 @@
 <h4 class="text-center">Olá, {{Auth::user()->nickname}}!</h4>
 @endauth
 
-
 <div class="row mt-5">
     <div class="col">
         <h2 class="mb-3">Veja os temas criados pela comunidade!</h2>

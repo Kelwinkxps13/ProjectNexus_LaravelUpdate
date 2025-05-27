@@ -80,18 +80,68 @@
                                 @endif
                                 @endif
                             </div>
-                            <label for="">Curtidas: {{ count($f->likes) }}</label><br>
+                            <label for="">Likes: {{ count($f->likes) }} Dislikes: {{count($f->dislikes)}}</label><br>
                             @if (Auth::check())
-                            @if (!$f->is_liked)
-                            <form action="{{route('item_like', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $f->name_slug])}}" method="post">
-                                @csrf
-                                <button type="submit" class="btn btn-primary">Curtir</button>
-                            </form>
+                            {{---
+
+                                like_type:
+                                0 => nem like nem dislike
+                                1 => deu like
+                                2 => deu dislike
+                                
+                                ---}}
+                            @if ($f->like_type === 1)
+                            <div class="d-flex gap-2">
+                                <form action="{{route('item_unlike', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $f->name_slug])}}" method="post">
+                                    @csrf
+                                    <button type="submit"
+                                        class="p-2 bg-transparent border-0 outline-none focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full">
+                                        <i class="fa-solid fa-thumbs-up text-gray-700 hover:text-blue-600 transition-all duration-200"></i>
+                                    </button>
+                                </form>
+                                <form action="{{route('item_dislike', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $f->name_slug])}}" method="post">
+                                    @csrf
+                                    <button type="submit"
+                                        class="p-2 bg-transparent border-0 outline-none focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full">
+                                        <i class="fa-regular fa-thumbs-down text-gray-700 hover:text-blue-600 transition-all duration-200"></i>
+                                    </button>
+                                </form>
+                            </div>
+                            @elseif ($f->like_type === 2)
+                            <div class="d-flex gap-2">
+                                <form action="{{route('item_like', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $f->name_slug])}}" method="post">
+                                    @csrf
+                                    <button type="submit"
+                                        class="p-2 bg-transparent border-0 outline-none focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full">
+                                        <i class="fa-regular fa-thumbs-up text-gray-700 hover:text-blue-600 transition-all duration-200"></i>
+                                    </button>
+                                </form>
+                                <form action="{{route('item_undislike', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $f->name_slug])}}" method="post">
+                                    @csrf
+                                    <button type="submit"
+                                        class="p-2 bg-transparent border-0 outline-none focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full">
+                                        <i class="fa-solid fa-thumbs-down text-gray-700 hover:text-blue-600 transition-all duration-200"></i>
+                                    </button>
+                                </form>
+                            </div>
                             @else
-                            <form action="{{route('item_unlike', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $f->name_slug])}}" method="post">
-                                @csrf
-                                <button type="submit" class="btn btn-danger">Descurtir</button>
-                            </form>
+                            <div class="d-flex gap-2">
+                                <form action="{{route('item_like', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $f->name_slug])}}" method="post">
+                                    @csrf
+                                    <button type="submit"
+                                        class="p-2 bg-transparent border-0 outline-none focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full">
+                                        <i class="fa-regular fa-thumbs-up text-gray-700 hover:text-blue-600 transition-all duration-200"></i>
+                                    </button>
+                                </form>
+                                <form action="{{route('item_dislike', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $f->name_slug])}}" method="post">
+                                    @csrf
+                                    <button type="submit"
+                                        class="p-2 bg-transparent border-0 outline-none focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full">
+                                        <i class="fa-regular fa-thumbs-down text-gray-700 hover:text-blue-600 transition-all duration-200"></i>
+                                    </button>
+                                </form>
+                            </div>
+
                             @endif
 
                             @endif

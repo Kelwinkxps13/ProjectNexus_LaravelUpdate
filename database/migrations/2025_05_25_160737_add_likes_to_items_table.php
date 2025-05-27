@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('items', function (Blueprint $table) {
             $table->json('likes')->nullable();
+            $table->json('dislikes')->nullable();
         });
     }
 
@@ -22,7 +23,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('items', function (Blueprint $table) {
-            $table->dropColumn('likes');
+            $table->dropColumn('dislikes');
         });
     }
 };

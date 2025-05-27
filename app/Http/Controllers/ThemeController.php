@@ -25,12 +25,23 @@ class ThemeController extends Controller
 
         if (Auth::check()) {
             foreach ($db_url as $key => $value) {
+                // passo inicial: definir como 0 o like_type
+                $db_url[$key]->like_type = 0;
+
                 // se a pessoa já curtiu esse item
-                $verify = in_array(Auth::id(), $db_url[$key]->likes);
+                $verify_like = in_array(Auth::id(), $db_url[$key]->likes);
 
                 //caso tenha curtido, o sistema adicionará uma variável no item dizendo que a pessoa já curtiu
-                if ($verify) {
-                    $db_url[$key]->is_liked = true;
+                if ($verify_like) {
+                    $db_url[$key]->like_type = 1;
+                }
+
+                // se a pessoa já discurtiu esse item
+                $verify_dislike = in_array(Auth::id(), $db_url[$key]->dislikes);
+
+                //caso tenha curtido, o sistema adicionará uma variável no item dizendo que a pessoa já curtiu
+                if ($verify_dislike) {
+                    $db_url[$key]->like_type = 2;
                 }
 
                 // dd($verify);

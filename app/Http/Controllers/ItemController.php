@@ -104,6 +104,7 @@ class ItemController extends Controller
 
         $item->category_id = $request->id;
         $item->likes = [];
+        $item->dislikes = [];
         $item->save();
 
 
@@ -153,6 +154,17 @@ class ItemController extends Controller
         $cat = Category::where('name_slug', $category_name_slug)->where('user_nickname', $nickname)->first();
         $item = Item::where('name_slug', $item_name_slug)->where('category_id', $cat->id)->first();
 
+
+        $dislikes = $item->dislikes;
+
+        // verifica se o elemento ja deu dislike anteriormente
+        $key = array_search(Auth::id(), $dislikes);
+
+        // caso tenha dado, ele tira esse dislike, e laika
+        unset($dislikes[$key]);
+        $dislikes = array_values($dislikes);
+        $item->dislikes = $dislikes;
+
         $likes = $item->likes;
         $likes[] = Auth::id();
 
@@ -160,7 +172,7 @@ class ItemController extends Controller
         $item->save();
 
         return Redirect::to(route('category_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug]))
-            ->with('msg-success', "Item curtido com sucesso!");
+            ->with('msg-success', "Item marcado como LIKE com sucesso!");
     }
     function unlike($nickname, $category_name_slug, $item_name_slug)
     {
@@ -187,7 +199,69 @@ class ItemController extends Controller
         $item->save();
 
         return Redirect::to(route('category_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug]))
-            ->with('msg-success', "Item descurtido com sucesso!");
+            ->with('msg-success', "Item desmarcado como LIKE com sucesso!");
+    }
+
+    function dislike($nickname, $category_name_slug, $item_name_slug)
+    {
+        // nome da categoria que vai ser modificada um item
+        $cat = Category::where('name_slug', $category_name_slug)->where('user_nickname', $nickname)->first();
+        if (!$cat) {
+            # code...
+            return Redirect::to(route('user_index', ['nickname' => $nickname]))
+                ->with('msg-warning', "categoria não encontrada!");
+        }
+
+        // informações sobre aquele item
+        $cat = Category::where('name_slug', $category_name_slug)->where('user_nickname', $nickname)->first();
+        $item = Item::where('name_slug', $item_name_slug)->where('category_id', $cat->id)->first();
+
+
+        $likes = $item->likes;
+
+        // verifica se o elemento ja deu like anteriormente
+        $key = array_search(Auth::id(), $likes);
+
+        // caso tenha dado, ele tira esse like, e dislaika
+        unset($likes[$key]);
+        $likes = array_values($likes);
+        $item->likes = $likes;
+
+        $dislikes = $item->dislikes;
+        $dislikes[] = Auth::id();
+
+        $item->dislikes = $dislikes;
+        $item->save();
+
+        return Redirect::to(route('category_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug]))
+            ->with('msg-success', "Item marcado como DISLIKE com sucesso!");
+    }
+    function undislike($nickname, $category_name_slug, $item_name_slug)
+    {
+        // nome da categoria que vai ser modificada um item
+        $cat = Category::where('name_slug', $category_name_slug)->where('user_nickname', $nickname)->first();
+        if (!$cat) {
+            # code...
+            return Redirect::to(route('user_index', ['nickname' => $nickname]))
+                ->with('msg-warning', "categoria não encontrada!");
+        }
+
+        // informações sobre aquele item
+        $cat = Category::where('name_slug', $category_name_slug)->where('user_nickname', $nickname)->first();
+        $item = Item::where('name_slug', $item_name_slug)->where('category_id', $cat->id)->first();
+
+        $dislikes = $item->dislikes;
+
+        $key = array_search(Auth::id(), $dislikes);
+        unset($dislikes[$key]);
+
+        $dislikes = array_values($dislikes);
+
+        $item->dislikes = $dislikes;
+        $item->save();
+
+        return Redirect::to(route('category_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug]))
+            ->with('msg-success', "Item desmarcado como LIKE com sucesso!");
     }
 
     function update(Request $request, $nickname, $category_name_slug)
