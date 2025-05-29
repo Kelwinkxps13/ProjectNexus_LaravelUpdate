@@ -107,6 +107,13 @@
             </div>
         </form>
 
+        {{---
+            
+            Comentários dos usuários ficarão aqui 
+            
+            ---}}
+
+
 
     </div>
 
