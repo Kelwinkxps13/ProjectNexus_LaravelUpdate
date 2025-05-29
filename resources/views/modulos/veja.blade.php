@@ -8,16 +8,7 @@
 
 
 
-
-
-
-
-
-
-
-
-
-@if ($db_url->isEmpty())
+    @if ($db_url->isEmpty())
 
     @if (!Auth::check())
     <h4 class="text-center">Sem conteúdos para mostrar</h4>
@@ -34,10 +25,10 @@
         </div>
     </div>
     @endif
-    
-@else
 
-@foreach ($db_url as $f)
+    @else
+
+    @foreach ($db_url as $f)
 
     @if ($f->image)
     <div class="row mb-4 my-4">
@@ -91,7 +82,39 @@
         </form>
     </div>
     @endif
-@endif
+
+
+    {{---
+
+        Area reservada para fazer o sistema de comentarios.
+        dentro do primeiro IF, ou seja, precisa ter conteudo no item para alguem poder comentar sobre.
+    
+    ---}}
+
+
+    <div class="container my-5">
+        <h4 class="text-center">
+            Seção de Comentários
+        </h4>
+
+        <form action="" method="post">
+            <div class="col">
+                <textarea id="autoTextarea" class="form-control custom-input" placeholder="Digite aqui..." rows="1" style="overflow:hidden; resize: none;"></textarea>
+
+                <div class="d-flex flex-row-reverse">
+                    <button class="btn custom-btn" type="submit">Comentar</button>
+                </div>
+            </div>
+        </form>
+
+
+    </div>
+
+
+
+
+
+    @endif
 
 </div>
 @endsection
