@@ -20,7 +20,7 @@
                             </div>
                             <div class="mb-4">
                                 <label for="description" class="form-label">Descrição</label>
-                                <textarea name="description" rows="4" class="form-control custom-input" id="description"
+                                <textarea name="description" id="autoTextarea" style="overflow:hidden; resize: none;" rows="4" class="form-control custom-input" id="description"
                                     placeholder="ex: Um jogo com detalhes incríveis, história maravilhosa e um ambiente realista mais incrível ainda..." required></textarea>
                             </div>
                             <div class="mb-4">

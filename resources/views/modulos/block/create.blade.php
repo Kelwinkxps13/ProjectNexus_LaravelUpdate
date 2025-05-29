@@ -20,8 +20,8 @@
                                 placeholder="ex: Introdução" required>
                         </div>
                         <div class="mb-4">
-                            <label for="description" class="form-label">Descrição</label>
-                            <textarea name="description" rows="4" class="form-control custom-input" id="description"
+                            <label for="description"  class="form-label">Descrição</label>
+                            <textarea name="description" rows="4" id="autoTextarea" style="overflow:hidden; resize: none;" class="form-control custom-input" id="description"
                                 placeholder="ex: O jogo conta a história de Arthur Morgan, membro da gangue Van Der Linde que está fugindo das autoridades devido a um assalto que fizeram em Blackwater..." required></textarea>
                         </div>
                         <div class="mb-4">

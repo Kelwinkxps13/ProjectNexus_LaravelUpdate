@@ -24,7 +24,7 @@
 
                         <div class="mb-4">
                             <label for="description" class="form-label">Descrição</label>
-                            <textarea name="description" rows="4" class="form-control custom-input"
+                            <textarea name="description" rows="4" id="autoTextarea" style="overflow:hidden; resize: none;" class="form-control custom-input"
                                 placeholder="ex: Um jogo com detalhes incríveis, história maravilhosa e um ambiente realista mais incrível ainda..." required>{{$db->description}}</textarea>
                         </div>
 

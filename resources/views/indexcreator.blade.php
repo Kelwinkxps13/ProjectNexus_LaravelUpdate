@@ -28,7 +28,7 @@
                         </div>
                         <div class="mb-4">
                             <label for="description" class="form-label">Descrição</label>
-                            <textarea name="description" rows="4" class="form-control custom-input" id="description"
+                            <textarea name="description" rows="4" id="autoTextarea" style="overflow:hidden; resize: none;" class="form-control custom-input" id="description"
                                 placeholder="ex: aqui vou postar algumas coisas que acho interessante."
                                 required></textarea>
                         </div>
