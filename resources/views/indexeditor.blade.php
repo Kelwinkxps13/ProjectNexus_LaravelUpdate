@@ -1,6 +1,14 @@
+{{--
+    Importação inicial do projeto.
+    Serve pra pegar o layout da página principal, e aplicar em cada view em que será extendido.
+--}}
 @extends('layouts.main')
 @section('title', 'Editar Tela Inicial')
 @section('content')
+
+{{--
+    Formulário para editar a tela inicial criada pelo usuário (autenticado)
+--}}
 
 <div class="container my-5">
     <div class="row justify-content-center">

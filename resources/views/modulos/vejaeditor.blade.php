@@ -1,3 +1,7 @@
+{{--
+    Importação inicial do projeto.
+    Serve pra pegar o layout da página principal, e aplicar em cada view em que será extendido.
+--}}
 @extends('layouts.main')
 @section('title', 'Editando o item '.$title)
 @section('content')
@@ -7,6 +11,9 @@
         <div class="col">
             <h2 class="mb-3">Conteúdo(s) de {{$title}}</h2>
 
+            {{--$_COOKIE
+                Verifica se o dono da página já adicionou algum conteúdo praquele item
+            --}}
             @if ($db_url->isEmpty())
             <h2 class="text-center text-dark">Sem Conteúdos para editar!</h2>
             @else

@@ -1,3 +1,7 @@
+{{--
+    Importação inicial do projeto.
+    Serve pra pegar o layout da página principal, e aplicar em cada view em que será extendido.
+--}}
 @extends('layouts.main')
 @section('title', 'Editor de '.$nickname)
 @section('content')
@@ -22,8 +26,14 @@
       <h2 class="mb-3">Temas</h2>
 
 
+      {{--$_COOKIE
+        Caso o forach dos temas esteja vazio
+      --}}
     @if ($themes_foreach->isEmpty())
     <h4 class="text-center">Sem Temas!</h4>
+    {{--$_COOKIE
+      Caso o foreach dos temas não esteja vazio
+    --}}
     @else
     @foreach ($themes_foreach as $f)
 

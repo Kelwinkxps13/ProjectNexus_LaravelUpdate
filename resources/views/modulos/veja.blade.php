@@ -1,3 +1,7 @@
+{{--
+    Importação inicial do projeto.
+    Serve pra pegar o layout da página principal, e aplicar em cada view em que será extendido.
+--}}
 @extends('layouts.main')
 @section('title', 'Sobre '.$item->name)
 @section('content')
@@ -7,13 +11,26 @@
 <div class="container-fluid my-4">
 
 
-
+    {{--$_COOKIE
+        Caso não tenha conteúdo para ser mostrado
+    --}}
     @if ($db_url->isEmpty())
 
+    {{--$_COOKIE
+        Verifica se o usuário NÃO está logado
+    --}}
     @if (!Auth::check())
     <h4 class="text-center">Sem conteúdos para mostrar</h4>
+
+    {{--$_COOKIE
+        Caso NÃO seja o criador
+    --}}
     @elseif (Auth::user()->nickname != $nickname)
     <h4 class="text-center">Sem conteúdos para mostrar</h4>
+
+    {{--$_COOKIE
+        Caso seja o criador
+    --}}
     @else
     <h2 class="text-center text-dark">Não tem nenhum Conteúdo? Adicione algum!</h2>
     <div class="row mt-4">
@@ -30,6 +47,12 @@
 
     @foreach ($db_url as $f)
 
+    {{--$_COOKIE
+        Caso tenha imagem naquele bloco de conteúdo.
+
+        se tiver, o texto ficará um pouco para o lado, enquando a imagem fica do lado.
+        Caso não tenha, o texto ocupará a tela inteira.
+    --}}
     @if ($f->image)
     <div class="row mb-4 my-4">
         <div class="col-md-9 d-flex flex-column justify-content-center text-break">
@@ -71,6 +94,9 @@
     </div>
     @endif
     @endforeach
+    {{--$_COOKIE
+        Verifica se tem um usuário logado, e se tiver, verifica também se ele é o usuário criador
+    --}}
     @if (Auth::check() && Auth::user()->nickname == $nickname)
     <div class="d-flex justify-content-center gap-3 float-end my-4">
         <a href="{{route('item_editor', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $item_name_slug])}}"

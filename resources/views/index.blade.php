@@ -1,10 +1,20 @@
+{{--
+    Importação inicial do projeto.
+    Serve pra pegar o layout da página principal, e aplicar em cada view em que será extendido.
+--}}
 @extends('layouts.main')
 @section('title', 'Página Inicial')
 @section('content')
 
+{{--
+    Caso o usuário não esteja autenticado
+--}}
 @guest
 <h4 class="text-center">Olá, Visitante!</h4>
 @endguest
+{{--
+    Caso o usuário esteja autenticado
+--}}
 @auth
 <h4 class="text-center">Olá, {{Auth::user()->nickname}}!</h4>
 @endauth
@@ -13,50 +23,71 @@
     <div class="col">
         <h2 class="mb-3">Veja os temas criados pela comunidade!</h2>
 
+        {{--
+            Caso tenha Temas a serem mostrados
+        --}}
         @if (!$themes_foreach->isEmpty())
 
-        @foreach ($themes_foreach as $f)
-        <div class="card mb-4 shadow-sm">
 
-            <!-- Banner de Fundo -->
-            <div class="banner {{($f->image === null)?'no-image':''}} %>">
-                @if($f->image !==null)
-                <img src="/images/{{$f->user_nickname}}/categories/banners/{{$f->image}}" alt="Profile">
-                @endif
-                <div class="overlay">
-                    <h4 class="card-title text-white title">
-                        {{$f->name}}
-                    </h4>
-                    <div>
-                        <form action="{{ route('category_index', ['nickname' => $f->user_nickname, 'category_name_slug' => $f->name_slug]) }}" method="get">
-                            <button type="submit" class="btn btn-dark">
-                                Ver Tema
-                            </button>
-                        </form>
+            {{--
+                Foreach dos temas pra serem mostrados
+            --}}
+            @foreach ($themes_foreach as $f)
+            <div class="card mb-4 shadow-sm">
+
+                <!-- Banner de Fundo -->
+                <div class="banner {{($f->image === null)?'no-image':''}} %>">
+                    @if($f->image !==null)
+                    <img src="/images/{{$f->user_nickname}}/categories/banners/{{$f->image}}" alt="Profile">
+                    @endif
+                    <div class="overlay">
+                        <h4 class="card-title text-white title">
+                            {{$f->name}}
+                        </h4>
+                        <div>
+                            <form action="{{ route('category_index', ['nickname' => $f->user_nickname, 'category_name_slug' => $f->name_slug]) }}" method="get">
+                                <button type="submit" class="btn btn-dark">
+                                    Ver Tema
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
 
-        @endforeach
+            @endforeach
 
+
+        {{--
+            Caso não tenha temas a serem mostrados
+        --}}
         @else
 
         <h4 class="text-center">Ainda sem temas criados pela comunidade</h4>
 
         @endif
 
+        {{--
+            Se tiverem usuários criadores a serem mostrados
+        --}}
         @if (!$users_foreach->isEmpty())
         <h2 class="mb-3">Veja os ultimos 10 usuarios Criadores!</h2>
 
-        @foreach ($users_foreach as $f)
+        {{--
+            Foreach desses usuários
+        --}}
+            @foreach ($users_foreach as $f)
 
-        <h4>
-            <a href="{{route('user_index', ['nickname' => $f->user_nickname]) }}"> Usuário - {{$f->user_nickname}}</a>
-        </h4>
+                <h4>
+                    <a href="{{route('user_index', ['nickname' => $f->user_nickname]) }}"> Usuário - {{$f->user_nickname}}</a>
+                </h4>
 
-        @endforeach
+            @endforeach
+
+        {{--
+            Caso não tenham usuários criados ainda
+        --}}
         @else
 
         <h4 class="text-center">Ainda sem usuarios criadores</h4>

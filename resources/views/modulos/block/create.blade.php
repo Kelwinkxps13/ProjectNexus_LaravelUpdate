@@ -1,3 +1,7 @@
+{{--
+    Importação inicial do projeto.
+    Serve pra pegar o layout da página principal, e aplicar em cada view em que será extendido.
+--}}
 @extends('layouts.main')
 @section('title', 'Criar Bloco do item '.$item->name)
 @section('content')
