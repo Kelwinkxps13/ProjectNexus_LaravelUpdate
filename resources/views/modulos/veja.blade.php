@@ -123,21 +123,42 @@
             Seção de Comentários
         </h4>
 
-        <form action="" method="post">
+        {{---
+
+            Comentários dos usuários ficarão aqui 
+
+            os comentários terão uma hierarquia:
+
+            comentário > resposta > réplica
+
+            consideremos os níveis:
+
+            0 > 1 > 2
+
+            ---}}
+
+        {{--$_COOKIE
+            Adicionar um comentário
+        --}}
+        @if (Auth::check())
+        <form action="{{route('add_comment_0', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $item_name_slug])}}" method="post">
             <div class="col">
-                <textarea id="autoTextarea" class="form-control custom-input" placeholder="Digite aqui..." rows="1" style="overflow:hidden; resize: none;"></textarea>
+                <textarea id="autoTextarea" name="text" class="form-control custom-input" placeholder="Digite aqui..." rows="1" style="overflow:hidden; resize: none;"></textarea>
 
                 <div class="d-flex flex-row-reverse">
                     <button class="btn custom-btn" type="submit">Comentar</button>
                 </div>
             </div>
         </form>
+        @endif
 
-        {{---
-            
-            Comentários dos usuários ficarão aqui 
-            
-            ---}}
+
+        {{--$_COOKIE
+            Ver os comentários
+        --}}
+        @if (isset($comments))
+
+        @endif
 
 
 

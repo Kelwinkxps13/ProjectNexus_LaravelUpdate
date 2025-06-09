@@ -58,6 +58,12 @@ Route::post('/{nickname}/{category_name_slug}/{item_name_slug}/like', [ItemContr
 Route::post('/{nickname}/{category_name_slug}/{item_name_slug}/unlike', [ItemController::class, 'unlike'])->name('item_unlike'); // feito com sucesso!
 Route::post('/{nickname}/{category_name_slug}/{item_name_slug}/dislike', [ItemController::class, 'dislike'])->name('item_dislike'); // feito com sucesso!
 Route::post('/{nickname}/{category_name_slug}/{item_name_slug}/undislike', [ItemController::class, 'undislike'])->name('item_undislike'); // feito com sucesso!
+
+// adicionar comentários
+Route::post('/{nickname}/{category_name_slug}/{item_name_slug}/add_comment_0', [ItemController::class, 'add_comment_0'])->name('add_comment_0'); // feito com sucesso!
+Route::post('/{nickname}/{category_name_slug}/{item_name_slug}/add_comment_1', [ItemController::class, 'add_comment_1'])->name('add_comment_1'); // feito com sucesso!
+Route::post('/{nickname}/{category_name_slug}/{item_name_slug}/add_comment_2', [ItemController::class, 'add_comment_2'])->name('add_comment_2'); // feito com sucesso!
+
 Route::get('/{nickname}/{category_name_slug}/edit/{item_name_slug}', [ItemController::class, 'edit'])->middleware(['is_creator', 'has_main_page'])->name('item_edit'); // feito com sucesso!
 Route::patch('/{nickname}/{category_name_slug}/', [ItemController::class, 'update'])->middleware(['is_creator', 'has_main_page'])->name('item_update'); // feito com sucesso!
 Route::delete('/{nickname}/{category_name_slug}/', [ItemController::class, 'destroy'])->middleware(['is_creator', 'has_main_page'])->name('item_destroy'); // feito com sucesso!

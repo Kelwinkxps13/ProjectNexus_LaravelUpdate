@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -263,6 +264,120 @@ class ItemController extends Controller
         return Redirect::to(route('category_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug]))
             ->with('msg-success', "Item desmarcado como LIKE com sucesso!");
     }
+
+
+    function add_comment_0($nickname, $category_name_slug, $item_name_slug, Request $request)
+    {
+        // nome da categoria que vai ser modificada um item
+        $cat = Category::where('name_slug', $category_name_slug)->where('user_nickname', $nickname)->first();
+        if (!$cat) {
+            # code...
+            return Redirect::to(route('user_index', ['nickname' => $nickname]))
+                ->with('msg-warning', "categoria não encontrada!");
+        }
+
+        // informações sobre aquele item
+        $cat = Category::where('name_slug', $category_name_slug)->where('user_nickname', $nickname)->first();
+        $item = Item::where('name_slug', $item_name_slug)->where('category_id', $cat->id)->first();
+
+        //validação dos campos
+        $request->validate([
+            'text' => 'required|string'
+        ]);
+
+        // comentários
+        $comment = new Comment();
+
+        $comment->text = $request->text; //texto do comentário
+        $comment->id_commenter = Auth::id(); //id do elemento que está comentando
+        $comment->id_creator = $cat->user_id; // id do dono do item
+        $comment->id_item = $item->id; // id do item
+        $comment->response_to = null; // comentário no qual esse comentário está respondendo
+        $comment->comment_level = 0; // nivel 0 = comentário base
+        $comment->likes = [];
+        $comment->dislikes = [];
+
+        $comment->save();
+
+        return Redirect::to(route('item_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' =>  $request->item_name_slug]))
+            ->with('msg-success', "comentário adicionado com sucesso!");
+    }
+
+    function add_comment_1($nickname, $category_name_slug, $item_name_slug, Request $request)
+    {
+        // nome da categoria que vai ser modificada um item
+        $cat = Category::where('name_slug', $category_name_slug)->where('user_nickname', $nickname)->first();
+        if (!$cat) {
+            # code...
+            return Redirect::to(route('user_index', ['nickname' => $nickname]))
+                ->with('msg-warning', "categoria não encontrada!");
+        }
+
+        // informações sobre aquele item
+        $cat = Category::where('name_slug', $category_name_slug)->where('user_nickname', $nickname)->first();
+        $item = Item::where('name_slug', $item_name_slug)->where('category_id', $cat->id)->first();
+
+        //validação dos campos
+        $request->validate([
+            'text' => 'required|string'
+        ]);
+
+        // comentários
+        $comment = new Comment();
+
+        $comment->text = $request->text; //texto do comentário
+        $comment->id_commenter = Auth::id(); //id do elemento que está comentando
+        $comment->id_creator = $cat->user_id; // id do dono do item
+        $comment->id_item = $item->id; // id do item
+        $comment->response_to = null; // comentário no qual esse comentário está respondendo
+        $comment->comment_level = 1; // nivel 0 = comentário base
+        $comment->likes = [];
+        $comment->dislikes = [];
+
+        $comment->save();
+
+        return Redirect::to(route('item_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' =>  $request->item_name_slug]))
+            ->with('msg-success', "comentário adicionado com sucesso!");
+    }
+
+    function add_comment_2($nickname, $category_name_slug, $item_name_slug, Request $request)
+    {
+        // nome da categoria que vai ser modificada um item
+        $cat = Category::where('name_slug', $category_name_slug)->where('user_nickname', $nickname)->first();
+        if (!$cat) {
+            # code...
+            return Redirect::to(route('user_index', ['nickname' => $nickname]))
+                ->with('msg-warning', "categoria não encontrada!");
+        }
+
+        // informações sobre aquele item
+        $cat = Category::where('name_slug', $category_name_slug)->where('user_nickname', $nickname)->first();
+        $item = Item::where('name_slug', $item_name_slug)->where('category_id', $cat->id)->first();
+
+        //validação dos campos
+        $request->validate([
+            'text' => 'required|string'
+        ]);
+
+        // comentários
+        $comment = new Comment();
+
+        $comment->text = $request->text; //texto do comentário
+        $comment->id_commenter = Auth::id(); //id do elemento que está comentando
+        $comment->id_creator = $cat->user_id; // id do dono do item
+        $comment->id_item = $item->id; // id do item
+        $comment->response_to = null; // comentário no qual esse comentário está respondendo
+        $comment->comment_level = 2; // nivel 0 = comentário base
+        $comment->likes = [];
+        $comment->dislikes = [];
+
+        $comment->save();
+
+        return Redirect::to(route('item_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' =>  $request->item_name_slug]))
+            ->with('msg-success', "comentário adicionado com sucesso!");
+    }
+
+
 
     function update(Request $request, $nickname, $category_name_slug)
     {
