@@ -117,7 +117,9 @@
     
     ---}}
 
-
+    <br>
+    <br>
+    <br>
     <div class="container my-5">
         <h4 class="text-center">
             Seção de Comentários
@@ -142,9 +144,9 @@
         --}}
         @if (Auth::check())
         <form action="{{route('add_comment_0', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $item_name_slug])}}" method="post">
+            @csrf
             <div class="col">
                 <textarea id="autoTextarea" name="text" class="form-control custom-input" placeholder="Digite aqui..." rows="1" style="overflow:hidden; resize: none;"></textarea>
-
                 <div class="d-flex flex-row-reverse">
                     <button class="btn custom-btn" type="submit">Comentar</button>
                 </div>
@@ -156,7 +158,202 @@
         {{--$_COOKIE
             Ver os comentários
         --}}
-        @if (isset($comments))
+        @if (($comments != null))
+
+        <br>
+        <br>
+        <br>
+        @foreach ($comments as $comment)
+        <div class="comentario">
+            <div class="info d-flex justify-content-between">
+                <span><strong>{{ $comment->author_name }}</strong></span>
+                <span>{{ $comment->created_at->format('d \d\e F \d\e Y \à\s H:i:s') }}</span>
+            </div>
+
+            <div class="texto">
+                @php
+                $paragraphs = preg_split('/\r\n|\n|\r/', $comment->text);
+                @endphp
+
+                @foreach($paragraphs as $paragraph)
+                <p class="text text-dark">
+                    {{ $paragraph }}
+                </p>
+                @endforeach
+            </div>
+
+            <button class="btn btn-primary btn-sm my-3 mt-2" onclick="mostrarResposta(this)">Responder</button>
+
+            <!-- Formulário oculto por padrão -->
+            <div class="resposta-form mt-2" style="display: none;">
+                <form action="{{ route('add_comment_1', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $item_name_slug]) }}" method="post">
+                    @csrf
+                    <div class="col">
+                        <textarea id="autoTextarea" name="text" class="form-control custom-input" placeholder="Digite aqui..." rows="1" style="overflow:hidden; resize: none;"></textarea>
+                        <input type="hidden" name="response_to" value="{{$comment->id}}">
+                        <div class="d-flex flex-row-reverse mt-2">
+                            <button class="btn custom-btn" type="submit">Comentar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            {{--$_COOKIE
+                Area reservada para mostrar os comentários da galera que responderam ao comentário tal
+            --}}
+
+
+
+
+
+            @if (count($comment->responses) > 0)
+
+            <button class="btn btn-primary btn-sm my-3 mt-2" onclick="mostrarRespostas(this)">Ver respostas</button>
+
+            @endif
+
+
+
+
+            <div class="resposta-form mt-2" style="display: none;">
+
+                @foreach ($comment->responses as $responses)
+
+                <div class="row">
+                    <div class="col-2"></div>
+                    <div class="col-10">
+
+
+                        <div class="info d-flex justify-content-between">
+                            <span><strong>{{ $responses->author_name }}</strong></span>
+                            <span>{{ $responses->created_at->format('d \d\e F \d\e Y \à\s H:i:s') }}</span>
+                        </div>
+
+                        <div class="texto">
+                            @php
+                            $paragraphs = preg_split('/\r\n|\n|\r/', $responses->text);
+                            @endphp
+
+                            @foreach($paragraphs as $paragraph)
+                            <p class="text text-dark">
+                                {{ $paragraph }}
+                            </p>
+                            @endforeach
+                        </div>
+
+                        <button class="btn btn-success btn-sm my-3 mt-2" onclick="mostrarResposta(this)">Responder</button>
+
+                        <!-- Formulário oculto por padrão -->
+                        <div class="resposta-form mt-2" style="display: none;">
+                            <form action="{{ route('add_comment_2', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $item_name_slug]) }}" method="post">
+                                @csrf
+                                <div class="col">
+                                    <textarea id="autoTextarea" name="text" class="form-control custom-input" placeholder="Digite aqui..." rows="1" style="overflow:hidden; resize: none;"></textarea>
+                                    <input type="hidden" name="response_to" value="{{$responses->id}}">
+                                    <div class="d-flex flex-row-reverse mt-2">
+                                        <button class="btn custom-btn" type="submit">Comentar</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+
+                        {{--$_COOKIE
+                Area reservada para mostrar os comentários da galera que responderam ao comentário tal
+            --}}
+
+
+
+
+
+                        @if (count($responses->responses2) > 0)
+
+                        <button class="btn btn-success btn-sm my-3 mt-2" onclick="mostrarRespostas(this)">Ver respostas</button>
+
+                        @endif
+
+
+
+
+                        <div class="resposta-form mt-2" style="display: none;">
+
+                            @foreach ($responses->responses2 as $responses2)
+
+                            <div class="row">
+                                <div class="col-2"></div>
+                                <div class="col-10">
+
+
+                                    <div class="info d-flex justify-content-between">
+                                        <span><strong>{{ $responses2->author_name }}</strong></span>
+                                        <span>{{ $responses2->created_at->format('d \d\e F \d\e Y \à\s H:i:s') }}</span>
+                                    </div>
+
+                                    <div class="texto">
+                                        @php
+                                        $paragraphs = preg_split('/\r\n|\n|\r/', $responses2->text);
+                                        @endphp
+
+                                        @foreach($paragraphs as $paragraph)
+                                        <p class="text text-dark">
+                                            {{ $paragraph }}
+                                        </p>
+                                        @endforeach
+                                    </div>
+
+                                    {{--$_COOKIE
+                                        Area onde ficaria o negocio pra responder esse comentario
+                                    --}}
+
+
+                                </div>
+                            </div>
+
+
+
+                            @endforeach
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+
+                @endforeach
+
+            </div>
+
+
+
+
+
+
+
+        </div>
+
+        <script>
+            function mostrarResposta(botao) {
+                const form = botao.nextElementSibling;
+                if (form.style.display === "none") {
+                    form.style.display = "block";
+                } else {
+                    form.style.display = "none";
+                }
+            }
+
+            function mostrarRespostas(botao) {
+                const form = botao.nextElementSibling;
+                if (form.style.display === "none") {
+                    form.style.display = "block";
+                } else {
+                    form.style.display = "none";
+                }
+            }
+        </script>
+        @endforeach
+
 
         @endif
 

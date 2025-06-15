@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\User;
 use App\Models\Comment;
 use App\Models\Item;
 use Illuminate\Http\Request;
@@ -33,13 +34,42 @@ class ItemController extends Controller
         // id do item
         $item_name_slug = $item->name_slug;
 
+        //comentarios
+        $comments = Comment::where('id_item', $item->id)->where('comment_level', 0)->get();
+        if ($comments != null) {
+            foreach ($comments as $key => $value) {
+                $user = User::where('id', $value->id_commenter)->first();
+                $value->author_name = $user->nickname;
+
+                //verificando respostas a este comentário
+                $value->responses = Comment::where('id_item', $item->id)->where('response_to', $value->id)->get();
+                if ($value->responses) {
+                    foreach ($value->responses as $key => $response) {
+                        $user_r = User::where('id', $response->id_commenter)->first();
+                        $response->author_name = $user_r->nickname;
+
+                        //verificando respostas a este comentário
+                        $response->responses2 = Comment::where('id_item', $item->id)->where('response_to', $response->id)->get();
+                        if ($response->responses2) {
+                            foreach ($response->responses2 as $key => $response2) {
+                                $user_r2 = User::where('id', $response2->id_commenter)->first();
+                                $response2->author_name = $user_r2->nickname;
+                            }
+
+                        }
+                    }
+                }
+            };
+        }
+
         return view('modulos.veja', [
             'item' => $item,
             'db_url' => $db_url,
             'id' => $id,
             'item_name_slug' => $item_name_slug,
             'nickname' => $nickname,
-            'category_name_slug' => $category_name_slug
+            'category_name_slug' => $category_name_slug,
+            'comments' => $comments
         ]);
     }
 
@@ -266,8 +296,9 @@ class ItemController extends Controller
     }
 
 
-    function add_comment_0($nickname, $category_name_slug, $item_name_slug, Request $request)
+    function add_comment_0(Request $request, $nickname, $category_name_slug, $item_name_slug)
     {
+
         // nome da categoria que vai ser modificada um item
         $cat = Category::where('name_slug', $category_name_slug)->where('user_nickname', $nickname)->first();
         if (!$cat) {
@@ -292,19 +323,20 @@ class ItemController extends Controller
         $comment->id_commenter = Auth::id(); //id do elemento que está comentando
         $comment->id_creator = $cat->user_id; // id do dono do item
         $comment->id_item = $item->id; // id do item
-        $comment->response_to = null; // comentário no qual esse comentário está respondendo
         $comment->comment_level = 0; // nivel 0 = comentário base
         $comment->likes = [];
         $comment->dislikes = [];
 
+
         $comment->save();
 
         return Redirect::to(route('item_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' =>  $request->item_name_slug]))
             ->with('msg-success', "comentário adicionado com sucesso!");
     }
 
-    function add_comment_1($nickname, $category_name_slug, $item_name_slug, Request $request)
+    function add_comment_1(Request $request, $nickname, $category_name_slug, $item_name_slug)
     {
+
         // nome da categoria que vai ser modificada um item
         $cat = Category::where('name_slug', $category_name_slug)->where('user_nickname', $nickname)->first();
         if (!$cat) {
@@ -329,19 +361,21 @@ class ItemController extends Controller
         $comment->id_commenter = Auth::id(); //id do elemento que está comentando
         $comment->id_creator = $cat->user_id; // id do dono do item
         $comment->id_item = $item->id; // id do item
-        $comment->response_to = null; // comentário no qual esse comentário está respondendo
+        $comment->response_to = $request->response_to; // respondendo ao comentario tal
         $comment->comment_level = 1; // nivel 0 = comentário base
         $comment->likes = [];
         $comment->dislikes = [];
 
+
         $comment->save();
 
         return Redirect::to(route('item_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' =>  $request->item_name_slug]))
             ->with('msg-success', "comentário adicionado com sucesso!");
     }
 
-    function add_comment_2($nickname, $category_name_slug, $item_name_slug, Request $request)
+    function add_comment_2(Request $request, $nickname, $category_name_slug, $item_name_slug)
     {
+
         // nome da categoria que vai ser modificada um item
         $cat = Category::where('name_slug', $category_name_slug)->where('user_nickname', $nickname)->first();
         if (!$cat) {
@@ -366,10 +400,11 @@ class ItemController extends Controller
         $comment->id_commenter = Auth::id(); //id do elemento que está comentando
         $comment->id_creator = $cat->user_id; // id do dono do item
         $comment->id_item = $item->id; // id do item
-        $comment->response_to = null; // comentário no qual esse comentário está respondendo
+        $comment->response_to = $request->response_to; // respondendo ao comentario tal
         $comment->comment_level = 2; // nivel 0 = comentário base
         $comment->likes = [];
         $comment->dislikes = [];
+
 
         $comment->save();
 

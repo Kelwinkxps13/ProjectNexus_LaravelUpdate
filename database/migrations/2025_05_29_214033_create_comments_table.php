@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->text('text')->nullable();
-            $table->foreignId('id_commenter')->constrained('users')->onDelete('cascade');
-            $table->foreignId('id_creator')->constrained('users')->onDelete('cascade');
-            $table->foreignId('id_item')->constrained('items')->onDelete('cascade');
-            $table->foreignId('response_to')->constrained('comments')->onDelete('cascade');
+            $table->integer('id_commenter');
+            $table->integer('id_creator');
+            $table->integer('id_item');
+            $table->text('response_to')->nullable();
             $table->integer('comment_level')->nullable();
             $table->json('likes')->nullable();
             $table->json('dislikes')->nullable();

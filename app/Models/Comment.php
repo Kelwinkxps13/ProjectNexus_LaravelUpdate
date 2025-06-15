@@ -12,7 +12,13 @@ class Comment extends Model
     protected $fillable = [
         'text',
         'id_commenter',
-        'id_item_creator',
+        'id_creator',
+        'id_item',
+        'response_to',
         'comment_level'
+    ];
+    protected $casts = [
+        'likes' => 'array',
+        'dislikes' => 'array'
     ];
 }
