@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Models\Category;
 use App\Models\Main;
 use App\Models\User;
+use App\Models\Follower;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Psy\Output\Theme;
 
 class UserController extends Controller
 {
@@ -25,12 +27,29 @@ class UserController extends Controller
             $themes_foreach = $user->categories()->get();
         }
 
+        $user_creator = User::where('nickname', $nickname)->first();
+
+        // contando os temas
+        $count_theme = Category::where('user_id', $user_creator->id)->get();
+
+        // contando os seguidores
+        $count_followers = Follower::where('id_creator', $user_creator->id)->get();
+
+        // contando quem o usuario segue
+        $count_following = Follower::where('id_user', $user_creator->id)->get();
+
+        //verificando se o usuário autenticado já segue aquele criador
+        $is_following = Follower::where('id_creator', $user_creator->id)->where('id_user', Auth::id())->first();
 
 
         return view('main', [
             'db_main' => $db_main,
             'nickname' => $nickname,
-            'themes_foreach' => $themes_foreach
+            'themes_foreach' => $themes_foreach,
+            'count_theme' => $count_theme,
+            'count_followers' => $count_followers,
+            'count_following' => $count_following,
+            'is_following' => $is_following
         ]);
     }
 
@@ -110,5 +129,33 @@ class UserController extends Controller
             'themes_foreach' => $themes_foreach,
             'nickname' => $nickname,
         ]);
+    }
+
+    function follow($nickname){
+
+        $user_creator = User::where('nickname', $nickname)->first();
+        $id_creator = $user_creator->id;
+
+        //fazendo o sistema de seguir
+        $follower = new Follower();
+        $follower->id_user = Auth::id();
+        $follower->id_creator = $id_creator;
+        $follower->save();
+
+        return Redirect::to(route('user_index', ['nickname' => $nickname]))
+        ->with('msg-success', 'agora você está seguindo '.$nickname.'!');
+
+    }
+    function unfollow($nickname){
+
+        $user_creator = User::where('nickname', $nickname)->first();
+        $id_creator = $user_creator->id;
+
+        //fazendo o sistema de seguir
+        $follower = Follower::where('id_user', Auth::id())->where('id_creator', $id_creator)->first();
+        $follower->delete();
+
+        return Redirect::to(route('user_index', ['nickname' => $nickname]))
+        ->with('msg-success', 'você deixou de seguir '.$nickname.'!');
     }
 }

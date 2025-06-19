@@ -49,6 +49,10 @@ Route::delete('/{nickname}/category', [ThemeController::class, 'destroy'])->midd
 Route::get('/{nickname}/create', [UserController::class, 'create'])->middleware(['is_creator'])->name('user_create'); // feito com sucesso!
 Route::get('/{nickname}/edit', [UserController::class, 'edit'])->middleware(['is_creator', 'has_main_page'])->name('user_edit'); // feito com sucesso!
 
+// FOLLOWERS
+Route::post('/{nickname}/follow', [UserController::class, 'follow'])->name('follow'); // feito com sucesso!
+Route::post('/{nickname}/unfollow', [UserController::class, 'unfollow'])->name('unfollow'); // feito com sucesso!
+
 
 //rotas do registro de theme (os itens)
 Route::get('/{nickname}/{category_name_slug}/create', [ItemController::class, 'create'])->middleware(['is_creator', 'has_main_page'])->name('item_create'); // feito com sucesso!

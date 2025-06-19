@@ -19,20 +19,76 @@
 <h4 class="text-center">Olá, {{Auth::user()->nickname}}!</h4>
 @endauth
 
-<div class="row mt-5">
-    <div class="col">
-        <h2 class="mb-3">Veja os temas criados pela comunidade!</h2>
+{{--$_COOKIE
+    Aqui vou separar a parte para fazer o pequeno sistema de Feed de cada usuário
 
-        {{--
-            Caso tenha Temas a serem mostrados
-        --}}
-        @if (!$themes_foreach->isEmpty())
+    Sistema simples.
+
+    o que vai ter?
+    - Cada usuário vai ter um feed personalizado;
+    - Aparecerá os ultímos conteúdos adicionados por cada criador que o usuário segue (em ordem decrescente de data);
+    - Quando acabar os novos conteúdos, o feed começará a mostrar conteúdos sugeridos de outros criadores.
+        Como talvez funcione essa sugestão?
+        - o sistema pegará palavras chave dos criadores que o usuário segue, para aplicar em outros usuários, para
+        tentar mostrar conteúdos semelhantes (se por possivel implementar isso)
+
+    Caso o usuário não siga ninguém, será mostrado um feed inicial de boas-vindas
+    O que vai ter nesse feed inicial?
+    - Os Ultimos 10 conteúdos adicionados de criadores;
+    - Sugestões para seguir alguns criadores;
+    - Sugestão para o próprio usuário começar a criar seus conteúdos
+--}}
+
+{{--$_COOKIE
+
+    IF o usuário segue pelo menos um:
+    senao segue ninguem
+
+--}}
 
 
-            {{--
-                Foreach dos temas pra serem mostrados
-            --}}
-            @foreach ($themes_foreach as $f)
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h3 class="text-center mt-5">Feed</h3>
+            @if (Auth::check())
+            @if ($is_following == 'following')
+            <h3 class="text-center mt-4">Veja suas ultimas atualizações!</h3>
+            @foreach ($themes as $f)
+            <div class="card mb-4 shadow-sm">
+
+                <!-- Banner de Fundo -->
+                <div class="banner {{($f->image === null)?'no-image':''}} %>">
+                    @if($f->image !==null)
+                    <img src="/images/{{$f->user_nickname}}/categories/banners/{{$f->image}}" alt="Profile">
+                    @endif
+                    <div class="overlay">
+                        <h4 class="card-title text-white title">
+                            {{$f->name}} <br>
+                            feito por {{$f->user_nickname}}
+                        </h4>
+                        <div>
+                            <form action="{{ route('category_index', ['nickname' => $f->user_nickname, 'category_name_slug' => $f->name_slug]) }}" method="get">
+                                <button type="submit" class="btn btn-dark">
+                                    Ver Tema
+                                </button>
+                            </form>
+                            <form action="{{ route('user_index', ['nickname' => $f->user_nickname]) }}" method="get">
+                                <button type="submit" class="btn btn-dark">
+                                    Ver usuário
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+            @else
+            <h4 class="text-center mt-5">Boas Vindas!</h4>
+
+            <h3 class="text-center mt-4">Descubra mais!</h3>
+            @foreach ($suggestion as $f)
             <div class="card mb-4 shadow-sm">
 
                 <!-- Banner de Fundo -->
@@ -54,19 +110,43 @@
                     </div>
                 </div>
             </div>
-
-
             @endforeach
+            @endif
+            @else
+            <h4 class="text-center my-5">Boas Vindas!</h4>
 
+            <h3 class="text-center mt-4">Descubra mais!</h3>
+            @foreach ($suggestion as $f)
+            <div class="card mb-4 shadow-sm">
 
-        {{--
-            Caso não tenha temas a serem mostrados
-        --}}
-        @else
+                <!-- Banner de Fundo -->
+                <div class="banner {{($f->image === null)?'no-image':''}} %>">
+                    @if($f->image !==null)
+                    <img src="/images/{{$f->user_nickname}}/categories/banners/{{$f->image}}" alt="Profile">
+                    @endif
+                    <div class="overlay">
+                        <h4 class="card-title text-white title">
+                            {{$f->name}}
+                        </h4>
+                        <div>
+                            <form action="{{ route('category_index', ['nickname' => $f->user_nickname, 'category_name_slug' => $f->name_slug]) }}" method="get">
+                                <button type="submit" class="btn btn-dark">
+                                    Ver Tema
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+            @endif
+        </div>
+    </div>
+</div>
 
-        <h4 class="text-center">Ainda sem temas criados pela comunidade</h4>
-
-        @endif
+<div class="row mt-5">
+    <div class="col">
+        
 
         {{--
             Se tiverem usuários criadores a serem mostrados
@@ -77,13 +157,13 @@
         {{--
             Foreach desses usuários
         --}}
-            @foreach ($users_foreach as $f)
+        @foreach ($users_foreach as $f)
 
-                <h4>
-                    <a href="{{route('user_index', ['nickname' => $f->user_nickname]) }}"> Usuário - {{$f->user_nickname}}</a>
-                </h4>
+        <h4>
+            <a href="{{route('user_index', ['nickname' => $f->user_nickname]) }}"> Usuário - {{$f->user_nickname}}</a>
+        </h4>
 
-            @endforeach
+        @endforeach
 
         {{--
             Caso não tenham usuários criados ainda
