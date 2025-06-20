@@ -84,6 +84,43 @@
                 </div>
             </div>
             @endforeach
+
+            
+            @if (count($suggestion)>0)
+            <h3 class="text-center mt-4">Veja sugestões de outros conteúdos!</h3>
+            @foreach ($suggestion as $f)
+            <div class="card mb-4 shadow-sm">
+
+                <!-- Banner de Fundo -->
+                <div class="banner {{($f->image === null)?'no-image':''}} %>">
+                    @if($f->image !==null)
+                    <img src="/images/{{$f->user_nickname}}/categories/banners/{{$f->image}}" alt="Profile">
+                    @endif
+                    <div class="overlay">
+                        <h4 class="card-title text-white title">
+                            {{$f->name}} <br>
+                            feito por {{$f->user_nickname}}
+                        </h4>
+                        <div>
+                            <form action="{{ route('category_index', ['nickname' => $f->user_nickname, 'category_name_slug' => $f->name_slug]) }}" method="get">
+                                <button type="submit" class="btn btn-dark">
+                                    Ver Tema
+                                </button>
+                            </form>
+                            <form action="{{ route('user_index', ['nickname' => $f->user_nickname]) }}" method="get">
+                                <button type="submit" class="btn btn-dark">
+                                    Ver usuário
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+            @else
+            <h3 class="text-center mt-4">Sem sugestões de mais conteúdos!</h3>
+            @endif
+
             @else
             <h4 class="text-center mt-5">Boas Vindas!</h4>
 
