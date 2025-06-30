@@ -20,7 +20,7 @@ class Main extends Model
     ];
 
     public function user(){
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(User::class);
     }
 
 }
