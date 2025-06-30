@@ -120,7 +120,7 @@ class IndexController extends Controller
                 $suggestion = $prepare;
             } else {
                 $is_following = 'no_following';
-                $suggestion = Category::orderBy('created_at', 'desc')->limit(10)->get();
+                $suggestion = Category::orderBy('created_at', 'desc')->where('user_id', '!=', Auth::id())->limit(10)->get();
             }
         } else {
             $following = 'no_following';
