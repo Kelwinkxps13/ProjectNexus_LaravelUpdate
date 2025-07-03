@@ -73,9 +73,16 @@ class ThemeController extends Controller
         $request->validate([
             'name' => 'required|string|max:20',
             'description' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ], [
-            'name.max' => 'Tamanho máximo de 20 caracteres excedido!'
+            'name.max' => 'Tamanho máximo de 20 caracteres excedido',
+            'name.string' => 'O conteúdo deve ser um texto',
+            'description.max' => 'Tamanho máximo de 255 caracteres excedido',
+            'description.string' => 'O conteúdo deve ser um texto',
+            'image.required' => 'Você precisa enviar uma imagem',
+            'image.image' => 'O conteúdo deve ser uma imagem',
+            'image.mimes' => 'São aceitos somente os formatos jpeg, jpg, png, gif e svg',
+            'image.max' => 'O tamanho máximo permitido é 2MB',
         ]);
 
         // verificando se já existe uma category com esse slug
@@ -131,14 +138,20 @@ class ThemeController extends Controller
 
         // name, description, image
 
-        $request
-            ->validate([
-                'name' => 'required|string|max:20',
-                'description' => 'required|string|max:255',
-                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg'
-            ], [
-                'name.max' => 'Tamanho máximo de 20 caracteres excedido!'
-            ]);
+        $request->validate([
+            'name' => 'required|string|max:20',
+            'description' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ], [
+            'name.max' => 'Tamanho máximo de 20 caracteres excedido',
+            'name.string' => 'O conteúdo deve ser um texto',
+            'description.max' => 'Tamanho máximo de 255 caracteres excedido',
+            'description.string' => 'O conteúdo deve ser um texto',
+            'image.required' => 'Você precisa enviar uma imagem',
+            'image.image' => 'O conteúdo deve ser uma imagem',
+            'image.mimes' => 'São aceitos somente os formatos jpeg, jpg, png, gif e svg',
+            'image.max' => 'O tamanho máximo permitido é 2MB',
+        ]);
 
 
         // buscar os dados do item no banco de dados

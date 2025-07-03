@@ -41,7 +41,14 @@ class ContentController extends Controller
         $request->validate([
             'name' => 'required|string|max:50',
             'description' => 'required',
-            'image' => 'nullable|image|mimes:png,jpg,jpeg,svg,gif'
+            'image' => 'nullable|image|mimes:png,jpg,jpeg,svg,gif|max:2048'
+        ], [
+            'name.max' => 'Tamanho máximo de 50 caracteres excedido',
+            'name.string' => 'O conteúdo deve ser um texto',
+            'image.required' => 'Você precisa enviar uma imagem',
+            'image.image' => 'O conteúdo deve ser uma imagem',
+            'image.mimes' => 'São aceitos somente os formatos jpeg, jpg, png, gif e svg',
+            'image.max' => 'O tamanho máximo permitido é 2MB',
         ]);
 
         $content = new Content();
@@ -126,7 +133,14 @@ class ContentController extends Controller
             'name' => 'required|string|max:50',
             'description' => 'required',
             'image' => 'nullable|image|mimes:png,jpg,jpeg,svg,gif'
-        ]);
+        ], [
+                'name.max' => 'Tamanho máximo de 50 caracteres excedido',
+                'name.string' => 'O conteúdo deve ser um texto',
+                'image.required' => 'Você precisa enviar uma imagem',
+                'image.image' => 'O conteúdo deve ser uma imagem',
+                'image.mimes' => 'São aceitos somente os formatos jpeg, jpg, png, gif e svg',
+                'image.max' => 'O tamanho máximo permitido é 2MB',
+            ]);
 
         $content = Content::find($request->idblock);
         $cat = Category::where('name_slug', $category_name_slug)->where('user_nickname', $nickname)->first();

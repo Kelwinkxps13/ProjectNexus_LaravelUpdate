@@ -55,7 +55,6 @@ class ItemController extends Controller
                                 $user_r2 = User::where('id', $response2->id_commenter)->first();
                                 $response2->author_name = $user_r2->nickname;
                             }
-
                         }
                     }
                 }
@@ -105,7 +104,16 @@ class ItemController extends Controller
         $request->validate([
             'name' => 'required|string|max:50',
             'description' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:png,jpg,svg,jpeg,gif'
+            'image' => 'nullable|image|mimes:png,jpg,svg,jpeg,gif|max:2048'
+        ], [
+            'name.max' => 'Tamanho máximo de 50 caracteres excedido',
+            'name.string' => 'O conteúdo deve ser um texto',
+            'description.max' => 'Tamanho máximo de 255 caracteres excedido',
+            'description.string' => 'O conteúdo deve ser um texto',
+            'image.required' => 'Você precisa enviar uma imagem',
+            'image.image' => 'O conteúdo deve ser uma imagem',
+            'image.mimes' => 'São aceitos somente os formatos jpeg, jpg, png, gif e svg',
+            'image.max' => 'O tamanho máximo permitido é 2MB',
         ]);
 
         $cat = Category::where('name_slug', $category_name_slug)->where('user_nickname', $nickname)->first();
@@ -314,6 +322,8 @@ class ItemController extends Controller
         //validação dos campos
         $request->validate([
             'text' => 'required|string'
+        ], [
+            'text.max' => 'O conteúdo deve ser um texto'
         ]);
 
         // comentários
@@ -352,6 +362,8 @@ class ItemController extends Controller
         //validação dos campos
         $request->validate([
             'text' => 'required|string'
+        ], [
+            'text.max' => 'O conteúdo deve ser um texto'
         ]);
 
         // comentários
@@ -391,6 +403,8 @@ class ItemController extends Controller
         //validação dos campos
         $request->validate([
             'text' => 'required|string'
+        ], [
+            'text.max' => 'O conteúdo deve ser um texto'
         ]);
 
         // comentários
@@ -421,7 +435,16 @@ class ItemController extends Controller
         $request->validate([
             'name' => 'required|string|max:50',
             'description' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:png,jpg,svg,jpeg,gif'
+            'image' => 'nullable|image|mimes:png,jpg,svg,jpeg,gif|max:2048'
+        ], [
+            'name.max' => 'Tamanho máximo de 50 caracteres excedido',
+            'name.string' => 'O conteúdo deve ser um texto',
+            'description.max' => 'Tamanho máximo de 255 caracteres excedido',
+            'description.string' => 'O conteúdo deve ser um texto',
+            'image.required' => 'Você precisa enviar uma imagem',
+            'image.image' => 'O conteúdo deve ser uma imagem',
+            'image.mimes' => 'São aceitos somente os formatos jpeg, jpg, png, gif e svg',
+            'image.max' => 'O tamanho máximo permitido é 2MB',
         ]);
 
         // verificando se já existe uma category com esse slug

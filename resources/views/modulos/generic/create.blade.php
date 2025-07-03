@@ -21,18 +21,24 @@
                             <input name="name" type="text" class="form-control custom-input" id="name"
                                 placeholder="ex: Jogos" required>
                             @error('name')
-                                <div class="text-danger">{{$message}}</div>
+                            <div class="text-danger">{{$message}}</div>
                             @enderror
                         </div>
                         <div class="mb-4">
                             <label for="description" class="form-label">Descrição</label>
                             <textarea name="description" rows="4" id="autoTextarea" style="overflow:hidden; resize: none;" class="form-control custom-input" id="description"
                                 placeholder="ex: parte reservada para mostrar meus favoritos." required></textarea>
+                            @error('description')
+                            <div class="text-danger">{{$message}}</div>
+                            @enderror
                         </div>
 
                         <div class="mb-4">
                             <label for="image" class="form-label">Adicionar Banner de fundo</label>
                             <input name="image" type="file" class="form-control custom-input" id="image">
+                            @error('image')
+                                <div class="text-danger">{{$message}}</div>
+                            @enderror
                         </div>
 
                         <div class="text-center mt-4">

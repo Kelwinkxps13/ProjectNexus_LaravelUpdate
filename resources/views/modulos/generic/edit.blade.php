@@ -32,6 +32,9 @@
                             <label for="description" class="form-label">Descrição</label>
                             <textarea name="description" rows="4" id="autoTextarea" style="overflow:hidden; resize: none;" class="form-control custom-input"
                                 placeholder="ex: parte reservada para mostrar meus favoritos." required>{{$db->description}}</textarea>
+                            @error('description')
+                            <div class="text-danger">{{$message}}</div>
+                            @enderror
                         </div>
 
                         <div class="mb-4">
@@ -43,6 +46,9 @@
                                     style="max-width: 200px; border-radius: 10px;">
                             </div>
                             @endif
+                            @error('image')
+                            <div class="text-danger">{{$message}}</div>
+                            @enderror
                         </div>
 
                         <div class="mb-4">

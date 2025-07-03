@@ -22,15 +22,24 @@
                             <label for="name" class="form-label">Nome</label>
                             <input name="name" type="text" class="form-control custom-input" id="name"
                                 placeholder="ex: Introdução" required>
+                            @error('name')
+                            <div class="text-danger">{{$message}}</div>
+                            @enderror
                         </div>
                         <div class="mb-4">
-                            <label for="description"  class="form-label">Descrição</label>
+                            <label for="description" class="form-label">Descrição</label>
                             <textarea name="description" rows="4" id="autoTextarea" style="overflow:hidden; resize: none;" class="form-control custom-input" id="description"
                                 placeholder="ex: O jogo conta a história de Arthur Morgan, membro da gangue Van Der Linde que está fugindo das autoridades devido a um assalto que fizeram em Blackwater..." required></textarea>
+                            @error('description')
+                            <div class="text-danger">{{$message}}</div>
+                            @enderror
                         </div>
                         <div class="mb-4">
                             <label for="image" class="form-label">Adicionar Imagem</label>
                             <input name="image" type="file" class="form-control custom-input" id="image">
+                            @error('image')
+                            <div class="text-danger">{{$message}}</div>
+                            @enderror
                         </div>
                         <div class="text-center mt-4">
                             <button type="submit" class="btn custom-btn">Enviar</button>

@@ -25,17 +25,26 @@
                             <label for="name" class="form-label">Título</label>
                             <input name="name" type="text" class="form-control custom-input" id="name"
                                 placeholder="ex: olá mundo!" value="{{$main->name}}" required>
+                            @error('name')
+                            <div class="text-danger">{{$message}}</div>
+                            @enderror
                         </div>
                         <div class="mb-4">
                             <label for="subtitle" class="form-label">Subtítulo</label>
                             <input name="subtitle" type="text" class="form-control custom-input" id="subtitle"
                                 placeholder="ex: seja bem vindo(a) à minha página!" value="{{$main->subtitle}}">
+                            @error('subtitle')
+                            <div class="text-danger">{{$message}}</div>
+                            @enderror
                         </div>
                         <div class="mb-4">
                             <label for="description" class="form-label">Descrição</label>
                             <textarea name="description" rows="4" id="autoTextarea" style="overflow:hidden; resize: none;" class="form-control custom-input" id="description"
                                 placeholder="ex: aqui vou postar algumas coisas que acho interessante."
                                 required>{{$main->description}}</textarea>
+                            @error('description')
+                            <div class="text-danger">{{$message}}</div>
+                            @enderror
                         </div>
 
                         <div class="text-center mt-4">

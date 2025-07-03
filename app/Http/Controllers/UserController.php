@@ -66,6 +66,14 @@ class UserController extends Controller
             'name' => 'required|string|min:1|max:50',
             'subtitle' =>  'nullable|string|max:100',
             'description' => 'required|string|max:255'
+        ], [
+            'name.min' => 'Tamanho minimo deve ser 1 caractere',
+            'name.max' => 'Tamanho máximo de 50 caracteres excedido',
+            'name.string' => 'O conteúdo deve ser um texto',
+            'subtitle.max' => 'Tamanho máximo de 100 caracteres excedido',
+            'subtitle.string' => 'O conteúdo deve ser um texto',
+            'description.max' => 'Tamanho máximo de 255 caracteres excedido',
+            'description.string' => 'O conteúdo deve ser um texto'
         ]);
         Main::create([
             'name' => $request->name,
@@ -108,6 +116,14 @@ class UserController extends Controller
             'name' => 'required|string|min:1|max:50',
             'subtitle' =>  'nullable|string|max:100',
             'description' => 'required|string|max:255'
+        ], [
+            'name.min' => 'Tamanho minimo deve ser 1 caractere',
+            'name.max' => 'Tamanho máximo de 50 caracteres excedido',
+            'name.string' => 'O conteúdo deve ser um texto',
+            'subtitle.max' => 'Tamanho máximo de 100 caracteres excedido',
+            'subtitle.string' => 'O conteúdo deve ser um texto',
+            'description.max' => 'Tamanho máximo de 255 caracteres excedido',
+            'description.string' => 'O conteúdo deve ser um texto'
         ]);
 
         $main->name = $request->name ?? $main->name;
