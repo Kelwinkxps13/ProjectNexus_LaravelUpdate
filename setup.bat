@@ -55,12 +55,6 @@ echo ==============================
 call php artisan migrate
 echo.
 
-echo =============================
-echo Executando artisan db:seed
-echo =============================
-call php artisan db:seed
-echo.
-
 echo ===============================
 echo Limpando o cache do Laravel
 echo ===============================
