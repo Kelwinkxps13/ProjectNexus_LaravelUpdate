@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
+
 class AuthenticatedSessionController extends Controller
 {
     /**
@@ -28,6 +29,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        
         return redirect()->intended(route('index', absolute: false));
     }
 
@@ -43,6 +45,6 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/')
-        ->with('msg-success', 'deslogado(a) com sucesso!');;
+            ->with('msg-success', 'deslogado(a) com sucesso!');;
     }
 }

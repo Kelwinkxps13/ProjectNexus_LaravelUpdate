@@ -31,12 +31,21 @@ class UserController extends Controller
 
         // contando os temas
         $count_theme = Category::where('user_id', $user_creator->id)->get();
+        if (!$count_theme) {
+            $count_theme = 0;
+        }
 
         // contando os seguidores
         $count_followers = Follower::where('id_creator', $user_creator->id)->get();
+        if (!$count_followers) {
+            $count_followers = 0;
+        }
 
         // contando quem o usuario segue
         $count_following = Follower::where('id_user', $user_creator->id)->get();
+        if (!$count_following) {
+            $count_following = 0;
+        }
 
         //verificando se o usuário autenticado já segue aquele criador
         $is_following = Follower::where('id_creator', $user_creator->id)->where('id_user', Auth::id())->first();
@@ -55,6 +64,8 @@ class UserController extends Controller
 
     function create($nickname)
     {
+
+        
         return view('indexcreator', [
             'nickname' => $nickname
         ]);
@@ -141,9 +152,12 @@ class UserController extends Controller
         // proximo passo, é pegar as categories em si daquele usuario
         $themes_foreach = $user->categories()->get();
 
+
+
+
         return view('editor', [
             'themes_foreach' => $themes_foreach,
-            'nickname' => $nickname,
+            'nickname' => $nickname
         ]);
     }
 

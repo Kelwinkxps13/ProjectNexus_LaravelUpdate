@@ -115,7 +115,7 @@ class IndexController extends Controller
                         unset($prepare[$key2]);
                     }
                 }
-                
+
                 //aqui estão os temas personalizados de acordo com quem o usuário segue
                 $suggestion = $prepare;
             } else {
@@ -126,7 +126,6 @@ class IndexController extends Controller
             $following = 'no_following';
             $suggestion = Category::orderBy('created_at', 'desc')->limit(10)->get();
         }
-
 
 
 

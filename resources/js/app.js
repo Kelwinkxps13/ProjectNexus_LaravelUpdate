@@ -1,4 +1,5 @@
 import './bootstrap';
+// import '../scss/navbar.scss';
 
 import Alpine from 'alpinejs';
 

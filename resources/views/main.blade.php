@@ -59,65 +59,75 @@
 
 
 
-<div class="container">
-    <div class="row">
-        <div class="col-6">
-            <h4>Página de {{$nickname}}</h4>
-        </div>
-        <div class="col-6 ">
-            <table class="text-center float-end">
-                <thead>
-                    <th> Temas </th>
-                    <th> Seguidores </th>
-                    <th> Seguindo </th>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>{{count($count_theme)}}</td>
-                        <td>{{count($count_followers)}}</td>
-                        <td>{{count($count_following)}}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    
-    {{--$_COOKIE
-        Verificando se o usuario autenticado já segue aquele usuario criador
-    --}}
-    @if (Auth::check())
+<div class="container py-5">
 
-        @if ($is_following)
-        <form action="{{route('unfollow', ['nickname' => $nickname])}}" method="post">
-            @csrf
-            <button class="btn btn-outline-danger" type="submit">Deixar de Seguir</button>
-        </form>
-        @else
-        <form action="{{route('follow', ['nickname' => $nickname])}}" method="post">
-            @csrf
-            <button class="btn btn-outline-primary" type="submit">Seguir</button>
-        </form>
-        @endif
-        
-    @endif
-    
+    <!-- Header: Nome + Seguir -->
+    <div class="d-flex flex-column flex-md-row align-items-center justify-content-between mb-5">
+        <div class="text-center text-md-start">
+            <h2 class="fw-bold mb-1">
+                Página de <span class="text-primary">{{ $nickname }}</span>
+            </h2>
+            <p class="text-muted mb-0">Bem-vindo(a) ao perfil de {{ $nickname }}!</p>
+        </div>
+
+        <!-- Botão seguir -->
+        @auth
+        <div class="mt-3 mt-md-0">
+            @if ($is_following)
+            <form action="{{ route('unfollow', ['nickname' => $nickname]) }}" method="post">
+                @csrf
+                <button class="btn btn-outline-danger">
+                    <i class="fas fa-user-minus me-2"></i>Deixar de Seguir
+                </button>
+            </form>
+            @else
+            <form action="{{ route('follow', ['nickname' => $nickname]) }}" method="post">
+                @csrf
+                <button class="btn btn-primary">
+                    <i class="fas fa-user-plus me-2"></i>Seguir
+                </button>
+            </form>
+            @endif
+        </div>
+        @endauth
     </div>
+
+    <!-- Estatísticas -->
+    <div class="row text-center mb-5">
+        <div class="col-4">
+            <i class="fas fa-book fa-lg text-primary mb-1"></i>
+            <h5 class="fw-bold mb-0">{{ count($count_theme) }}</h5>
+            <small class="text-muted">Temas</small>
+        </div>
+        <div class="col-4">
+            <i class="fas fa-users fa-lg text-success mb-1"></i>
+            <h5 class="fw-bold mb-0">{{ count($count_followers) }}</h5>
+            <small class="text-muted">Seguidores</small>
+        </div>
+        <div class="col-4">
+            <i class="fas fa-user-friends fa-lg text-warning mb-1"></i>
+            <h5 class="fw-bold mb-0">{{ count($count_following) }}</h5>
+            <small class="text-muted">Seguindo</small>
+        </div>
+    </div>
+
+    <!-- Nome e subtítulo -->
+    <div class="text-center mb-4">
+        <h1 class="display-4 fw-bold">{{ $db_main->name }}</h1>
+        <p class="lead text-muted fst-italic">{{ $db_main->subtitle }}</p>
+    </div>
+
+    <!-- Descrição -->
+    <div class="text-center px-3 px-md-5 mt-4">
+        <p class="lead text-body-secondary fs-5">
+            {{ $db_main->description }}
+        </p>
+    </div>
+
 </div>
 
 
-<div class="text-center">
-    <h3 class="display-4 fw-bold">
-        {{$db_main->name}}
-    </h3>
-    <h3 class="lead">
-        {{$db_main->subtitle}}
-    </h3>
-</div>
 
-<div class="mt-5 mb-5">
-    <p class="lead">
-        {{$db_main->description}}
-    </p>
-</div>
 
 
 {{--
