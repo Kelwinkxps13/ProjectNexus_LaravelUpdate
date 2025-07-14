@@ -19,7 +19,7 @@ class AttStatus
     public function handle(Request $request, Closure $next): Response
     {
 
-        dd(Auth::user()->nickname);
+
         if (Auth::check()) {
             $user = Auth::user();
 

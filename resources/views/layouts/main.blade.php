@@ -1,3 +1,5 @@
+{{-- ola mundo --}}
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -120,7 +122,7 @@ $data = session('user_data');
             <ul class="navbar-nav d-flex flex-row align-items-center mt-3 mt-lg-0">
 
               @auth
-              
+
               <!-- <li class="nav-item d-flex align-items-center text-center mx-2">
                 <div class="d-flex flex-column me-3">
                   <strong class="number text-white">{{ session('count_theme') }}</strong>
@@ -137,7 +139,7 @@ $data = session('user_data');
               </li>
 
 
-              
+
               <li class="nav-item text-center mx-2 mx-lg-1">
                 <a class="nav-link" href="#!">
                   <div>
