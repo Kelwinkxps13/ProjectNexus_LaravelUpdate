@@ -6,13 +6,6 @@
 @section('title', 'Sobre '.$item->name)
 @section('content')
 
-<form action="{{route('category_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug])}}" method="get">
-    @csrf
-    <button type="submit" class="btn btn-dark">
-        Voltar pros Temas de {{$nickname}}
-    </button>
-</form>
-
 <!-- forma padrao de um bloco, com titulo, texto e imagem -->
 <!-- ideia do leandro: ir alternando onde a imagem fica, uma vez na esquerda, outra na direita -->
 <div class="container-fluid my-4">

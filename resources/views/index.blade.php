@@ -85,7 +85,7 @@
             </div>
             @endforeach
 
-            
+
             @if (count($suggestion)>0)
             <h3 class="text-center mt-4">Veja sugestões de outros conteúdos!</h3>
             @foreach ($suggestion as $f)
@@ -135,12 +135,18 @@
                     @endif
                     <div class="overlay">
                         <h4 class="card-title text-white title">
-                            {{$f->name}}
+                            {{$f->name}} <br>
+                            feito por {{$f->user_nickname}}
                         </h4>
                         <div>
                             <form action="{{ route('category_index', ['nickname' => $f->user_nickname, 'category_name_slug' => $f->name_slug]) }}" method="get">
                                 <button type="submit" class="btn btn-dark">
                                     Ver Tema
+                                </button>
+                            </form>
+                            <form action="{{ route('user_index', ['nickname' => $f->user_nickname]) }}" method="get">
+                                <button type="submit" class="btn btn-dark">
+                                    Ver usuário
                                 </button>
                             </form>
                         </div>
@@ -163,12 +169,18 @@
                     @endif
                     <div class="overlay">
                         <h4 class="card-title text-white title">
-                            {{$f->name}}
+                            {{$f->name}} <br>
+                            feito por {{$f->user_nickname}}
                         </h4>
                         <div>
                             <form action="{{ route('category_index', ['nickname' => $f->user_nickname, 'category_name_slug' => $f->name_slug]) }}" method="get">
                                 <button type="submit" class="btn btn-dark">
                                     Ver Tema
+                                </button>
+                            </form>
+                            <form action="{{ route('user_index', ['nickname' => $f->user_nickname]) }}" method="get">
+                                <button type="submit" class="btn btn-dark">
+                                    Ver usuário
                                 </button>
                             </form>
                         </div>
@@ -183,7 +195,7 @@
 
 <div class="row mt-5">
     <div class="col">
-        
+
 
         {{--
             Se tiverem usuários criadores a serem mostrados

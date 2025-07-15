@@ -7,12 +7,6 @@
 @section('title', 'Página Inicial de '.$nickname)
 @section('content')
 
-<form action="{{ route('index', []) }}" method="get">
-    <button type="submit" class="btn btn-dark">
-        Voltar pra página inicial
-    </button>
-</form>
-
 {{--
     Verifica se o usuário está autenticado.
     Em seguida, verifica se o usuário logado é o usuário dono da página
@@ -63,15 +57,26 @@
 
     <!-- Header: Nome + Seguir -->
     <div class="d-flex flex-column flex-md-row align-items-center justify-content-between mb-5">
+        @if (Auth::check() && Auth::user()->nickname == $nickname)
         <div class="text-center text-md-start">
             <h2 class="fw-bold mb-1">
-                Página de <span class="text-primary">{{ $nickname }}</span>
+                Sua página</span>
+            </h2>
+            <p class="text-muted mb-0">Bem-vindo(a) !</p>
+        </div>
+        @else
+        <div class="text-center text-md-start">
+            <h2 class="fw-bold mb-1">
+                Página de {{ $nickname }}
             </h2>
             <p class="text-muted mb-0">Bem-vindo(a) ao perfil de {{ $nickname }}!</p>
         </div>
+        @endif
+
 
         <!-- Botão seguir -->
         @auth
+        @if (Auth::user()->nickname != $nickname)
         <div class="mt-3 mt-md-0">
             @if ($is_following)
             <form action="{{ route('unfollow', ['nickname' => $nickname]) }}" method="post">
@@ -89,6 +94,7 @@
             </form>
             @endif
         </div>
+        @endif
         @endauth
     </div>
 

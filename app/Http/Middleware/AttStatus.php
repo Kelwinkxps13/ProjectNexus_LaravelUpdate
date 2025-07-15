@@ -2,12 +2,13 @@
 
 namespace App\Http\Middleware;
 
+use Illuminate\Support\Facades\Auth;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\Category;
 use App\Models\Follower;
-use Illuminate\Support\Facades\Auth;
+
 
 class AttStatus
 {
@@ -19,20 +20,26 @@ class AttStatus
     public function handle(Request $request, Closure $next): Response
     {
 
-        dd(Auth::user()->nickname);
-        if (Auth::check()) {
-            $user = Auth::user();
+        if ($request->method() == 'GET') {
 
-            $count_theme = Category::where('user_id', $user->id)->count();
-            $count_followers = Follower::where('id_creator', $user->id)->count();
-            $count_following = Follower::where('id_user', $user->id)->count();
+            if (Auth::check()) {
+                // dd('ola mund');
+                // dd(Auth::user()->nickname);
+                $user = Auth::user();
 
-            session([
-                'count_theme' => $count_theme,
-                'count_followers' => $count_followers,
-                'count_following' => $count_following,
-            ]);
+                $count_theme = Category::where('user_id', $user->id)->count();
+                $count_followers = Follower::where('id_creator', $user->id)->count();
+                $count_following = Follower::where('id_user', $user->id)->count();
+
+                session([
+                    'count_theme' => $count_theme,
+                    'count_followers' => $count_followers,
+                    'count_following' => $count_following,
+                ]);
+            }
         }
+
+
 
         return $next($request);
     }

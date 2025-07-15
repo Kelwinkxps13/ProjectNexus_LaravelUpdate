@@ -6,12 +6,6 @@
 @section('title', 'Tema '.$db_theme->name.' de '.$nickname)
 @section('content')
 
-<form action="{{ route('user_index', ['nickname' => $nickname]) }}" method="get">
-    <button type="submit" class="btn btn-dark">
-        Voltar pra página do usuário
-    </button>
-</form>
-
 {{--
     Dados do tema atual
 --}}

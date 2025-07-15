@@ -15,10 +15,10 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware
-        // ->append(AttStatus::class)
         ->alias([
             'is_creator' => IsCreator::class,
-            'has_main_page' => hasMainPage::class
+            'has_main_page' => hasMainPage::class,
+            'att_status' => AttStatus::class
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
