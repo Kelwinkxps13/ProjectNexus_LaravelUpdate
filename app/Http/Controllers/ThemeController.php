@@ -7,18 +7,28 @@ use App\Models\Item;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Hash;
 
 class ThemeController extends Controller
 {
-    function index($nickname, $category_name_slug)
+    function index(Request $request, $nickname, $category_name_slug)
     {
         // filtra pra encontrar uma category em especifico
         $db_theme = Category::where('name_slug', $category_name_slug)->where('user_nickname', $nickname)->first();
         // condicional caso o tanto de temas deletados seja igual o tanto de temas totais
 
+        if (!$db_theme) {
+            abort(404);
+        }
 
         // pegando os dados dos itens do tema escolhido
         $db_url = $db_theme->items()->get();
+
+        if ($db_url->isEmpty() && !$this->isValidCsrfToken($request->_token)) {
+            abort(404);
+        }
 
         // devemos criar a variavel is_liked pra saber se o elemento curtiu ou não aquele item
         // porem isso deve ser feito com cada item...
@@ -56,6 +66,11 @@ class ThemeController extends Controller
             'nickname' => $nickname,
             'category_name_slug' => $category_name_slug
         ]);
+    }
+
+    private function isValidCsrfToken($token)
+    {
+        return is_string($token) && hash_equals(csrf_token(), $token);
     }
 
     function create($nickname)

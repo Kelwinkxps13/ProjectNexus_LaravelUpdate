@@ -40,9 +40,12 @@ $data = session('user_data');
     /* Ajuste para a segunda navbar (hierarquia) */
     /* Segunda navbar mais fina */
     .second-navbar {
-      margin-top: 10px;
-      padding: 4px 0;
-      font-size: 1.2rem;
+      position: fixed;
+      top: 80px; /* height of the first navbar */
+      width: 100%;
+      z-index: 1030; /* same as Bootstrap navbar */
+      background-color: #f8f9fa;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
 
     /* Breadcrumb base */
@@ -79,6 +82,10 @@ $data = session('user_data');
     .breadcrumb-item.active {
       color: #6c757d;
       font-weight: bold;
+    }
+
+    .navbar .container-fluid {
+      position: relative;
     }
   </style>
 
@@ -122,7 +129,7 @@ $data = session('user_data');
               @endauth
             </ul>
 
-            <form class="d-flex my-2" style="width: 300px;">
+            <form class="search-form position-absolute start-50 translate-middle-x d-flex my-2" style="width: 300px;">
               <input type="search" class="form-control me-2" placeholder="Search" aria-label="Search" />
               <button class="btn btn-primary" type="submit">Search</button>
             </form>
@@ -224,7 +231,7 @@ $data = session('user_data');
 
 
   <!-- Main Content -->
-  <main>
+  <main style="margin-top: 112px;">
     <div class="site-section">
       <div class="container">
         <div class="row justify-content-center">
