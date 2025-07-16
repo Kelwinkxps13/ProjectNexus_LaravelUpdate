@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Firsttime;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -31,8 +32,8 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'nickname' => ['required', 'string', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'nickname' => ['required', 'string', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -45,9 +46,30 @@ class RegisteredUserController extends Controller
             'following' => []
         ]);
 
+        
+
+
+
         event(new Registered($user));
 
         Auth::login($user);
+
+        $first_time = Firsttime::create([
+            'user_id' => Auth::id(),
+            'editor' => 1,
+            'generic' => 1,
+            'index' => 1,
+            'indexcreator' => 1,
+            'main' => 1,
+            'veja' => 1,
+            'vejaeditor' => 1,
+            'base_create' => 1,
+            'base_edit' => 1,
+            'block_create' => 1,
+            'block_edit' => 1,
+            'generic_create' => 1,
+            'generic_edit' => 1
+        ]);
 
         return redirect(route('index', absolute: false));
     }

@@ -183,6 +183,7 @@ class ContentController extends Controller
         return Redirect::to(route('item_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $request->item_name_slug]))
             ->with('msg-success', "Conteúdo editado com sucesso!");
     }
+    
     function destroy(Request $request, $nickname, $category_name_slug)
     {
 

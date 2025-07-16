@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Firsttime;
 use App\Models\Item;
 use App\Models\Follower;
 use App\Models\Main;
@@ -14,6 +15,27 @@ class IndexController extends Controller
 {
     public function index()
     {
+
+        // tutorial do spray
+        if (Auth::check()) {
+
+            $first_time = Firsttime::where('user_id', Auth::id())->first();
+
+            if ($first_time) {
+
+                if ($first_time->index === 1) {
+
+                    $first_time->index = 0;
+
+                    $first_time->save();
+
+                    return view('first_time', [
+                        'validate' => 'index'
+                    ]);
+                }
+            }
+        }
+
 
         // foreach de todos os temas!
 

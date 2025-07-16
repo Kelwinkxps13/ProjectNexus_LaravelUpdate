@@ -161,7 +161,8 @@ class UserController extends Controller
         ]);
     }
 
-    function follow($nickname){
+    function follow($nickname)
+    {
 
         $user_creator = User::where('nickname', $nickname)->first();
         $id_creator = $user_creator->id;
@@ -176,7 +177,9 @@ class UserController extends Controller
         ->with('msg-success', 'agora você está seguindo '.$nickname.'!');
 
     }
-    function unfollow($nickname){
+
+    function unfollow($nickname)
+    {
 
         $user_creator = User::where('nickname', $nickname)->first();
         $id_creator = $user_creator->id;

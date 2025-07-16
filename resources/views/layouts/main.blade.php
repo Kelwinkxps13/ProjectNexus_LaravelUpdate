@@ -224,7 +224,7 @@ $data = session('user_data');
 
 
   <!-- Main Content -->
-  <main>
+  <main class="my-5">
     <div class="site-section">
       <div class="container">
         <div class="row justify-content-center">

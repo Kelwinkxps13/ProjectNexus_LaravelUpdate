@@ -151,7 +151,6 @@ class ItemController extends Controller
             ->with('msg-success', "Item criado com sucesso!");
     }
 
-
     function edit($nickname, $category_name_slug, $item_name_slug)
     {
         // nome da categoria que vai ser modificada um item
@@ -213,6 +212,7 @@ class ItemController extends Controller
         return Redirect::to(route('category_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug]))
             ->with('msg-success', "Item marcado como LIKE com sucesso!");
     }
+
     function unlike($nickname, $category_name_slug, $item_name_slug)
     {
         // nome da categoria que vai ser modificada um item
@@ -302,7 +302,6 @@ class ItemController extends Controller
         return Redirect::to(route('category_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug]))
             ->with('msg-success', "Item desmarcado como LIKE com sucesso!");
     }
-
 
     function add_comment_0(Request $request, $nickname, $category_name_slug, $item_name_slug)
     {
@@ -426,8 +425,6 @@ class ItemController extends Controller
             ->with('msg-success', "comentário adicionado com sucesso!");
     }
 
-
-
     function update(Request $request, $nickname, $category_name_slug)
     {
         //  protected $fillable = ['name', 'description', 'image', 'category_id'];]
@@ -486,6 +483,7 @@ class ItemController extends Controller
         return Redirect::to(route('category_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug]))
             ->with('msg-success', "Item editado com sucesso!");
     }
+
     function destroy(Request $request, $nickname, $category_name_slug)
     {
         $cat = Category::where('name_slug', $category_name_slug)->where('user_nickname', $nickname)->first();
@@ -496,6 +494,7 @@ class ItemController extends Controller
         return Redirect::to(route('category_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug]))
             ->with('msg-success', "Item excluído com sucesso!");
     }
+
     function editor($nickname, $category_name_slug, $item_name_slug)
     {
         // titulo do item

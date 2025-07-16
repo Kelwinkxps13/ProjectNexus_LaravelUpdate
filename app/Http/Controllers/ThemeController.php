@@ -120,7 +120,6 @@ class ThemeController extends Controller
             ->with('msg-success', "Categoria criada com sucesso!");
     }
 
-
     function edit($nickname, $category_name_slug)
     {
         // dados da categoria (theme)
@@ -191,6 +190,7 @@ class ThemeController extends Controller
         return Redirect::to(route('user_editor', ['nickname' => $nickname]))
             ->with('msg-success', 'Categoria Atualizada com Sucesso!');
     }
+    
     function destroy(Request $request, $nickname)
     {
 
