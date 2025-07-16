@@ -85,4 +85,4 @@ Cada **bloco de conteúdo** consiste basicamente três elementos:
 
 ### feito por
 - Kelwin Jhackson (Full Stack)
-- Elbston Souza (Front End)
+- Elbston Souza (Gestor de Projeto)
