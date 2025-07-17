@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Item;
+use App\Models\Firsttime;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -12,6 +13,30 @@ class ThemeController extends Controller
 {
     function index($nickname, $category_name_slug)
     {
+
+        // tutorial do spray
+        if (Auth::check()) {
+
+            $first_time = Firsttime::where('user_id', Auth::id())->first();
+
+            if ($first_time) {
+
+                if ($first_time->generic === 1) {
+
+                    $first_time->generic = 0;
+
+                    $first_time->save();
+
+                    return view('first_time', [
+                        'validate' => 'generic',
+                        'route' => route('category_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug])
+                    ]);
+                }
+            }
+        }
+
+
+        
         // filtra pra encontrar uma category em especifico
         $db_theme = Category::where('name_slug', $category_name_slug)->where('user_nickname', $nickname)->first();
         // condicional caso o tanto de temas deletados seja igual o tanto de temas totais
@@ -60,6 +85,28 @@ class ThemeController extends Controller
 
     function create($nickname)
     {
+        // tutorial do spray
+        if (Auth::check()) {
+
+            $first_time = Firsttime::where('user_id', Auth::id())->first();
+
+            if ($first_time) {
+
+                if ($first_time->generic_create === 1) {
+
+                    $first_time->generic_create = 0;
+
+                    $first_time->save();
+
+                    return view('first_time', [
+                        'validate' => 'generic_create',
+                        'route' => route('category_create', ['nickname' => $nickname])
+                    ]);
+                }
+            }
+        }
+
+
         return view('modulos.generic.create', [
             'nickname' => $nickname
         ]);
@@ -122,6 +169,30 @@ class ThemeController extends Controller
 
     function edit($nickname, $category_name_slug)
     {
+
+        // tutorial do spray
+        if (Auth::check()) {
+
+            $first_time = Firsttime::where('user_id', Auth::id())->first();
+
+            if ($first_time) {
+
+                if ($first_time->generic_edit === 1) {
+
+                    $first_time->generic_edit = 0;
+
+                    $first_time->save();
+
+                    return view('first_time', [
+                        'validate' => 'generic_edit',
+                        'route' => route('category_edit', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug])
+                    ]);
+                }
+            }
+        }
+
+
+
         // dados da categoria (theme)
         $db = Category::where('name_slug', $category_name_slug)->where('user_nickname', $nickname)->first();
         return view('modulos.generic.edit', [

@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Main;
 use App\Models\User;
 use App\Models\Follower;
+use App\Models\Firsttime;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -15,6 +16,30 @@ class UserController extends Controller
 {
     function index($nickname)
     {
+
+        // tutorial do spray
+        if (Auth::check()) {
+
+            $first_time = Firsttime::where('user_id', Auth::id())->first();
+
+            if ($first_time) {
+
+                if ($first_time->main === 1) {
+
+                    $first_time->main = 0;
+
+                    $first_time->save();
+
+                    return view('first_time', [
+                        'validate' => 'main',
+                        'route' => route('user_index', ['nickname' => $nickname])
+                    ]);
+                }
+            }
+        }
+
+
+
         // pegar os dados da pessoa que tem aquele nickname
         $db_main = Main::where('user_nickname', $nickname)->first();
         $user = null;
@@ -65,7 +90,28 @@ class UserController extends Controller
     function create($nickname)
     {
 
-        
+
+        // tutorial do spray
+        if (Auth::check()) {
+
+            $first_time = Firsttime::where('user_id', Auth::id())->first();
+
+            if ($first_time) {
+
+                if ($first_time->indexcreator === 1) {
+
+                    $first_time->indexcreator = 0;
+
+                    $first_time->save();
+
+                    return view('first_time', [
+                        'validate' => 'indexcreator',
+                        'route' => route('user_create', ['nickname' => $nickname])
+                    ]);
+                }
+            }
+        }
+
         return view('indexcreator', [
             'nickname' => $nickname
         ]);
@@ -99,6 +145,29 @@ class UserController extends Controller
 
     function edit($nickname)
     {
+
+        // tutorial do spray
+        if (Auth::check()) {
+
+            $first_time = Firsttime::where('user_id', Auth::id())->first();
+
+            if ($first_time) {
+
+                if ($first_time->indexeditor === 1) {
+
+                    $first_time->indexeditor = 0;
+
+                    $first_time->save();
+
+                    return view('first_time', [
+                        'validate' => 'indexeditor',
+                        'route' => route('user_edit', ['nickname' => $nickname])
+                    ]);
+                }
+            }
+        }
+
+
         // pega os dados da tela inicial
         $main = Main::where('user_id', Auth::id())->first();
 
@@ -147,6 +216,30 @@ class UserController extends Controller
 
     function editor($nickname)
     {
+
+        // tutorial do spray
+        if (Auth::check()) {
+
+            $first_time = Firsttime::where('user_id', Auth::id())->first();
+
+            if ($first_time) {
+
+                if ($first_time->editor === 1) {
+
+                    $first_time->editor = 0;
+
+                    $first_time->save();
+
+                    return view('first_time', [
+                        'validate' => 'editor',
+                        'route' => route('user_editor', ['nickname' => $nickname])
+                    ]);
+                }
+            }
+        }
+
+
+
         // pega o usuario
         $user = User::find(Auth::id());
         // proximo passo, é pegar as categories em si daquele usuario
@@ -174,8 +267,7 @@ class UserController extends Controller
         $follower->save();
 
         return Redirect::to(route('user_index', ['nickname' => $nickname]))
-        ->with('msg-success', 'agora você está seguindo '.$nickname.'!');
-
+            ->with('msg-success', 'agora você está seguindo ' . $nickname . '!');
     }
 
     function unfollow($nickname)
@@ -189,6 +281,6 @@ class UserController extends Controller
         $follower->delete();
 
         return Redirect::to(route('user_index', ['nickname' => $nickname]))
-        ->with('msg-success', 'você deixou de seguir '.$nickname.'!');
+            ->with('msg-success', 'você deixou de seguir ' . $nickname . '!');
     }
 }

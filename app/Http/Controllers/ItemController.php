@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\User;
 use App\Models\Comment;
+use App\Models\Firsttime;
 use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -15,6 +16,27 @@ class ItemController extends Controller
 
     function index($nickname, $category_name_slug, $item_name_slug)
     {
+
+        // tutorial do spray
+        if (Auth::check()) {
+
+            $first_time = Firsttime::where('user_id', Auth::id())->first();
+
+            if ($first_time) {
+
+                if ($first_time->veja === 1) {
+
+                    $first_time->veja = 0;
+
+                    $first_time->save();
+
+                    return view('first_time', [
+                        'validate' => 'veja',
+                        'route' => route('item_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $item_name_slug])
+                    ]);
+                }
+            }
+        }
 
         $cat = Category::where('name_slug', $category_name_slug)->where('user_nickname', $nickname)->first();
         // contents daquele item daquela category
@@ -74,6 +96,30 @@ class ItemController extends Controller
 
     function create($nickname, $category_name_slug)
     {
+
+        // tutorial do spray
+        if (Auth::check()) {
+
+            $first_time = Firsttime::where('user_id', Auth::id())->first();
+
+            if ($first_time) {
+
+                if ($first_time->base_create === 1) {
+
+                    $first_time->base_create = 0;
+
+                    $first_time->save();
+
+                    return view('first_time', [
+                        'validate' => 'base_create',
+                        'route' => route('item_create', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug])
+                    ]);
+                }
+            }
+        }
+
+
+
         // nome da categoria que vai ser adicionada um item
         $cat = Category::where('name_slug', $category_name_slug)->where('user_nickname', $nickname)->first();
 
@@ -153,6 +199,28 @@ class ItemController extends Controller
 
     function edit($nickname, $category_name_slug, $item_name_slug)
     {
+
+        // tutorial do spray
+        if (Auth::check()) {
+
+            $first_time = Firsttime::where('user_id', Auth::id())->first();
+
+            if ($first_time) {
+
+                if ($first_time->base_edit === 1) {
+
+                    $first_time->base_edit = 0;
+
+                    $first_time->save();
+                    return view('first_time', [
+                        'validate' => 'base_edit',
+                        'route' => route('item_edit', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $item_name_slug])
+                    ]);
+                }
+            }
+        }
+
+
         // nome da categoria que vai ser modificada um item
         $cat = Category::where('name_slug', $category_name_slug)->where('user_nickname', $nickname)->first();
         if (!$cat) {
@@ -497,6 +565,29 @@ class ItemController extends Controller
 
     function editor($nickname, $category_name_slug, $item_name_slug)
     {
+
+        // tutorial do spray
+        if (Auth::check()) {
+
+            $first_time = Firsttime::where('user_id', Auth::id())->first();
+
+            if ($first_time) {
+
+                if ($first_time->vejaeditor === 1) {
+
+                    $first_time->vejaeditor = 0;
+
+                    $first_time->save();
+
+                    return view('first_time', [
+                        'validate' => 'vejaeditor',
+                        'route' => route('item_editor', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $item_name_slug])
+                    ]);
+                }
+            }
+        }
+
+
         // titulo do item
         $cat = Category::where('name_slug', $category_name_slug)->where('user_nickname', $nickname)->first();
         $item = Item::where('name_slug', $item_name_slug)->where('category_id', $cat->id)->first();

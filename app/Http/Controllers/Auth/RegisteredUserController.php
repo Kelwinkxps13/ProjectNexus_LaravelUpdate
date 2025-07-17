@@ -60,6 +60,7 @@ class RegisteredUserController extends Controller
             'generic' => 1,
             'index' => 1,
             'indexcreator' => 1,
+            'indexeditor' => 1,
             'main' => 1,
             'veja' => 1,
             'vejaeditor' => 1,

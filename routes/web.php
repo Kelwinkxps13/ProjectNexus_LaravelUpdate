@@ -33,7 +33,6 @@ Route::get('/', [IndexController::class, 'index'])->middleware(['att_status'])->
 Route::get('/{nickname}/editor', [UserController::class, 'editor'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('user_editor'); // feito com sucesso!
 
 // rotas dos blocos (conteúdo) de cada item
-Route::get('/{nickname}/{category_name_slug}/editblock', [ContentController::class, 'edit'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('content_edit'); // feito com sucesso!
 Route::get('/{nickname}/{category_name_slug}/createblock/{item_name_slug}', [ContentController::class, 'create'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('content_create'); // feito com sucesso!
 Route::post('/{nickname}/{category_name_slug}/storeblock', [ContentController::class, 'store'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('content_store'); // feito com sucesso!
 Route::patch('/{nickname}/{category_name_slug}/updateblock', [ContentController::class, 'update'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('content_update'); // feito com sucesso!
@@ -70,7 +69,7 @@ Route::get('/{nickname}/{category_name_slug}/edit/{item_name_slug}', [ItemContro
 Route::patch('/{nickname}/{category_name_slug}/', [ItemController::class, 'update'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('item_update'); // feito com sucesso!
 Route::delete('/{nickname}/{category_name_slug}/', [ItemController::class, 'destroy'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('item_destroy'); // feito com sucesso!
 Route::get('/{nickname}/{category_name_slug}/{item_name_slug}/editor', [ItemController::class, 'editor'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('item_editor'); // feito com sucesso!
-
+Route::get('/{nickname}/{category_name_slug}/{item_name_slug}/{idblock}', [ContentController::class, 'edit'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('content_edit'); // feito com sucesso!
 // rotas de theme
 Route::get('/{nickname}/{category_name_slug}', [ThemeController::class, 'index'])->middleware(['att_status'])->name('category_index'); // feito com sucesso!
 

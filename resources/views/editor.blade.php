@@ -9,12 +9,12 @@
 <div class="container py-4">
   <div class="row">
     <div class="col">
-      <h2 class="mb-3">Menu</h2>
+      <h2 class="mb-3">Página Inicial</h2>
       <div class="d-flex justify-content-end">
         <form action="{{route('user_edit', ['nickname' => $nickname])}}" method="get">
           @csrf
           <button type="submit" class="btn btn-warning">
-            Editar menu
+            Editar Página Inicial
           </button>
         </form>
       </div>
@@ -29,21 +29,23 @@
       {{--$_COOKIE
         Caso o forach dos temas esteja vazio
       --}}
-    @if ($themes_foreach->isEmpty())
-    <h4 class="text-center">Sem Temas!</h4>
-    {{--$_COOKIE
+      @if ($themes_foreach->isEmpty())
+      <h4 class="text-center">Sem Temas!</h4>
+      {{--$_COOKIE
       Caso o foreach dos temas não esteja vazio
     --}}
-    @else
-    @foreach ($themes_foreach as $f)
+      @else
+      @foreach ($themes_foreach as $f)
 
 
 
       <div class="card mb-4 shadow-sm">
         <!-- Banner de Fundo -->
-        <div class="banner {{ $f->image === null ? 'no-image' : '' }}">
+        <div class="banner">
           @if($f->image !==null)
           <img src="/images/{{$f->user_nickname}}/categories/banners/{{$f->image}}" alt="Profile">
+          @else
+          <img src="/default/banner-default.jpg" alt="Profile">
           @endif
           <div class="overlay">
             <h4 class="card-title text-white title">
@@ -143,7 +145,7 @@
         }
       </style>
       @endforeach
-    @endif
+      @endif
 
     </div>
   </div>

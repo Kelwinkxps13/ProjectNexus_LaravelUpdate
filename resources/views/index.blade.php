@@ -59,9 +59,11 @@
             <div class="card mb-4 shadow-sm">
 
                 <!-- Banner de Fundo -->
-                <div class="banner {{($f->image === null)?'no-image':''}} %>">
+                <div class="banner">
                     @if($f->image !==null)
                     <img src="/images/{{$f->user_nickname}}/categories/banners/{{$f->image}}" alt="Profile">
+                    @else
+                    <img src="/default/banner-default.jpg" alt="Profile">
                     @endif
                     <div class="overlay">
                         <h4 class="card-title text-white title">
@@ -92,9 +94,11 @@
             <div class="card mb-4 shadow-sm">
 
                 <!-- Banner de Fundo -->
-                <div class="banner {{($f->image === null)?'no-image':''}} %>">
+                <div class="banner">
                     @if($f->image !==null)
                     <img src="/images/{{$f->user_nickname}}/categories/banners/{{$f->image}}" alt="Profile">
+                    @else
+                    <img src="/default/banner-default.jpg" alt="Profile">
                     @endif
                     <div class="overlay">
                         <h4 class="card-title text-white title">
@@ -129,9 +133,11 @@
             <div class="card mb-4 shadow-sm">
 
                 <!-- Banner de Fundo -->
-                <div class="banner {{($f->image === null)?'no-image':''}} %>">
+                <div class="banner">
                     @if($f->image !==null)
                     <img src="/images/{{$f->user_nickname}}/categories/banners/{{$f->image}}" alt="Profile">
+                    @else
+                    <img src="/default/banner-default.jpg" alt="Profile">
                     @endif
                     <div class="overlay">
                         <h4 class="card-title text-white title">
@@ -163,9 +169,11 @@
             <div class="card mb-4 shadow-sm">
 
                 <!-- Banner de Fundo -->
-                <div class="banner {{($f->image === null)?'no-image':''}} %>">
+                <div class="banner">
                     @if($f->image !==null)
                     <img src="/images/{{$f->user_nickname}}/categories/banners/{{$f->image}}" alt="Profile">
+                    @else
+                    <img src="/default/banner-default.jpg" alt="Profile">
                     @endif
                     <div class="overlay">
                         <h4 class="card-title text-white title">

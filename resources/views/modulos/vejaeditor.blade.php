@@ -26,11 +26,9 @@
                         {{$f->name}}
                     </h4>
                     <div class="d-flex justify-content-end gap-2">
-                        <form action="{{route('content_edit', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug])}}"
+                        <form action="{{route('content_edit', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $item_name_slug, 'idblock' => $f->id])}}"
                             method="get">
                             @csrf
-                            <input type="hidden" name="item_name_slug" value="{{$item_name_slug}}">
-                            <input type="hidden" name="idblock" value="{{$f->id}}">
                             <button type="submit" class="btn btn-warning">Editar</button>
                         </form>
                         <form action="{{route('content_destroy', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug])}}"

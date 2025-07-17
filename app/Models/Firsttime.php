@@ -15,6 +15,7 @@ class Firsttime extends Model
         'generic',
         'index',
         'indexcreator',
+        'indexeditor',
         'main',
         'veja',
         'vejaeditor',

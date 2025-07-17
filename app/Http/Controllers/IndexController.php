@@ -16,6 +16,7 @@ class IndexController extends Controller
     public function index()
     {
 
+
         // tutorial do spray
         if (Auth::check()) {
 
@@ -30,7 +31,8 @@ class IndexController extends Controller
                     $first_time->save();
 
                     return view('first_time', [
-                        'validate' => 'index'
+                        'validate' => 'index',
+                        'route' => route('index')
                     ]);
                 }
             }
