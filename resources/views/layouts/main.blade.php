@@ -86,7 +86,7 @@ $data = session('user_data');
   <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">Nexus</a>
+        <a class="navbar-brand" href="/">Nexus</a>
         <button class="navbar-toggler" type="button" data-mdb-collapse-init data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <i class="fas fa-bars text-light"></i>
         </button>
@@ -122,9 +122,15 @@ $data = session('user_data');
               @endauth
             </ul>
 
-            <form class="d-flex my-2" style="width: 300px;">
-              <input type="search" class="form-control me-2" placeholder="Search" aria-label="Search" />
-              <button class="btn btn-primary" type="submit">Search</button>
+
+
+            <form class="d-flex my-2" action="{{ route('search') }}" method="GET" style="max-width: 300px;">
+              <div class="input-group shadow-sm rounded-pill overflow-hidden">
+                <input type="text" class="form-control form-control-lg border-0 ps-4" name="query" placeholder="Buscar...">
+                <button class="btn btn-primary px-4" type="submit">
+                  <i class="fa fa-search"></i>
+                </button>
+              </div>
             </form>
 
             <ul class="navbar-nav d-flex flex-row align-items-center mt-3 mt-lg-0">
@@ -145,7 +151,7 @@ $data = session('user_data');
               </li>
 
               <li class="nav-item text-center mx-2 mx-lg-1">
-                <a class="nav-link" href="#!">
+                <a class="nav-link" href="/notifications">
                   <div>
                     <i class="fas fa-bell fa-lg mb-1"></i>
                     <span class="badge rounded-pill badge-notification bg-info">11</span>

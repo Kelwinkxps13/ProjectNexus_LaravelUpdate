@@ -161,4 +161,40 @@ class IndexController extends Controller
             'themes' => $themes
         ]);
     }
+
+    public function search(Request $request)
+    {
+        // Captura a palavra-chave digitada na busca
+        $query = $request->input('query');
+
+        // Buscar usuários e temas com base na query
+        $users = User::where('nickname', 'like', '%' . $query . '%')->where('name', 'like', '%' . $query . '%')->get();
+
+        foreach ($users as $key => $value) {
+
+            //verificando se o usuário autenticado já segue aquele criador
+            $is_following = Follower::where('id_creator', $value->id)->where('id_user', Auth::id())->first();
+
+            if ($is_following) {
+                $value->is_following = true;
+            }
+
+            unset($value['password']);
+            unset($value['email']);
+        }
+
+        $themes = Category::where('name', 'like', '%' . $query . '%')->get();
+        $items = Item::where('name', 'like', '%' . $query . '%')->get();
+
+
+
+
+        // Retornar a view com os resultados
+        return view('search', [
+            'users' => $users,
+            'themes' => $themes,
+            'items' => $items,
+            'query' => $query
+        ]);
+    }
 }

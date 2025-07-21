@@ -30,6 +30,8 @@ Route::middleware('auth')->group(function () {
 // adicionado pelo dev
 Route::get('/', [IndexController::class, 'index'])->middleware(['att_status'])->name('index'); // feito com sucesso!
 
+Route::get('/notifications', [UserController::class, 'notifications'])->middleware(['att_status'])->name('notifications');
+Route::get('/pesquisa', [IndexController::class, 'search'])->middleware(['att_status'])->name('search');
 Route::get('/{nickname}/editor', [UserController::class, 'editor'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('user_editor'); // feito com sucesso!
 
 // rotas dos blocos (conteúdo) de cada item
@@ -72,6 +74,8 @@ Route::get('/{nickname}/{category_name_slug}/{item_name_slug}/editor', [ItemCont
 Route::get('/{nickname}/{category_name_slug}/{item_name_slug}/{idblock}', [ContentController::class, 'edit'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('content_edit'); // feito com sucesso!
 // rotas de theme
 Route::get('/{nickname}/{category_name_slug}', [ThemeController::class, 'index'])->middleware(['att_status'])->name('category_index'); // feito com sucesso!
+
+
 
 // rotas do user
 Route::get('/{nickname}', [UserController::class, 'index'])->middleware(['att_status'])->name('user_index'); // feito com sucesso!

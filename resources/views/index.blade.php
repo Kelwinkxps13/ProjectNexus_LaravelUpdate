@@ -16,7 +16,10 @@
     Caso o usuário esteja autenticado
 --}}
 @auth
-<h4 class="text-center">Olá, {{Auth::user()->nickname}}!</h4>
+{{--$_COOKIE
+    nada acontece, mas antes aparecia "Ola, usuario tal!" 
+    ninguem liga pra voce!
+--}}
 @endauth
 
 {{--$_COOKIE
@@ -201,113 +204,117 @@
     </div>
 </div>
 
-<div class="row mt-5">
-    <div class="col">
 
+<div class="container">
+    {{-- Verifica se existem usuários criadores --}}
+    @if (!$users_foreach->isEmpty())
+    <h2 class="mb-4 text-center">Descubra mais criadores!</h2>
 
-        {{--
-            Se tiverem usuários criadores a serem mostrados
-        --}}
-        @if (!$users_foreach->isEmpty())
-        <h2 class="mb-3">Veja os ultimos 10 usuarios Criadores!</h2>
-
-        {{--
-            Foreach desses usuários
-        --}}
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {{-- Loop para exibir os usuários criadores --}}
         @foreach ($users_foreach as $f)
-
-        <h4>
-            <a href="{{route('user_index', ['nickname' => $f->user_nickname]) }}"> Usuário - {{$f->user_nickname}}</a>
-        </h4>
-
+        <div class="col">
+            <div class="card shadow-sm rounded-3 border-0">
+                <div class="card-body">
+                    <h5 class="card-title d-flex align-items-center">
+                        <i class="fa-solid fa-user-circle me-3 text-primary"></i>
+                        <a href="{{ route('user_index', ['nickname' => $f->user_nickname]) }}" class="text-decoration-none text-dark fw-bold fs-4">
+                            {{ '@'.$f->user_nickname }}
+                        </a>
+                    </h5>
+                    <p class="card-text text-muted">Criador de temas, ideias e conteúdo inovador!</p>
+                </div>
+            </div>
+        </div>
         @endforeach
-
-        {{--
-            Caso não tenham usuários criados ainda
-        --}}
-        @else
-
-        <h4 class="text-center">Ainda sem usuarios criadores</h4>
-
-        @endif
+    </div>
+    @else
+    <h4 class="text-center text-danger mt-4">Ainda não há usuários criadores disponíveis.</h4>
+    @endif
+</div>
 
 
 
 
 
-        <style>
-            .banner {
-                width: 100%;
-                height: 140px;
-                /* Banner mais fino */
-                overflow: hidden;
-                position: relative;
-                border-radius: 8px;
-                /* Arredondamento opcional */
-                background-color: white;
-                /* Cor de fundo padrão */
-            }
 
-            .banner img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                position: absolute;
-                top: 0;
-                left: 0;
-            }
 
-            .overlay {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                display: flex;
-                align-items: center;
-                /* Centraliza verticalmente */
-                justify-content: space-between;
-                /* Mantém o título à esquerda e o botão à direita */
-                padding: 0 20px;
-                background: rgba(0, 0, 0, 0.5);
-                /* Escurece um pouco a imagem */
-                color: white;
-            }
 
-            .title {
-                margin: 0;
-                font-size: 1.2rem;
-                font-weight: bold;
-                text-shadow: 2px 2px 4px rgba(0, 0, 0, 1);
-                /* Sombra preta forte */
-            }
 
-            /* Se não houver imagem, o fundo fica branco e o texto preto */
-            .no-image {
-                background-color: #f0f0f0 !important;
-                /* Cinza bem claro */
-            }
 
-            .no-image .overlay {
-                background: none;
-                /* Remove a camada escura */
-                color: black !important;
-                /* Texto preto */
-                text-shadow: none;
-                /* Remove a sombra do texto */
-            }
+<style>
+    .banner {
+        width: 100%;
+        height: 140px;
+        /* Banner mais fino */
+        overflow: hidden;
+        position: relative;
+        border-radius: 8px;
+        /* Arredondamento opcional */
+        background-color: white;
+        /* Cor de fundo padrão */
+    }
 
-            .btn-dark {
-                background-color: #343a40;
-                /* Cor mais escura */
-                border-color: #23272b;
-            }
+    .banner img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
 
-            .btn-dark:hover {
-                background-color: #23272b;
-                /* Ainda mais escuro no hover */
-                border-color: #1d2124;
-            }
-        </style>
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        /* Centraliza verticalmente */
+        justify-content: space-between;
+        /* Mantém o título à esquerda e o botão à direita */
+        padding: 0 20px;
+        background: rgba(0, 0, 0, 0.5);
+        /* Escurece um pouco a imagem */
+        color: white;
+    }
 
-        @endsection
+    .title {
+        margin: 0;
+        font-size: 1.2rem;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 1);
+        /* Sombra preta forte */
+    }
+
+    /* Se não houver imagem, o fundo fica branco e o texto preto */
+    .no-image {
+        background-color: #f0f0f0 !important;
+        /* Cinza bem claro */
+    }
+
+    .no-image .overlay {
+        background: none;
+        /* Remove a camada escura */
+        color: black !important;
+        /* Texto preto */
+        text-shadow: none;
+        /* Remove a sombra do texto */
+    }
+
+    .btn-dark {
+        background-color: #343a40;
+        /* Cor mais escura */
+        border-color: #23272b;
+    }
+
+    .btn-dark:hover {
+        background-color: #23272b;
+        /* Ainda mais escuro no hover */
+        border-color: #1d2124;
+    }
+</style>
+
+@endsection

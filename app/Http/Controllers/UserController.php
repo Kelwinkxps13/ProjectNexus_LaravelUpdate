@@ -7,6 +7,7 @@ use App\Models\Main;
 use App\Models\User;
 use App\Models\Follower;
 use App\Models\Firsttime;
+use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -282,5 +283,22 @@ class UserController extends Controller
 
         return Redirect::to(route('user_index', ['nickname' => $nickname]))
             ->with('msg-success', 'você deixou de seguir ' . $nickname . '!');
+    }
+
+    function notifications()
+    {
+        $notifications = Notification::where('user_id', Auth::id())->get();
+        if(!$notifications){
+            foreach ($notifications as $key => $value) {
+                if ($value->responser_id != null) {
+                    $responser = User::where('id', $value->responser_id)->first();
+                    $value->responser_nickname = $responser->nickname;
+                    unset($responser);
+                }
+            }
+        }
+        return view('notifications', [
+            'notifications' => $notifications
+        ]);
     }
 }

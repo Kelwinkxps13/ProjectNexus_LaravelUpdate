@@ -6,7 +6,9 @@ use App\Models\Category;
 use App\Models\User;
 use App\Models\Comment;
 use App\Models\Firsttime;
+use App\Models\Follower;
 use App\Models\Item;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
@@ -191,6 +193,30 @@ class ItemController extends Controller
         $item->likes = [];
         $item->dislikes = [];
         $item->save();
+
+
+        $user_creator = User::where('nickname', $nickname)->first();
+
+        // consulta pra pegar o nome do tema
+
+        $cat = Category::where('name_slug', $category_name_slug)->where('user_id', Auth::id())->first();
+
+        $followers = Follower::where('id_creator', Auth::id())->get();
+        
+        foreach ($followers as $key => $follower) {
+            Notification::create([
+                'user_id' => $follower->id_user,
+                'name' => $item->name,
+                'theme_name' => $cat->name,
+                'text' => route('category_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug]),
+                'status' => 'new_item',
+                'responser_id' => Auth::id(),
+                'route' => route('item_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' =>  $item->name_slug])
+            ]);
+        }
+
+
+        unset($user_creator);
 
 
         return Redirect::to(route('category_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug]))
@@ -406,6 +432,21 @@ class ItemController extends Controller
 
 
         $comment->save();
+
+        //sistema de notificação ao criador
+
+        $user_creator = User::where('nickname', $nickname)->first();
+
+        Notification::create([
+            'user_id' => $user_creator->id,
+            'name' => 'Novo Comentário',
+            'text' => $request->text,
+            'status' => 'new_comment',
+            'responser_id' => Auth::id(),
+            'route' => route('item_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' =>  $request->item_name_slug])
+        ]);
+
+        unset($user_creator);
 
         return Redirect::to(route('item_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' =>  $request->item_name_slug]))
             ->with('msg-success', "comentário adicionado com sucesso!");
