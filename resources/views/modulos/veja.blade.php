@@ -191,6 +191,7 @@
                     <div class="col">
                         <textarea id="autoTextarea" name="text" class="form-control custom-input" placeholder="Digite aqui..." rows="1" style="overflow:hidden; resize: none;"></textarea>
                         <input type="hidden" name="response_to" value="{{$comment->id}}">
+                        <input type="hidden" name="response_to_commenter" value="{{$comment->id_commenter}}">
                         <div class="d-flex flex-row-reverse mt-2">
                             <button class="btn custom-btn" type="submit">Comentar</button>
                         </div>
@@ -250,6 +251,7 @@
                                 <div class="col">
                                     <textarea id="autoTextarea" name="text" class="form-control custom-input" placeholder="Digite aqui..." rows="1" style="overflow:hidden; resize: none;"></textarea>
                                     <input type="hidden" name="response_to" value="{{$responses->id}}">
+                                    <input type="hidden" name="response_to_commenter" value="{{$responses->id_commenter}}">
                                     <div class="d-flex flex-row-reverse mt-2">
                                         <button class="btn custom-btn" type="submit">Comentar</button>
                                     </div>

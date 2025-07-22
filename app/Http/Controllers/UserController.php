@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Main;
 use App\Models\User;
 use App\Models\Follower;
@@ -269,14 +270,14 @@ class UserController extends Controller
 
 
         Notification::create([
-                'user_id' => $id_creator,
-                'name' => '',
-                'theme_name' => '',
-                'text' => '',
-                'status' => 'new_follower',
-                'responser_id' => Auth::id(),
-                'route' => ''
-            ]);
+            'user_id' => $id_creator,
+            'name' => '',
+            'theme_name' => '',
+            'text' => '',
+            'status' => 'new_follower',
+            'responser_id' => Auth::id(),
+            'route' => ''
+        ]);
 
         return Redirect::to(route('user_index', ['nickname' => $nickname]))
             ->with('msg-success', 'agora você está seguindo ' . $nickname . '!');
@@ -298,15 +299,38 @@ class UserController extends Controller
 
     function notifications()
     {
-        $notifications = Notification::where('user_id', Auth::id())->orWhere('user_id', 0)->get();
-        if(count($notifications) > 0){
+            
+        $notifications = Notification::where('user_id', Auth::id())->orWhere('user_id', 0)->orderBy('created_at', 'desc')->get();
+        if (count($notifications) > 0) {
             foreach ($notifications as $key => $value) {
                 if ($value->responser_id != 0) {
                     $responser = User::where('id', $value->responser_id)->first();
                     $value->responser_nickname = $responser->nickname;
                     unset($responser);
                 }
+                if ($value->status == 'new_comment') {
+                    $comment = Comment::where('id', $value->name)->first();
+                    $user_r = User::where('id', $comment->id_commenter)->first();
+                    $comment->author_name = $user_r->nickname;
+                    $comment->route = $value->theme_name;
+                    $value->comment = $comment;
+                }
+                if ($value->status == 'new_comment_2') {
+                    $comment = Comment::where('id', $value->name)->first();
+                    $user_r = User::where('id', $comment->id_commenter)->first();
+                    $comment->author_name = $user_r->nickname;
+                    $comment->route = $value->theme_name;
+                    $value->comment = $comment;
+                }
+                if ($value->status == 'new_comment_3') {
+                    $comment = Comment::where('id', $value->name)->first();
+                    $user_r = User::where('id', $comment->id_commenter)->first();
+                    $comment->author_name = $user_r->nickname;
+                    $comment->route = $value->theme_name;
+                    $value->comment = $comment;
+                }
             }
+            
         }
 
         return view('notifications', [
@@ -317,15 +341,15 @@ class UserController extends Controller
     function notifications_destroy(Request $request)
     {
         $notifications = Notification::where('id', $request->id)->first();
-        
-        if($notifications){
+
+        if ($notifications) {
             $notifications->delete();
-        }else{
+        } else {
             return Redirect::to(route('notifications'))
-        ->with('msg-danger', 'Houve um erro ao processar a solicitação'); 
+                ->with('msg-danger', 'Houve um erro ao processar a solicitação');
         }
 
         return Redirect::to(route('notifications'))
-        ->with('msg-success', 'Notificação excluída com sucesso!');
+            ->with('msg-success', 'Notificação excluída com sucesso!');
     }
 }

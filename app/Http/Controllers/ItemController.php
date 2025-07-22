@@ -202,7 +202,7 @@ class ItemController extends Controller
         $cat = Category::where('name_slug', $category_name_slug)->where('user_id', Auth::id())->first();
 
         $followers = Follower::where('id_creator', Auth::id())->get();
-        
+
         foreach ($followers as $key => $follower) {
             Notification::create([
                 'user_id' => $follower->id_user,
@@ -435,15 +435,25 @@ class ItemController extends Controller
 
         //sistema de notificação ao criador
 
+        $c = Comment::
+        where('id_commenter', Auth::id())->
+        where('id_creator', $cat->user_id)->
+        where('id_item', $item->id)->
+        where('response_to', $request->response_to)->
+        where('comment_level', 0)->
+        where('text', $request->text)->
+        first();
+
         $user_creator = User::where('nickname', $nickname)->first();
 
         Notification::create([
             'user_id' => $user_creator->id,
-            'name' => 'Novo Comentário',
+            'name' => $c->id,
             'text' => $request->text,
             'status' => 'new_comment',
             'responser_id' => Auth::id(),
-            'route' => route('item_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' =>  $request->item_name_slug])
+            'route' => route('item_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' =>  $request->item_name_slug]),
+            'theme_name' => route('add_comment_1', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $item_name_slug])
         ]);
 
         unset($user_creator);
@@ -489,6 +499,31 @@ class ItemController extends Controller
 
         $comment->save();
 
+        $c = Comment::
+        where('id_commenter', Auth::id())->
+        where('id_creator', $cat->user_id)->
+        where('id_item', $item->id)->
+        where('response_to', $request->response_to)->
+        where('comment_level', 1)->
+        where('text', $request->text)->
+        first();
+
+        $user_creator = User::where('nickname', $nickname)->first();
+
+        Notification::create([
+            'user_id' => $request->response_to_commenter,
+            'name' => $c->id,
+            'text' => $request->text,
+            'status' => 'new_comment_2',
+            'responser_id' => Auth::id(),
+            'route' => route('item_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' =>  $request->item_name_slug]),
+            'theme_name' => route('add_comment_2', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $item_name_slug])
+        ]);
+
+        unset($user_creator);
+
+
+
         return Redirect::to(route('item_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' =>  $request->item_name_slug]))
             ->with('msg-success', "comentário adicionado com sucesso!");
     }
@@ -529,6 +564,30 @@ class ItemController extends Controller
 
 
         $comment->save();
+
+        $c = Comment::
+        where('id_commenter', Auth::id())->
+        where('id_creator', $cat->user_id)->
+        where('id_item', $item->id)->
+        where('response_to', $request->response_to)->
+        where('comment_level', 2)->
+        where('text', $request->text)->
+        first();
+
+        $user_creator = User::where('nickname', $nickname)->first();
+
+        Notification::create([
+            'user_id' => $request->response_to_commenter,
+            'name' => $c->id,
+            'text' => $request->text,
+            'status' => 'new_comment_3',
+            'responser_id' => Auth::id(),
+            'route' => route('item_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' =>  $request->item_name_slug])
+        ]);
+
+        unset($user_creator);
+
+
 
         return Redirect::to(route('item_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' =>  $request->item_name_slug]))
             ->with('msg-success', "comentário adicionado com sucesso!");

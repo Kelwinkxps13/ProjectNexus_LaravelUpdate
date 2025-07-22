@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Firsttime;
+use App\Models\Notification;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -70,6 +71,13 @@ class RegisteredUserController extends Controller
             'block_edit' => 1,
             'generic_create' => 1,
             'generic_edit' => 1
+        ]);
+
+        Notification::create([
+            'user_id' => Auth::id(),
+            'name' => 'Seja Bem-vindo(a) ao Site Nexus!',
+            'text' => 'Compartilhe, descubra novos conteúdos, interaja e divirta-se!',
+            'status' => 'system'
         ]);
 
         return redirect(route('index', absolute: false));

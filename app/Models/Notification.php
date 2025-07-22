@@ -12,7 +12,8 @@ class Notification extends Model
         'text',
         'status',
         'responser_id',
-        'route'
+        'route',
+        'theme_name'
     ];
 
     public function user(){

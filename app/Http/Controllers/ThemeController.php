@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Item;
 use App\Models\Firsttime;  
+use App\Models\Notification;  
 use App\Models\Follower;  
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
