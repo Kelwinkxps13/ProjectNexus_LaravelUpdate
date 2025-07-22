@@ -26,68 +26,101 @@ $data = session('user_data');
 
 <body class="d-flex flex-column min-vh-100">
 
-  <style>
-    .btn {
-      padding: .55rem 1.5rem .45rem;
-    }
 
-    /* Estilo para a Navbar principal */
-    .navbar {
-      margin-bottom: 15px;
-    }
-
-    /* Ajuste para a segunda navbar (hierarquia) */
-    /* Ajuste para a segunda navbar (hierarquia) */
-    /* Segunda navbar mais fina */
-    .second-navbar {
-      margin-top: 10px;
-      padding: 4px 0;
-      font-size: 1.2rem;
-    }
-
-    /* Breadcrumb base */
-    .breadcrumb {
-      margin-bottom: 0;
-      background-color: transparent;
-      padding-left: 0;
-      padding-right: 0;
-      font-weight: bold;
-      font-size: 1.3rem;
-    }
-
-    /* Alterar separador padrão de '>' para '/' */
-    .breadcrumb-item+.breadcrumb-item::before {
-      content: "/";
-      padding: 0 8px;
-      color: #6c757d;
-    }
-
-    /* Links normais (sem azul) */
-    .breadcrumb-item a {
-      color: inherit;
-      /* herda a cor do pai (geralmente escura) */
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    /* Hover com sublinhado */
-    .breadcrumb-item a:hover {
-      text-decoration: underline;
-    }
-
-    /* Item ativo (sem link) */
-    .breadcrumb-item.active {
-      color: #6c757d;
-      font-weight: bold;
-    }
-  </style>
 
   <!-- Navbar -->
   <header>
+    <style>
+      .btn {
+        padding: .55rem 1.5rem .45rem;
+      }
+
+      /* Estilo para a Navbar principal */
+      .navbar {
+        margin-bottom: 15px;
+      }
+
+      /* Ajuste para a segunda navbar (hierarquia) */
+      .second-navbar {
+        margin-top: 10px;
+        padding: 4px 0;
+        font-size: 1.2rem;
+      }
+
+      /* Breadcrumb base */
+      .breadcrumb {
+        margin-bottom: 0;
+        background-color: transparent;
+        padding-left: 0;
+        padding-right: 0;
+        font-weight: bold;
+        font-size: 1.3rem;
+      }
+
+      /* Alterar separador padrão de '>' para '/' */
+      .breadcrumb-item+.breadcrumb-item::before {
+        content: "/";
+        padding: 0 8px;
+        color: #6c757d;
+      }
+
+      /* Links normais (sem azul) */
+      .breadcrumb-item a {
+        color: inherit;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      /* Hover com sublinhado */
+      .breadcrumb-item a:hover {
+        text-decoration: underline;
+      }
+
+      /* Item ativo (sem link) */
+      .breadcrumb-item.active {
+        color: #6c757d;
+        font-weight: bold;
+      }
+
+      /* Corrige padding do conteúdo por causa da navbar fixa */
+      main {
+        padding-top: 120px;
+      }
+
+      /* Breadcrumb responsivo */
+      .breadcrumb {
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      /* Estilo do scroll horizontal */
+      .breadcrumb::-webkit-scrollbar {
+        height: 6px;
+      }
+
+      .breadcrumb::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        border-radius: 10px;
+      }
+
+      /* Ajustes nas métricas do usuário (mobile = some) */
+      .user-metrics {
+        display: none;
+      }
+
+      @media (min-width: 768px) {
+        .user-metrics {
+          display: flex !important;
+        }
+      }
+    </style>
+
+    <!-- Navbar principal -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
         <a class="navbar-brand" href="/">Nexus</a>
-        <button class="navbar-toggler" type="button" data-mdb-collapse-init data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <i class="fas fa-bars text-light"></i>
         </button>
 
@@ -121,8 +154,6 @@ $data = session('user_data');
               </li>
               @endauth
             </ul>
-
-
 
             <form class="d-flex my-2" action="{{ route('search') }}" method="GET" style="max-width: 300px;">
               <div class="input-group shadow-sm rounded-pill overflow-hidden">
@@ -199,6 +230,7 @@ $data = session('user_data');
       </div>
     </nav>
 
+    <!-- Segunda Navbar (Breadcrumb) -->
     <nav class="navbar navbar-light bg-light second-navbar">
       <div class="container-fluid">
         <ol class="breadcrumb">
@@ -219,39 +251,57 @@ $data = session('user_data');
             <a href="{{ url($url) }}">{{ ucfirst($segment) }}</a>
           </li>
           @endif
-
           @endforeach
-
-
-          <!-- <li class="breadcrumb-item"><a href="#">Curso X</a></li>
-          <li class="breadcrumb-item active" aria-current="page">Tarefa 1</li> -->
         </ol>
       </div>
     </nav>
+
   </header>
 
 
+
   <!-- Main Content -->
-  <main class="my-5">
+  <main class="pt-navbar-adjust">
+
+
+
+    <style>
+      .pt-navbar-adjust {
+        padding-top: 100px;
+        /* ajuste conforme a altura da sua navbar */
+      }
+
+      @media (max-width: 768px) {
+        .pt-navbar-adjust {
+          padding-top: 120px;
+          /* mais espaço pra navbar móvel, se for o caso */
+        }
+      }
+    </style>
+
+
     <div class="site-section">
-      <div class="container">
+      <div class="container-fluid px-3 px-md-4">
         <div class="row justify-content-center">
           @if (session('msg-warning'))
-          <p class="msg-warning">{{ session('msg-warning') }}</p>
+          <p class="msg-warning text-white text-center w-100">{{ session('msg-warning') }}</p>
           @endif
           @if (session('msg-success'))
-          <p class="msg-success">{{ session('msg-success') }}</p>
+          <p class="msg-success text-white text-center w-100">{{ session('msg-success') }}</p>
           @endif
           @if (session('msg-danger'))
-          <p class="msg-danger">{{ session('msg-danger') }}</p>
+          <p class="msg-danger text-white text-center w-100">{{ session('msg-danger') }}</p>
           @endif
-          <div class="container-fluid mt-5">
-            <div class="row">
-              @yield('content')
+
+          <div class="container-fluid mt-4">
+            <div class="row justify-content-center">
+              <div class="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8">
+                @yield('content')
+              </div>
             </div>
           </div>
 
-          <footer class="text-dark py-4 mt-5">
+          <footer class="text-dark py-4 mt-5 w-100">
             <div class="container text-center">
               <p class="mb-0">&copy; 2025 Kelwin Jhackson Gonçalves de Moura. Todos os direitos reservados.</p>
               <div class="mt-2">
@@ -267,10 +317,12 @@ $data = session('user_data');
               </div>
             </div>
           </footer>
+
         </div>
       </div>
     </div>
   </main>
+
 
   <!-- JS Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

@@ -51,19 +51,25 @@
 
 
 
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h3 class="text-center mt-5">Feed</h3>
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+
+            <h3 class="text-center text-primary mb-4">
+                <i class="fas fa-rss me-2"></i>Feed
+            </h3>
+
             @if (Auth::check())
             @if ($is_following == 'following')
-            <h3 class="text-center mt-4">Veja suas ultimas atualizações!</h3>
+            <h4 class="text-center text-success mb-4">
+                <i class="fas fa-bolt me-2"></i>Veja suas últimas atualizações!
+            </h4>
+
             @foreach ($themes as $f)
-            <div class="card mb-4 shadow-sm">
-
-                <!-- Banner de Fundo -->
+            <div class="card border-0 rounded-4 shadow mb-4">
                 <div class="banner">
-                    @if($f->image !==null)
+                    {{-- NÃO ALTERADO --}}
+                    @if($f->image !== null)
                     <img src="/images/{{$f->user_nickname}}/categories/banners/{{$f->image}}" alt="Profile">
                     @else
                     <img src="/default/banner-default.jpg" alt="Profile">
@@ -73,15 +79,15 @@
                             {{$f->name}} <br>
                             feito por {{$f->user_nickname}}
                         </h4>
-                        <div>
-                            <form action="{{ route('category_index', ['nickname' => $f->user_nickname, 'category_name_slug' => $f->name_slug]) }}" method="get">
-                                <button type="submit" class="btn btn-dark">
-                                    Ver Tema
+                        <div class="float-end">
+                            <form action="{{ route('category_index', ['nickname' => $f->user_nickname, 'category_name_slug' => $f->name_slug]) }}" method="get" class="d-inline">
+                                <button type="submit" class="btn btn-outline-light btn-sm me-1">
+                                    <i class="fas fa-eye me-1"></i>Ver Tema
                                 </button>
                             </form>
-                            <form action="{{ route('user_index', ['nickname' => $f->user_nickname]) }}" method="get">
-                                <button type="submit" class="btn btn-dark">
-                                    Ver usuário
+                            <form action="{{ route('user_index', ['nickname' => $f->user_nickname]) }}" method="get" class="d-inline">
+                                <button type="submit" class="btn btn-outline-light btn-sm">
+                                    <i class="fas fa-user me-1"></i>Ver usuário
                                 </button>
                             </form>
                         </div>
@@ -90,54 +96,60 @@
             </div>
             @endforeach
 
+            @if (count($suggestion) > 0)
+            <hr class="my-4">
+            <h4 class="text-center text-info mb-4">
+                <i class="fas fa-lightbulb me-2"></i>Veja sugestões de outros conteúdos!
+            </h4>
 
-            @if (count($suggestion)>0)
-            <h3 class="text-center mt-4">Veja sugestões de outros conteúdos!</h3>
             @foreach ($suggestion as $f)
-            <div class="card mb-4 shadow-sm">
-
-                <!-- Banner de Fundo -->
-                <div class="banner">
-                    @if($f->image !==null)
-                    <img src="/images/{{$f->user_nickname}}/categories/banners/{{$f->image}}" alt="Profile">
-                    @else
-                    <img src="/default/banner-default.jpg" alt="Profile">
-                    @endif
-                    <div class="overlay">
-                        <h4 class="card-title text-white title">
-                            {{$f->name}} <br>
-                            feito por {{$f->user_nickname}}
-                        </h4>
-                        <div>
-                            <form action="{{ route('category_index', ['nickname' => $f->user_nickname, 'category_name_slug' => $f->name_slug]) }}" method="get">
-                                <button type="submit" class="btn btn-dark">
-                                    Ver Tema
-                                </button>
-                            </form>
-                            <form action="{{ route('user_index', ['nickname' => $f->user_nickname]) }}" method="get">
-                                <button type="submit" class="btn btn-dark">
-                                    Ver usuário
-                                </button>
-                            </form>
+            <div class="col-md-12 mb-4">
+                <div class="card border-0 rounded-4 shadow">
+                    <div class="banner">
+                        @if($f->image !== null)
+                        <img src="/images/{{$f->user_nickname}}/categories/banners/{{$f->image}}" alt="Profile">
+                        @else
+                        <img src="/default/banner-default.jpg" alt="Profile">
+                        @endif
+                        <div class="overlay d-flex justify-content-between align-items-center px-4">
+                            <div>
+                                <h4 class="card-title text-white title mb-1">
+                                    {{$f->name}}
+                                </h4>
+                                <small class="text-white-50">feito por {{$f->user_nickname}}</small>
+                            </div>
+                            <div class="float-end">
+                                <form action="{{ route('category_index', ['nickname' => $f->user_nickname, 'category_name_slug' => $f->name_slug]) }}" method="get" class="d-inline">
+                                    <button type="submit" class="btn btn-outline-light btn-sm me-1">
+                                        <i class="fas fa-eye me-1"></i>Ver Tema
+                                    </button>
+                                </form>
+                                <form action="{{ route('user_index', ['nickname' => $f->user_nickname]) }}" method="get" class="d-inline">
+                                    <button type="submit" class="btn btn-outline-light btn-sm">
+                                        <i class="fas fa-user me-1"></i>Ver usuário
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             @endforeach
             @else
-            <h3 class="text-center mt-4">Sem sugestões de mais conteúdos!</h3>
+            <h4 class="text-center text-secondary mt-4">
+                <i class="fas fa-info-circle me-2"></i>Sem sugestões de mais conteúdos!
+            </h4>
             @endif
 
             @else
-            <h4 class="text-center mt-5">Boas Vindas!</h4>
+            <h4 class="text-center mt-5 text-primary"><i class="fas fa-hand-sparkles me-2"></i>Boas Vindas!</h4>
+            <h4 class="text-center text-secondary mb-4"><i class="fas fa-search me-2"></i>Descubra mais!</h4>
 
-            <h3 class="text-center mt-4">Descubra mais!</h3>
             @foreach ($suggestion as $f)
-            <div class="card mb-4 shadow-sm">
-
-                <!-- Banner de Fundo -->
+            <div class="card border-0 rounded-4 shadow mb-4">
                 <div class="banner">
-                    @if($f->image !==null)
+                    {{-- NÃO ALTERADO --}}
+                    @if($f->image !== null)
                     <img src="/images/{{$f->user_nickname}}/categories/banners/{{$f->image}}" alt="Profile">
                     @else
                     <img src="/default/banner-default.jpg" alt="Profile">
@@ -148,14 +160,14 @@
                             feito por {{$f->user_nickname}}
                         </h4>
                         <div>
-                            <form action="{{ route('category_index', ['nickname' => $f->user_nickname, 'category_name_slug' => $f->name_slug]) }}" method="get">
-                                <button type="submit" class="btn btn-dark">
-                                    Ver Tema
+                            <form action="{{ route('category_index', ['nickname' => $f->user_nickname, 'category_name_slug' => $f->name_slug]) }}" method="get" class="d-inline">
+                                <button type="submit" class="btn btn-outline-light btn-sm me-1">
+                                    <i class="fas fa-eye me-1"></i>Ver Tema
                                 </button>
                             </form>
-                            <form action="{{ route('user_index', ['nickname' => $f->user_nickname]) }}" method="get">
-                                <button type="submit" class="btn btn-dark">
-                                    Ver usuário
+                            <form action="{{ route('user_index', ['nickname' => $f->user_nickname]) }}" method="get" class="d-inline">
+                                <button type="submit" class="btn btn-outline-light btn-sm">
+                                    <i class="fas fa-user me-1"></i>Ver usuário
                                 </button>
                             </form>
                         </div>
@@ -165,15 +177,19 @@
             @endforeach
             @endif
             @else
-            <h4 class="text-center my-5">Boas Vindas!</h4>
+            <h4 class="text-center text-primary my-5">
+                <i class="fas fa-door-open me-2"></i>Boas Vindas!
+            </h4>
 
-            <h3 class="text-center mt-4">Descubra mais!</h3>
+            <h4 class="text-center text-secondary mb-4">
+                <i class="fas fa-compass me-2"></i>Descubra mais!
+            </h4>
+
             @foreach ($suggestion as $f)
-            <div class="card mb-4 shadow-sm">
-
-                <!-- Banner de Fundo -->
+            <div class="card border-0 rounded-4 shadow mb-4">
                 <div class="banner">
-                    @if($f->image !==null)
+                    {{-- NÃO ALTERADO --}}
+                    @if($f->image !== null)
                     <img src="/images/{{$f->user_nickname}}/categories/banners/{{$f->image}}" alt="Profile">
                     @else
                     <img src="/default/banner-default.jpg" alt="Profile">
@@ -184,14 +200,14 @@
                             feito por {{$f->user_nickname}}
                         </h4>
                         <div>
-                            <form action="{{ route('category_index', ['nickname' => $f->user_nickname, 'category_name_slug' => $f->name_slug]) }}" method="get">
-                                <button type="submit" class="btn btn-dark">
-                                    Ver Tema
+                            <form action="{{ route('category_index', ['nickname' => $f->user_nickname, 'category_name_slug' => $f->name_slug]) }}" method="get" class="d-inline">
+                                <button type="submit" class="btn btn-outline-light btn-sm me-1">
+                                    <i class="fas fa-eye me-1"></i>Ver Tema
                                 </button>
                             </form>
-                            <form action="{{ route('user_index', ['nickname' => $f->user_nickname]) }}" method="get">
-                                <button type="submit" class="btn btn-dark">
-                                    Ver usuário
+                            <form action="{{ route('user_index', ['nickname' => $f->user_nickname]) }}" method="get" class="d-inline">
+                                <button type="submit" class="btn btn-outline-light btn-sm">
+                                    <i class="fas fa-user me-1"></i>Ver usuário
                                 </button>
                             </form>
                         </div>
@@ -203,6 +219,7 @@
         </div>
     </div>
 </div>
+
 
 
 <div class="container">

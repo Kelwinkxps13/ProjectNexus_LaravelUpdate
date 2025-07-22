@@ -27,58 +27,58 @@ Route::middleware('auth')->group(function () {
 
 
 // adicionado pelo dev
-// adicionado pelo dev
-Route::get('/', [IndexController::class, 'index'])->middleware(['att_status'])->name('index'); // feito com sucesso!
-
+// Rotas principais (fixas)
+Route::get('/', [IndexController::class, 'index'])->middleware(['att_status'])->name('index');
 Route::get('/notifications', [UserController::class, 'notifications'])->middleware(['att_status'])->name('notifications');
 Route::delete('/notifications', [UserController::class, 'notifications_destroy'])->middleware(['att_status'])->name('notification_destroy');
 Route::get('/pesquisa', [IndexController::class, 'search'])->middleware(['att_status'])->name('search');
-Route::get('/{nickname}/editor', [UserController::class, 'editor'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('user_editor'); // feito com sucesso!
 
-// rotas dos blocos (conteúdo) de cada item
-Route::get('/{nickname}/{category_name_slug}/createblock/{item_name_slug}', [ContentController::class, 'create'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('content_create'); // feito com sucesso!
-Route::post('/{nickname}/{category_name_slug}/storeblock', [ContentController::class, 'store'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('content_store'); // feito com sucesso!
-Route::patch('/{nickname}/{category_name_slug}/updateblock', [ContentController::class, 'update'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('content_update'); // feito com sucesso!
-Route::delete('/{nickname}/{category_name_slug}/destroyblock', [ContentController::class, 'destroy'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('content_destroy'); // feito com sucesso!
+// Rotas de usuário
+Route::post('/{nickname}', [UserController::class, 'store'])->middleware(['is_creator', 'att_status'])->name('user_store');
+Route::patch('/{nickname}', [UserController::class, 'update'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('user_update');
+Route::get('/{nickname}', [UserController::class, 'index'])->middleware(['att_status'])->name('user_index');
 
-Route::get('/{nickname}/category/create', [ThemeController::class, 'create'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('category_create'); // feito com sucesso!
-Route::get('/{nickname}/{category_name_slug}/edit', [ThemeController::class, 'edit'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('category_edit'); // feito com sucesso!
-Route::post('/{nickname}/category', [ThemeController::class, 'store'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('category_store'); // feito com sucesso!
-Route::patch('/{nickname}/category', [ThemeController::class, 'update'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('category_update'); // feito com sucesso!
-Route::delete('/{nickname}/category', [ThemeController::class, 'destroy'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('category_destroy'); // feito com sucesso!
-
-Route::get('/{nickname}/create', [UserController::class, 'create'])->middleware(['is_creator', 'att_status'])->name('user_create'); // feito com sucesso!
-Route::get('/{nickname}/edit', [UserController::class, 'edit'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('user_edit'); // feito com sucesso!
-
-// FOLLOWERS
-Route::post('/{nickname}/follow', [UserController::class, 'follow'])->middleware(['att_status'])->name('follow'); // feito com sucesso!
-Route::post('/{nickname}/unfollow', [UserController::class, 'unfollow'])->middleware(['att_status'])->name('unfollow'); // feito com sucesso!
-
-// rotas do registro de theme (os itens)
-Route::get('/{nickname}/{category_name_slug}/create', [ItemController::class, 'create'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('item_create'); // feito com sucesso!
-Route::get('/{nickname}/{category_name_slug}/{item_name_slug}', [ItemController::class, 'index'])->middleware(['att_status'])->name('item_index'); // feito com sucesso!
-Route::post('/{nickname}/{category_name_slug}/', [ItemController::class, 'store'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('item_store'); // feito com sucesso!
-Route::post('/{nickname}/{category_name_slug}/{item_name_slug}/like', [ItemController::class, 'like'])->middleware(['att_status'])->name('item_like'); // feito com sucesso!
-Route::post('/{nickname}/{category_name_slug}/{item_name_slug}/unlike', [ItemController::class, 'unlike'])->middleware(['att_status'])->name('item_unlike'); // feito com sucesso!
-Route::post('/{nickname}/{category_name_slug}/{item_name_slug}/dislike', [ItemController::class, 'dislike'])->middleware(['att_status'])->name('item_dislike'); // feito com sucesso!
-Route::post('/{nickname}/{category_name_slug}/{item_name_slug}/undislike', [ItemController::class, 'undislike'])->middleware(['att_status'])->name('item_undislike'); // feito com sucesso!
-
-// adicionar comentários
-Route::post('/{nickname}/{category_name_slug}/{item_name_slug}/add_comment_0', [ItemController::class, 'add_comment_0'])->middleware(['att_status'])->name('add_comment_0'); // feito com sucesso!
-Route::post('/{nickname}/{category_name_slug}/{item_name_slug}/add_comment_1', [ItemController::class, 'add_comment_1'])->middleware(['att_status'])->name('add_comment_1'); // feito com sucesso!
-Route::post('/{nickname}/{category_name_slug}/{item_name_slug}/add_comment_2', [ItemController::class, 'add_comment_2'])->middleware(['att_status'])->name('add_comment_2'); // feito com sucesso!
-
-Route::get('/{nickname}/{category_name_slug}/edit/{item_name_slug}', [ItemController::class, 'edit'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('item_edit'); // feito com sucesso!
-Route::patch('/{nickname}/{category_name_slug}/', [ItemController::class, 'update'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('item_update'); // feito com sucesso!
-Route::delete('/{nickname}/{category_name_slug}/', [ItemController::class, 'destroy'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('item_destroy'); // feito com sucesso!
-Route::get('/{nickname}/{category_name_slug}/{item_name_slug}/editor', [ItemController::class, 'editor'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('item_editor'); // feito com sucesso!
-Route::get('/{nickname}/{category_name_slug}/{item_name_slug}/{idblock}', [ContentController::class, 'edit'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('content_edit'); // feito com sucesso!
-// rotas de theme
-Route::get('/{nickname}/{category_name_slug}', [ThemeController::class, 'index'])->middleware(['att_status'])->name('category_index'); // feito com sucesso!
+// Rotas específicas de usuário
+Route::get('/{nickname}/editor', [UserController::class, 'editor'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('user_editor');
+Route::get('/{nickname}/create', [UserController::class, 'create'])->middleware(['is_creator', 'att_status'])->name('user_create');
+Route::get('/{nickname}/edit', [UserController::class, 'edit'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('user_edit');
 
 
+// Follow / Unfollow
+Route::post('/{nickname}/follow', [UserController::class, 'follow'])->middleware(['att_status'])->name('follow');
+Route::post('/{nickname}/unfollow', [UserController::class, 'unfollow'])->middleware(['att_status'])->name('unfollow');
 
-// rotas do user
-Route::get('/{nickname}', [UserController::class, 'index'])->middleware(['att_status'])->name('user_index'); // feito com sucesso!
-Route::post('/{nickname}', [UserController::class, 'store'])->middleware(['is_creator', 'att_status'])->name('user_store'); // feito com sucesso!
-Route::patch('/{nickname}', [UserController::class, 'update'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('user_update'); // feito com sucesso!
+// Categorias (Themes)
+Route::get('/{nickname}/categorycreate', [ThemeController::class, 'create'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('category_create');
+Route::post('/{nickname}/category', [ThemeController::class, 'store'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('category_store');
+Route::patch('/{nickname}/category', [ThemeController::class, 'update'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('category_update');
+Route::delete('/{nickname}/category', [ThemeController::class, 'destroy'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('category_destroy');
+Route::get('/{nickname}/{category_name_slug}/edit', [ThemeController::class, 'edit'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('category_edit');
+Route::get('/{nickname}/{category_name_slug}', [ThemeController::class, 'index'])->middleware(['att_status'])->name('category_index');
+
+// Itens (Itens de Categoria)
+Route::get('/{nickname}/{category_name_slug}/create', [ItemController::class, 'create'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('item_create');
+Route::post('/{nickname}/{category_name_slug}/', [ItemController::class, 'store'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('item_store');
+Route::patch('/{nickname}/{category_name_slug}/', [ItemController::class, 'update'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('item_update');
+Route::delete('/{nickname}/{category_name_slug}/', [ItemController::class, 'destroy'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('item_destroy');
+Route::get('/{nickname}/{category_name_slug}/{item_name_slug}/edit', [ItemController::class, 'edit'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('item_edit');
+Route::get('/{nickname}/{category_name_slug}/{item_name_slug}/editor', [ItemController::class, 'editor'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('item_editor');
+Route::get('/{nickname}/{category_name_slug}/{item_name_slug}', [ItemController::class, 'index'])->middleware(['att_status'])->name('item_index');
+
+// Likes / Dislikes
+Route::post('/{nickname}/{category_name_slug}/{item_name_slug}/like', [ItemController::class, 'like'])->middleware(['att_status'])->name('item_like');
+Route::post('/{nickname}/{category_name_slug}/{item_name_slug}/unlike', [ItemController::class, 'unlike'])->middleware(['att_status'])->name('item_unlike');
+Route::post('/{nickname}/{category_name_slug}/{item_name_slug}/dislike', [ItemController::class, 'dislike'])->middleware(['att_status'])->name('item_dislike');
+Route::post('/{nickname}/{category_name_slug}/{item_name_slug}/undislike', [ItemController::class, 'undislike'])->middleware(['att_status'])->name('item_undislike');
+
+// Comentários
+Route::post('/{nickname}/{category_name_slug}/{item_name_slug}/add_comment_0', [ItemController::class, 'add_comment_0'])->middleware(['att_status'])->name('add_comment_0');
+Route::post('/{nickname}/{category_name_slug}/{item_name_slug}/add_comment_1', [ItemController::class, 'add_comment_1'])->middleware(['att_status'])->name('add_comment_1');
+Route::post('/{nickname}/{category_name_slug}/{item_name_slug}/add_comment_2', [ItemController::class, 'add_comment_2'])->middleware(['att_status'])->name('add_comment_2');
+
+// Blocos de conteúdo (dentro dos itens)
+Route::get('/{nickname}/{category_name_slug}/{item_name_slug}/createblock', [ContentController::class, 'create'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('content_create');
+Route::post('/{nickname}/{category_name_slug}/storeblock', [ContentController::class, 'store'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('content_store');
+Route::patch('/{nickname}/{category_name_slug}/updateblock', [ContentController::class, 'update'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('content_update');
+Route::delete('/{nickname}/{category_name_slug}/destroyblock', [ContentController::class, 'destroy'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('content_destroy');
+Route::get('/{nickname}/{category_name_slug}/{item_name_slug}/{idblock}', [ContentController::class, 'edit'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('content_edit');
