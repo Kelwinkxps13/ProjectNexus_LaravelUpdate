@@ -154,7 +154,9 @@ $data = session('user_data');
                 <a class="nav-link" href="/notifications">
                   <div>
                     <i class="fas fa-bell fa-lg mb-1"></i>
-                    <span class="badge rounded-pill badge-notification bg-info">11</span>
+                    @if(session('notifications_user') > 0)
+                    <span class="badge rounded-pill badge-notification bg-info">{{session('notifications_user')}}</span>
+                    @endif
                   </div>
                   Notificações
                 </a>

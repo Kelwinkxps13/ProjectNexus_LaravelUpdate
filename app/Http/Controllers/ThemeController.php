@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Item;
-use App\Models\Firsttime;
+use App\Models\Firsttime;  
+use App\Models\Follower;  
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -162,6 +163,25 @@ class ThemeController extends Controller
         $cat->user_id = Auth::id();
         $cat->user_nickname = Auth::user()->nickname;
         $cat->save();
+
+        $followers = Follower::where('id_creator', Auth::id())->get();
+        
+        foreach ($followers as $key => $follower) {
+            Notification::create([
+                'user_id' => $follower->id_user,
+                'name' => '',
+                'theme_name' => $cat->name,
+                'text' => '',
+                'status' => 'new_theme',
+                'responser_id' => Auth::id(),
+                'route' => route('category_index', ['nickname' => $nickname, 'category_name_slug' => $cat->name_slug])
+            ]);
+        }
+
+
+        unset($user_creator);
+
+
 
         return Redirect::to(route('user_index', ['nickname' => $nickname]))
             ->with('msg-success', "Categoria criada com sucesso!");

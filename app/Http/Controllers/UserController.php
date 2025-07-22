@@ -267,6 +267,17 @@ class UserController extends Controller
         $follower->id_creator = $id_creator;
         $follower->save();
 
+
+        Notification::create([
+                'user_id' => $id_creator,
+                'name' => '',
+                'theme_name' => '',
+                'text' => '',
+                'status' => 'new_follower',
+                'responser_id' => Auth::id(),
+                'route' => ''
+            ]);
+
         return Redirect::to(route('user_index', ['nickname' => $nickname]))
             ->with('msg-success', 'agora você está seguindo ' . $nickname . '!');
     }
@@ -287,18 +298,34 @@ class UserController extends Controller
 
     function notifications()
     {
-        $notifications = Notification::where('user_id', Auth::id())->get();
-        if(!$notifications){
+        $notifications = Notification::where('user_id', Auth::id())->orWhere('user_id', 0)->get();
+        if(count($notifications) > 0){
             foreach ($notifications as $key => $value) {
-                if ($value->responser_id != null) {
+                if ($value->responser_id != 0) {
                     $responser = User::where('id', $value->responser_id)->first();
                     $value->responser_nickname = $responser->nickname;
                     unset($responser);
                 }
             }
         }
+
         return view('notifications', [
             'notifications' => $notifications
         ]);
+    }
+
+    function notifications_destroy(Request $request)
+    {
+        $notifications = Notification::where('id', $request->id)->first();
+        
+        if($notifications){
+            $notifications->delete();
+        }else{
+            return Redirect::to(route('notifications'))
+        ->with('msg-danger', 'Houve um erro ao processar a solicitação'); 
+        }
+
+        return Redirect::to(route('notifications'))
+        ->with('msg-success', 'Notificação excluída com sucesso!');
     }
 }

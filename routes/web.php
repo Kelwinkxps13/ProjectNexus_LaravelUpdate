@@ -31,6 +31,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/', [IndexController::class, 'index'])->middleware(['att_status'])->name('index'); // feito com sucesso!
 
 Route::get('/notifications', [UserController::class, 'notifications'])->middleware(['att_status'])->name('notifications');
+Route::delete('/notifications', [UserController::class, 'notifications_destroy'])->middleware(['att_status'])->name('notification_destroy');
 Route::get('/pesquisa', [IndexController::class, 'search'])->middleware(['att_status'])->name('search');
 Route::get('/{nickname}/editor', [UserController::class, 'editor'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('user_editor'); // feito com sucesso!
 
