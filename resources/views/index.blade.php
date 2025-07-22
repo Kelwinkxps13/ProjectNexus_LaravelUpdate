@@ -239,7 +239,11 @@
                             {{ '@'.$f->user_nickname }}
                         </a>
                     </h5>
-                    <p class="card-text text-muted">Criador de temas, ideias e conteúdo inovador!</p>
+                    @if ($f->title != "")
+                    <p class="card-text text-muted">{{$f->title}}</p>
+                    @else
+                    <p class="card-text text-muted">Usuário sem descrição</p>
+                    @endif
                 </div>
             </div>
         </div>

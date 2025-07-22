@@ -45,6 +45,14 @@ class IndexController extends Controller
 
         $users_foreach = Main::orderBy('created_at', 'desc')->limit(10)->get();
 
+        foreach ($users_foreach as $key => $value) {
+            $main = Main::where('user_id', $value->id)->first();
+            if ($main) {
+                # code...
+                $value->title = $main->name;
+            }
+        }
+
 
 
         // sistema de feed
