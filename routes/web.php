@@ -38,15 +38,24 @@ Route::post('/{nickname}', [UserController::class, 'store'])->middleware(['is_cr
 Route::patch('/{nickname}', [UserController::class, 'update'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('user_update');
 Route::get('/{nickname}', [UserController::class, 'index'])->middleware(['att_status'])->name('user_index');
 
+// Follow / Unfollow
+Route::post('/{nickname}/follow', [UserController::class, 'follow'])->middleware(['att_status'])->name('follow');
+Route::post('/{nickname}/unfollow', [UserController::class, 'unfollow'])->middleware(['att_status'])->name('unfollow');
+Route::post('/{nickname}/follow_by_seguidores', [UserController::class, 'follow_by_seguidores'])->middleware(['att_status'])->name('follow_by_seguidores');
+Route::post('/{nickname}/unfollow_by_seguidores', [UserController::class, 'unfollow_by_seguidores'])->middleware(['att_status'])->name('unfollow_by_seguidores');
+Route::post('/{nickname}/follow_by_seguindo', [UserController::class, 'follow_by_seguindo'])->middleware(['att_status'])->name('follow_by_seguindo');
+Route::post('/{nickname}/unfollow_by_seguindo', [UserController::class, 'unfollow_by_seguindo'])->middleware(['att_status'])->name('unfollow_by_seguindo');
+Route::post('/{nickname}/removefromfollowers', [UserController::class, 'remove_from_followers'])->middleware(['att_status'])->name('remove_from_followers');
+
+
 // Rotas específicas de usuário
 Route::get('/{nickname}/editor', [UserController::class, 'editor'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('user_editor');
 Route::get('/{nickname}/create', [UserController::class, 'create'])->middleware(['is_creator', 'att_status'])->name('user_create');
 Route::get('/{nickname}/edit', [UserController::class, 'edit'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('user_edit');
 
-
-// Follow / Unfollow
-Route::post('/{nickname}/follow', [UserController::class, 'follow'])->middleware(['att_status'])->name('follow');
-Route::post('/{nickname}/unfollow', [UserController::class, 'unfollow'])->middleware(['att_status'])->name('unfollow');
+// seguidores e seguindo
+Route::get('/{nickname}/seguidores', [UserController::class, 'seguidores'])->middleware('att_status')->name('user_followers');
+Route::get('/{nickname}/seguindo', [UserController::class, 'seguindo'])->middleware('att_status')->name('user_following');
 
 // Categorias (Themes)
 Route::get('/{nickname}/categorycreate', [ThemeController::class, 'create'])->middleware(['is_creator', 'has_main_page', 'att_status'])->name('category_create');

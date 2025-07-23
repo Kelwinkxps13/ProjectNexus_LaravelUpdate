@@ -172,13 +172,23 @@ $data = session('user_data');
                   <small class="number-label text-white">Temas</small>
                 </div>
                 <div class="d-flex flex-column me-3">
-                  <strong class="number text-light">{{ session('count_followers') }}</strong>
+                  <strong class="number text-light">
+                    <a href="{{ route('user_followers', ['nickname' => Auth::user()->nickname]) }}" class="text-decoration-none text-light">
+                      {{ session('count_followers') }}
+                    </a>
+                  </strong>
                   <small class="number-label text-white">Seguidores</small>
                 </div>
+
                 <div class="d-flex flex-column">
-                  <strong class="number text-light">{{ session('count_following') }}</strong>
+                  <strong class="number text-light">
+                    <a href="{{ route('user_following', ['nickname' => Auth::user()->nickname]) }}" class="text-decoration-none text-light">
+                      {{ session('count_following') }}
+                    </a>
+                  </strong>
                   <small class="number-label text-white">Seguindo</small>
                 </div>
+
               </li>
 
               <li class="nav-item text-center mx-2 mx-lg-1">

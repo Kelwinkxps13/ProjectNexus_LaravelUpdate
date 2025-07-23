@@ -74,11 +74,13 @@
                     @else
                     <img src="/default/banner-default.jpg" alt="Profile">
                     @endif
-                    <div class="overlay">
-                        <h4 class="card-title text-white title">
-                            {{$f->name}} <br>
-                            feito por {{$f->user_nickname}}
-                        </h4>
+                    <div class="overlay d-flex justify-content-between align-items-center px-4">
+                        <div>
+                            <h4 class="card-title text-white title mb-1">
+                                {{$f->name}}
+                            </h4>
+                            <small class="text-white-50">feito por {{$f->user_nickname}}</small>
+                        </div>
                         <div class="float-end">
                             <form action="{{ route('category_index', ['nickname' => $f->user_nickname, 'category_name_slug' => $f->name_slug]) }}" method="get" class="d-inline">
                                 <button type="submit" class="btn btn-outline-light btn-sm me-1">
@@ -154,11 +156,13 @@
                     @else
                     <img src="/default/banner-default.jpg" alt="Profile">
                     @endif
-                    <div class="overlay">
-                        <h4 class="card-title text-white title">
-                            {{$f->name}} <br>
-                            feito por {{$f->user_nickname}}
-                        </h4>
+                    <div class="overlay d-flex justify-content-between align-items-center px-4">
+                        <div>
+                            <h4 class="card-title text-white title mb-1">
+                                {{$f->name}}
+                            </h4>
+                            <small class="text-white-50">feito por {{$f->user_nickname}}</small>
+                        </div>
                         <div>
                             <form action="{{ route('category_index', ['nickname' => $f->user_nickname, 'category_name_slug' => $f->name_slug]) }}" method="get" class="d-inline">
                                 <button type="submit" class="btn btn-outline-light btn-sm me-1">
@@ -194,11 +198,13 @@
                     @else
                     <img src="/default/banner-default.jpg" alt="Profile">
                     @endif
-                    <div class="overlay">
-                        <h4 class="card-title text-white title">
-                            {{$f->name}} <br>
-                            feito por {{$f->user_nickname}}
-                        </h4>
+                    <div class="overlay d-flex justify-content-between align-items-center px-4">
+                        <div>
+                            <h4 class="card-title text-white title mb-1">
+                                {{$f->name}}
+                            </h4>
+                            <small class="text-white-50">feito por {{$f->user_nickname}}</small>
+                        </div>
                         <div>
                             <form action="{{ route('category_index', ['nickname' => $f->user_nickname, 'category_name_slug' => $f->name_slug]) }}" method="get" class="d-inline">
                                 <button type="submit" class="btn btn-outline-light btn-sm me-1">

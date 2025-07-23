@@ -297,9 +297,104 @@ class UserController extends Controller
             ->with('msg-success', 'você deixou de seguir ' . $nickname . '!');
     }
 
+    function follow_by_seguidores($nickname, Request $request)
+    {
+
+        $user_creator = User::where('nickname', $nickname)->first();
+        $id_creator = $user_creator->id;
+
+        //fazendo o sistema de seguir
+        $follower = new Follower();
+        $follower->id_user = Auth::id();
+        $follower->id_creator = $id_creator;
+        $follower->save();
+
+
+        Notification::create([
+            'user_id' => $id_creator,
+            'name' => '',
+            'theme_name' => '',
+            'text' => '',
+            'status' => 'new_follower',
+            'responser_id' => Auth::id(),
+            'route' => ''
+        ]);
+
+        return Redirect::to(route('user_followers', ['nickname' => $request->nickname_atual]))
+            ->with('msg-success', 'agora você está seguindo ' . $nickname . '!');
+    }
+
+    function unfollow_by_seguidores($nickname, Request $request)
+    {
+
+        $user_creator = User::where('nickname', $nickname)->first();
+        $id_creator = $user_creator->id;
+
+        //fazendo o sistema de seguir
+        $follower = Follower::where('id_user', Auth::id())->where('id_creator', $id_creator)->first();
+        $follower->delete();
+
+        return Redirect::to(route('user_followers', ['nickname' => $request->nickname_atual]))
+            ->with('msg-success', 'você deixou de seguir ' . $nickname . '!');
+    }
+
+    function follow_by_seguindo($nickname, Request $request)
+    {
+
+        $user_creator = User::where('nickname', $nickname)->first();
+        $id_creator = $user_creator->id;
+
+        //fazendo o sistema de seguir
+        $follower = new Follower();
+        $follower->id_user = Auth::id();
+        $follower->id_creator = $id_creator;
+        $follower->save();
+
+
+        Notification::create([
+            'user_id' => $id_creator,
+            'name' => '',
+            'theme_name' => '',
+            'text' => '',
+            'status' => 'new_follower',
+            'responser_id' => Auth::id(),
+            'route' => ''
+        ]);
+
+        return Redirect::to(route('user_following', ['nickname' => $request->nickname_atual]))
+            ->with('msg-success', 'agora você está seguindo ' . $nickname . '!');
+    }
+
+    function unfollow_by_seguindo($nickname, Request $request)
+    {
+
+        $user_creator = User::where('nickname', $nickname)->first();
+        $id_creator = $user_creator->id;
+
+        //fazendo o sistema de seguir
+        $follower = Follower::where('id_user', Auth::id())->where('id_creator', $id_creator)->first();
+        $follower->delete();
+
+        return Redirect::to(route('user_following', ['nickname' => $request->nickname_atual]))
+            ->with('msg-success', 'você deixou de seguir ' . $nickname . '!');
+    }
+
+    function remove_from_followers($nickname)
+    {
+        $user = User::where('nickname', $nickname)->first();
+        $id_user = $user->id;
+
+        //fazendo o sistema de seguir
+        $follower = Follower::where('id_user', $id_user)->where('id_creator', Auth::id())->first();
+        $follower->delete();
+
+        return Redirect::to(route('user_followers', ['nickname' => Auth::user()->nickname]))
+            ->with('msg-success', 'você removeu ' . $nickname . ' de seus seguidores!');
+    }
+
     function notifications()
     {
-            
+
         $notifications = Notification::where('user_id', Auth::id())->orWhere('user_id', 0)->orderBy('created_at', 'desc')->get();
         if (count($notifications) > 0) {
             foreach ($notifications as $key => $value) {
@@ -330,7 +425,6 @@ class UserController extends Controller
                     $value->comment = $comment;
                 }
             }
-            
         }
 
         return view('notifications', [
@@ -351,5 +445,98 @@ class UserController extends Controller
 
         return Redirect::to(route('notifications'))
             ->with('msg-success', 'Notificação excluída com sucesso!');
+    }
+
+    function seguidores($nickname)
+    {
+        $user = User::where('nickname', $nickname)->first();
+        $users_foreach = Follower::where('id_creator', $user->id)->get();
+
+        if ($users_foreach) {
+            foreach ($users_foreach as $key => $value) {
+                $user = User::where('id', $value->id_user)->first();
+                if ($user) {
+
+                    $main = Main::where('user_id', $value->id_user)->first();
+                    $texto_main = "";
+                    if ($main) {
+                        $texto_main = $main->name;
+                        unset($main);
+                    }
+                    $value->user_nickname = $user->nickname;
+                    $value->id = $user->id;
+                    $value->title = $texto_main;
+                    unset($user);
+
+                    if ($nickname != Auth::user()->nickname) {
+                        //verificando se o usuário autenticado já segue aquele criador
+                        $is_following = Follower::where('id_creator', $value->id)->where('id_user', Auth::id())->first();
+
+                        if ($is_following) {
+                            $value->is_following = true;
+                        }
+                    } else {
+
+                        $user = User::where('nickname', $nickname)->first();
+                        $is_following = Follower::where('id_creator', $value->id)->where('id_user', $user->id)->first();
+
+                        if ($is_following) {
+                            $value->is_following = true;
+                        }
+                    }
+                }
+            }
+        } else {
+            $users_foreach = 0;
+        }
+
+        return view('seguidores', [
+            'users_foreach' => $users_foreach,
+            'nickname' => $nickname
+        ]);
+    }
+
+    function seguindo($nickname)
+    {
+
+        $user = User::where('nickname', $nickname)->first();
+
+        $users_foreach = Follower::where('id_user', $user->id)->get();
+
+        if ($users_foreach) {
+            foreach ($users_foreach as $key => $value) {
+                $user = User::where('id', $value->id_creator)->first();
+                if ($user) {
+
+                    $main = Main::where('user_id', $value->id_creator)->first();
+                    $texto_main = "";
+                    if ($main) {
+                        $texto_main = $main->name;
+                        unset($main);
+                    }
+
+                    $value->user_nickname = $user->nickname;
+                    $value->id = $user->id;
+                    $value->title = $texto_main;
+                    unset($user);
+
+                    if ($nickname != Auth::user()->nickname) {
+                        //verificando se o usuário autenticado já segue aquele criador
+                        $is_following = Follower::where('id_creator', $value->id)->where('id_user', Auth::id())->first();
+
+                        if ($is_following) {
+                            $value->is_following = true;
+                        }
+                    }
+                }
+            }
+        } else {
+            $users_foreach = 0;
+        }
+
+        return view('seguindo', [
+            'users_foreach' => $users_foreach,
+            'nickname' => $nickname
+        ]);
     }
 }

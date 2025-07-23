@@ -88,7 +88,7 @@
             @else
             <form action="{{ route('follow', ['nickname' => $nickname]) }}" method="post">
                 @csrf
-                <button class="btn btn-primary">
+                <button class="btn btn-outline-primary">
                     <i class="fas fa-user-plus me-2"></i>Seguir
                 </button>
             </form>
@@ -105,17 +105,24 @@
             <h5 class="fw-bold mb-0">{{ count($count_theme) }}</h5>
             <small class="text-muted">Temas</small>
         </div>
+
         <div class="col-4">
-            <i class="fas fa-users fa-lg text-success mb-1"></i>
-            <h5 class="fw-bold mb-0">{{ count($count_followers) }}</h5>
-            <small class="text-muted">Seguidores</small>
+            <a href="{{ route('user_followers', ['nickname' => $nickname]) }}" class="text-decoration-none">
+                <i class="fas fa-users fa-lg text-success mb-1"></i>
+                <h5 class="fw-bold mb-0 text-dark">{{ count($count_followers) }}</h5>
+                <small class="text-muted">Seguidores</small>
+            </a>
         </div>
+
         <div class="col-4">
-            <i class="fas fa-user-friends fa-lg text-warning mb-1"></i>
-            <h5 class="fw-bold mb-0">{{ count($count_following) }}</h5>
-            <small class="text-muted">Seguindo</small>
+            <a href="{{ route('user_following', ['nickname' => $nickname]) }}" class="text-decoration-none">
+                <i class="fas fa-user-friends fa-lg text-warning mb-1"></i>
+                <h5 class="fw-bold mb-0 text-dark">{{ count($count_following) }}</h5>
+                <small class="text-muted">Seguindo</small>
+            </a>
         </div>
     </div>
+
 
     <!-- Nome e subtítulo -->
     <div class="text-center mb-4">
@@ -215,11 +222,13 @@
                             @else
                             <img src="/default/banner-default.jpg" alt="Profile">
                             @endif
-                            <div class="overlay">
-                                <h4 class="card-title text-white title">
-                                    {{$f->name}} <br>
-                                    feito por {{$f->user_nickname}}
-                                </h4>
+                            <div class="overlay d-flex justify-content-between align-items-center px-4">
+                                <div>
+                            <h4 class="card-title text-white title mb-1">
+                                {{$f->name}}
+                            </h4>
+                            <small class="text-white-50">feito por {{$f->user_nickname}}</small>
+                        </div>
                                 <div>
                                     <form action="{{ route('category_index', ['nickname' => $f->user_nickname, 'category_name_slug' => $f->name_slug]) }}" method="get" class="d-inline">
                                         <button type="submit" class="btn btn-outline-light btn-sm me-1">
