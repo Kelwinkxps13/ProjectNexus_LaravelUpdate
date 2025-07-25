@@ -16,7 +16,7 @@
 
     <div class="d-flex flex-column gap-3">
         @foreach ($users_foreach as $f)
-        @if(Auth::user()->nickname != $f->user_nickname)
+        @if(Auth::check() && Auth::user()->nickname != $f->user_nickname)
         <div class="card shadow-sm rounded-3 border-0">
             <div class="card-body d-flex align-items-center justify-content-between flex-wrap">
                 <div class="d-flex align-items-center">

@@ -116,16 +116,24 @@ $data = session('user_data');
       }
     </style>
 
+
+    @auth
     <!-- Navbar principal -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark position-relative">
       <div class="container-fluid">
+
         <a class="navbar-brand" href="/">Nexus</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+          aria-expanded="false" aria-label="Toggle navigation">
           <i class="fas fa-bars text-light"></i>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <div class="d-flex justify-content-between align-items-center w-100">
+
+          <!-- ESQUERDA -->
+          <div class="d-flex align-items-center">
             <ul class="navbar-nav d-flex flex-row mt-3 mt-lg-0">
               <li class="nav-item text-center mx-2 mx-lg-1">
                 <a class="nav-link active" aria-current="page" href="/">
@@ -133,28 +141,23 @@ $data = session('user_data');
                   Início
                 </a>
               </li>
-
-              @auth
               <li class="nav-item text-center mx-2 mx-lg-1">
                 <a class="nav-link" href="{{ route('user_index', ['nickname' => Auth::user()->nickname]) }}">
-                  <div>
-                    <i class="fas fa-user fa-lg mb-1"></i>
-                  </div>
+                  <div><i class="fas fa-user fa-lg mb-1"></i></div>
                   Minha Página
                 </a>
               </li>
-
               <li class="nav-item text-center mx-2 mx-lg-1">
                 <a class="nav-link" href="/{{ Auth::user()->nickname }}/editor">
-                  <div>
-                    <i class="fas fa-pen fa-lg mb-1"></i>
-                  </div>
+                  <div><i class="fas fa-pen fa-lg mb-1"></i></div>
                   Editor
                 </a>
               </li>
-              @endauth
             </ul>
+          </div>
 
+          <!-- CENTRO: busca centralizada com position absolute -->
+          <div class="position-absolute start-50 translate-middle-x" style="z-index: 1;">
             <form class="d-flex my-2" action="{{ route('search') }}" method="GET" style="max-width: 300px;">
               <div class="input-group shadow-sm rounded-pill overflow-hidden">
                 <input type="text" class="form-control form-control-lg border-0 ps-4" name="query" placeholder="Buscar...">
@@ -163,9 +166,11 @@ $data = session('user_data');
                 </button>
               </div>
             </form>
+          </div>
 
+          <!-- DIREITA -->
+          <div class="ms-auto d-flex align-items-center">
             <ul class="navbar-nav d-flex flex-row align-items-center mt-3 mt-lg-0">
-              @auth
               <li class="nav-item d-flex align-items-center text-center mx-2">
                 <div class="d-flex flex-column me-3">
                   <strong class="number text-light">{{ session('count_theme') }}</strong>
@@ -173,22 +178,22 @@ $data = session('user_data');
                 </div>
                 <div class="d-flex flex-column me-3">
                   <strong class="number text-light">
-                    <a href="{{ route('user_followers', ['nickname' => Auth::user()->nickname]) }}" class="text-decoration-none text-light">
+                    <a href="{{ route('user_followers', ['nickname' => Auth::user()->nickname]) }}"
+                      class="text-decoration-none text-light">
                       {{ session('count_followers') }}
                     </a>
                   </strong>
                   <small class="number-label text-white">Seguidores</small>
                 </div>
-
                 <div class="d-flex flex-column">
                   <strong class="number text-light">
-                    <a href="{{ route('user_following', ['nickname' => Auth::user()->nickname]) }}" class="text-decoration-none text-light">
+                    <a href="{{ route('user_following', ['nickname' => Auth::user()->nickname]) }}"
+                      class="text-decoration-none text-light">
                       {{ session('count_following') }}
                     </a>
                   </strong>
                   <small class="number-label text-white">Seguindo</small>
                 </div>
-
               </li>
 
               <li class="nav-item text-center mx-2 mx-lg-1">
@@ -204,8 +209,10 @@ $data = session('user_data');
               </li>
 
               <li class="nav-item dropdown ms-2">
-                <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(9).jpg" class="rounded-circle" height="30" alt="" loading="lazy" />
+                <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdownMenuLink"
+                  role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(9).jpg"
+                    class="rounded-circle" height="30" alt="" loading="lazy" />
                   {{ Auth::user()->nickname }}
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
@@ -214,18 +221,71 @@ $data = session('user_data');
                   <li>
                     <form method="POST" action="{{ route('logout') }}" class="logout-form">
                       @csrf
-                      <x-dropdown-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();" class="dropdown-item text-dark">
+                      <x-dropdown-link :href="route('logout')"
+                        onclick="event.preventDefault(); this.closest('form').submit();"
+                        class="dropdown-item text-dark">
                         {{ __('Log Out') }}
                       </x-dropdown-link>
                     </form>
                   </li>
                 </ul>
               </li>
-              @endauth
+            </ul>
+          </div>
 
-              @guest
+        </div>
+      </div>
+    </nav>
+
+
+    @endauth
+
+
+
+    @guest
+    <!-- Navbar principal -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark position-relative">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">Nexus</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+          aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fas fa-bars text-light"></i>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+          <!-- ESQUERDA -->
+          <div class="d-flex align-items-center">
+            <ul class="navbar-nav d-flex flex-row mt-3 mt-lg-0">
+              <li class="nav-item text-center mx-2 mx-lg-1">
+                <a class="nav-link active" aria-current="page" href="/">
+                  <div><i class="fas fa-home fa-lg mb-1"></i></div>
+                  Início
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- CENTRO: Busca centralizada -->
+          <div class="position-absolute start-50 translate-middle-x" style="z-index: 1;">
+            <form class="d-flex my-2" action="{{ route('search') }}" method="GET" style="max-width: 300px;">
+              <div class="input-group shadow-sm rounded-pill overflow-hidden">
+                <input type="text" class="form-control form-control-lg border-0 ps-4" name="query" placeholder="Buscar...">
+                <button class="btn btn-primary px-4" type="submit">
+                  <i class="fa fa-search"></i>
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- DIREITA -->
+          <div class="ms-auto d-flex align-items-center">
+            <ul class="navbar-nav d-flex flex-row align-items-center mt-3 mt-lg-0">
               <li class="nav-item dropdown ms-2">
-                <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdownMenuLink"
+                  role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <img src="default/icon-profile-image.jpg" class="rounded-circle" height="30" alt="" loading="lazy" />
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
@@ -233,12 +293,16 @@ $data = session('user_data');
                   <li><a class="dropdown-item" href="{{ route('register') }}">Cadastrar</a></li>
                 </ul>
               </li>
-              @endguest
             </ul>
           </div>
+
         </div>
       </div>
     </nav>
+
+    @endguest
+
+
 
     <!-- Segunda Navbar (Breadcrumb) -->
     <nav class="navbar navbar-light bg-light second-navbar">

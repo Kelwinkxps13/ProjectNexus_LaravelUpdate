@@ -449,94 +449,105 @@ class UserController extends Controller
 
     function seguidores($nickname)
     {
-        $user = User::where('nickname', $nickname)->first();
-        $users_foreach = Follower::where('id_creator', $user->id)->get();
+        if (Auth::check()) {
+            $user = User::where('nickname', $nickname)->first();
+            $users_foreach = Follower::where('id_creator', $user->id)->get();
 
-        if ($users_foreach) {
-            foreach ($users_foreach as $key => $value) {
-                $user = User::where('id', $value->id_user)->first();
-                if ($user) {
+            if ($users_foreach) {
+                foreach ($users_foreach as $key => $value) {
+                    $user = User::where('id', $value->id_user)->first();
+                    if ($user) {
 
-                    $main = Main::where('user_id', $value->id_user)->first();
-                    $texto_main = "";
-                    if ($main) {
-                        $texto_main = $main->name;
-                        unset($main);
-                    }
-                    $value->user_nickname = $user->nickname;
-                    $value->id = $user->id;
-                    $value->title = $texto_main;
-                    unset($user);
-
-                    if ($nickname != Auth::user()->nickname) {
-                        //verificando se o usuário autenticado já segue aquele criador
-                        $is_following = Follower::where('id_creator', $value->id)->where('id_user', Auth::id())->first();
-
-                        if ($is_following) {
-                            $value->is_following = true;
+                        $main = Main::where('user_id', $value->id_user)->first();
+                        $texto_main = "";
+                        if ($main) {
+                            $texto_main = $main->name;
+                            unset($main);
                         }
-                    } else {
+                        $value->user_nickname = $user->nickname;
+                        $value->id = $user->id;
+                        $value->title = $texto_main;
+                        unset($user);
 
-                        $user = User::where('nickname', $nickname)->first();
-                        $is_following = Follower::where('id_creator', $value->id)->where('id_user', $user->id)->first();
+                        if ($nickname != Auth::user()->nickname) {
+                            //verificando se o usuário autenticado já segue aquele criador
+                            $is_following = Follower::where('id_creator', $value->id)->where('id_user', Auth::id())->first();
 
-                        if ($is_following) {
-                            $value->is_following = true;
+                            if ($is_following) {
+                                $value->is_following = true;
+                            }
+                        } else {
+
+                            $user = User::where('nickname', $nickname)->first();
+                            $is_following = Follower::where('id_creator', $value->id)->where('id_user', $user->id)->first();
+
+                            if ($is_following) {
+                                $value->is_following = true;
+                            }
                         }
                     }
                 }
+            } else {
+                $users_foreach = 0;
             }
-        } else {
-            $users_foreach = 0;
-        }
 
-        return view('seguidores', [
-            'users_foreach' => $users_foreach,
-            'nickname' => $nickname
-        ]);
+            return view('seguidores', [
+                'users_foreach' => $users_foreach,
+                'nickname' => $nickname
+            ]);
+        } else {
+            return Redirect::to(route('user_index', ['nickname' => $nickname]))
+                ->with('msg-danger', "Você mão tem permissão para acessar essa página!");
+        }
     }
 
     function seguindo($nickname)
     {
 
-        $user = User::where('nickname', $nickname)->first();
+        if (Auth::check()) {
 
-        $users_foreach = Follower::where('id_user', $user->id)->get();
+            $user = User::where('nickname', $nickname)->first();
 
-        if ($users_foreach) {
-            foreach ($users_foreach as $key => $value) {
-                $user = User::where('id', $value->id_creator)->first();
-                if ($user) {
+            $users_foreach = Follower::where('id_user', $user->id)->get();
 
-                    $main = Main::where('user_id', $value->id_creator)->first();
-                    $texto_main = "";
-                    if ($main) {
-                        $texto_main = $main->name;
-                        unset($main);
-                    }
+            if ($users_foreach) {
+                foreach ($users_foreach as $key => $value) {
+                    $user = User::where('id', $value->id_creator)->first();
+                    if ($user) {
 
-                    $value->user_nickname = $user->nickname;
-                    $value->id = $user->id;
-                    $value->title = $texto_main;
-                    unset($user);
+                        $main = Main::where('user_id', $value->id_creator)->first();
+                        $texto_main = "";
+                        if ($main) {
+                            $texto_main = $main->name;
+                            unset($main);
+                        }
 
-                    if ($nickname != Auth::user()->nickname) {
-                        //verificando se o usuário autenticado já segue aquele criador
-                        $is_following = Follower::where('id_creator', $value->id)->where('id_user', Auth::id())->first();
+                        $value->user_nickname = $user->nickname;
+                        $value->id = $user->id;
+                        $value->title = $texto_main;
+                        unset($user);
 
-                        if ($is_following) {
-                            $value->is_following = true;
+                        if ($nickname != Auth::user()->nickname) {
+                            //verificando se o usuário autenticado já segue aquele criador
+                            $is_following = Follower::where('id_creator', $value->id)->where('id_user', Auth::id())->first();
+
+                            if ($is_following) {
+                                $value->is_following = true;
+                            }
                         }
                     }
                 }
+            } else {
+                $users_foreach = 0;
             }
-        } else {
-            $users_foreach = 0;
-        }
 
-        return view('seguindo', [
-            'users_foreach' => $users_foreach,
-            'nickname' => $nickname
-        ]);
+            return view('seguindo', [
+                'users_foreach' => $users_foreach,
+                'nickname' => $nickname
+            ]);
+        } else {
+            return Redirect::to(route('user_index', ['nickname' => $nickname]))
+                ->with('msg-danger', "Você mão tem permissão para acessar essa página!");
+        }
     }
 }

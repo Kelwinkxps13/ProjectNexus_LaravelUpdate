@@ -75,23 +75,28 @@
                     <img src="/default/banner-default.jpg" alt="Profile">
                     @endif
                     <div class="overlay d-flex justify-content-between align-items-center px-4">
-                        <div>
-                            <h4 class="card-title text-white title mb-1">
-                                {{$f->name}}
-                            </h4>
-                            <small class="text-white-50">feito por {{$f->user_nickname}}</small>
-                        </div>
-                        <div class="float-end">
-                            <form action="{{ route('category_index', ['nickname' => $f->user_nickname, 'category_name_slug' => $f->name_slug]) }}" method="get" class="d-inline">
-                                <button type="submit" class="btn btn-outline-light btn-sm me-1">
-                                    <i class="fas fa-eye me-1"></i>Ver Tema
-                                </button>
-                            </form>
-                            <form action="{{ route('user_index', ['nickname' => $f->user_nickname]) }}" method="get" class="d-inline">
-                                <button type="submit" class="btn btn-outline-light btn-sm">
-                                    <i class="fas fa-user me-1"></i>Ver usuário
-                                </button>
-                            </form>
+                        <div class="w-100 d-flex justify-content-between align-items-center">
+                            <!-- Esquerda: Título e nome do autor -->
+                            <div class="text-start">
+                                <h4 class="card-title text-white title mb-1">
+                                    {{$f->name}}
+                                </h4>
+                                <small class="text-white-50">feito por {{$f->user_nickname}}</small>
+                            </div>
+
+                            <!-- Direita: Botões -->
+                            <div class="text-end">
+                                <form action="{{ route('category_index', ['nickname' => $f->user_nickname, 'category_name_slug' => $f->name_slug]) }}" method="get" class="d-inline">
+                                    <button type="submit" class="btn btn-outline-light btn-sm me-1">
+                                        <i class="fas fa-eye me-1"></i>Ver Tema
+                                    </button>
+                                </form>
+                                <form action="{{ route('user_index', ['nickname' => $f->user_nickname]) }}" method="get" class="d-inline">
+                                    <button type="submit" class="btn btn-outline-light btn-sm">
+                                        <i class="fas fa-user me-1"></i>Ver usuário
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -114,25 +119,31 @@
                         <img src="/default/banner-default.jpg" alt="Profile">
                         @endif
                         <div class="overlay d-flex justify-content-between align-items-center px-4">
-                            <div>
-                                <h4 class="card-title text-white title mb-1">
-                                    {{$f->name}}
-                                </h4>
-                                <small class="text-white-50">feito por {{$f->user_nickname}}</small>
-                            </div>
-                            <div class="float-end">
-                                <form action="{{ route('category_index', ['nickname' => $f->user_nickname, 'category_name_slug' => $f->name_slug]) }}" method="get" class="d-inline">
-                                    <button type="submit" class="btn btn-outline-light btn-sm me-1">
-                                        <i class="fas fa-eye me-1"></i>Ver Tema
-                                    </button>
-                                </form>
-                                <form action="{{ route('user_index', ['nickname' => $f->user_nickname]) }}" method="get" class="d-inline">
-                                    <button type="submit" class="btn btn-outline-light btn-sm">
-                                        <i class="fas fa-user me-1"></i>Ver usuário
-                                    </button>
-                                </form>
+                            <div class="w-100 d-flex justify-content-between align-items-center">
+                                <!-- Esquerda: Título e nome do autor -->
+                                <div class="text-start">
+                                    <h4 class="card-title text-white title mb-1">
+                                        {{$f->name}}
+                                    </h4>
+                                    <small class="text-white-50">feito por {{$f->user_nickname}}</small>
+                                </div>
+
+                                <!-- Direita: Botões -->
+                                <div class="text-end">
+                                    <form action="{{ route('category_index', ['nickname' => $f->user_nickname, 'category_name_slug' => $f->name_slug]) }}" method="get" class="d-inline">
+                                        <button type="submit" class="btn btn-outline-light btn-sm me-1">
+                                            <i class="fas fa-eye me-1"></i>Ver Tema
+                                        </button>
+                                    </form>
+                                    <form action="{{ route('user_index', ['nickname' => $f->user_nickname]) }}" method="get" class="d-inline">
+                                        <button type="submit" class="btn btn-outline-light btn-sm">
+                                            <i class="fas fa-user me-1"></i>Ver usuário
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -157,25 +168,31 @@
                     <img src="/default/banner-default.jpg" alt="Profile">
                     @endif
                     <div class="overlay d-flex justify-content-between align-items-center px-4">
-                        <div>
-                            <h4 class="card-title text-white title mb-1">
-                                {{$f->name}}
-                            </h4>
-                            <small class="text-white-50">feito por {{$f->user_nickname}}</small>
-                        </div>
-                        <div>
-                            <form action="{{ route('category_index', ['nickname' => $f->user_nickname, 'category_name_slug' => $f->name_slug]) }}" method="get" class="d-inline">
-                                <button type="submit" class="btn btn-outline-light btn-sm me-1">
-                                    <i class="fas fa-eye me-1"></i>Ver Tema
-                                </button>
-                            </form>
-                            <form action="{{ route('user_index', ['nickname' => $f->user_nickname]) }}" method="get" class="d-inline">
-                                <button type="submit" class="btn btn-outline-light btn-sm">
-                                    <i class="fas fa-user me-1"></i>Ver usuário
-                                </button>
-                            </form>
+                        <div class="w-100 d-flex justify-content-between align-items-center">
+                            <!-- Esquerda: Título e nome do autor -->
+                            <div class="text-start">
+                                <h4 class="card-title text-white title mb-1">
+                                    {{$f->name}}
+                                </h4>
+                                <small class="text-white-50">feito por {{$f->user_nickname}}</small>
+                            </div>
+
+                            <!-- Direita: Botões -->
+                            <div class="text-end">
+                                <form action="{{ route('category_index', ['nickname' => $f->user_nickname, 'category_name_slug' => $f->name_slug]) }}" method="get" class="d-inline">
+                                    <button type="submit" class="btn btn-outline-light btn-sm me-1">
+                                        <i class="fas fa-eye me-1"></i>Ver Tema
+                                    </button>
+                                </form>
+                                <form action="{{ route('user_index', ['nickname' => $f->user_nickname]) }}" method="get" class="d-inline">
+                                    <button type="submit" class="btn btn-outline-light btn-sm">
+                                        <i class="fas fa-user me-1"></i>Ver usuário
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
+
                 </div>
             </div>
             @endforeach
@@ -199,25 +216,31 @@
                     <img src="/default/banner-default.jpg" alt="Profile">
                     @endif
                     <div class="overlay d-flex justify-content-between align-items-center px-4">
-                        <div>
-                            <h4 class="card-title text-white title mb-1">
-                                {{$f->name}}
-                            </h4>
-                            <small class="text-white-50">feito por {{$f->user_nickname}}</small>
-                        </div>
-                        <div>
-                            <form action="{{ route('category_index', ['nickname' => $f->user_nickname, 'category_name_slug' => $f->name_slug]) }}" method="get" class="d-inline">
-                                <button type="submit" class="btn btn-outline-light btn-sm me-1">
-                                    <i class="fas fa-eye me-1"></i>Ver Tema
-                                </button>
-                            </form>
-                            <form action="{{ route('user_index', ['nickname' => $f->user_nickname]) }}" method="get" class="d-inline">
-                                <button type="submit" class="btn btn-outline-light btn-sm">
-                                    <i class="fas fa-user me-1"></i>Ver usuário
-                                </button>
-                            </form>
+                        <div class="w-100 d-flex justify-content-between align-items-center">
+                            <!-- Esquerda: Título e nome do autor -->
+                            <div class="text-start">
+                                <h4 class="card-title text-white title mb-1">
+                                    {{$f->name}}
+                                </h4>
+                                <small class="text-white-50">feito por {{$f->user_nickname}}</small>
+                            </div>
+
+                            <!-- Direita: Botões -->
+                            <div class="text-end">
+                                <form action="{{ route('category_index', ['nickname' => $f->user_nickname, 'category_name_slug' => $f->name_slug]) }}" method="get" class="d-inline">
+                                    <button type="submit" class="btn btn-outline-light btn-sm me-1">
+                                        <i class="fas fa-eye me-1"></i>Ver Tema
+                                    </button>
+                                </form>
+                                <form action="{{ route('user_index', ['nickname' => $f->user_nickname]) }}" method="get" class="d-inline">
+                                    <button type="submit" class="btn btn-outline-light btn-sm">
+                                        <i class="fas fa-user me-1"></i>Ver usuário
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
+
                 </div>
             </div>
             @endforeach
