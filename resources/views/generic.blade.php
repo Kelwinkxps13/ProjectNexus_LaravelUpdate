@@ -62,145 +62,117 @@
         Caso tenha Itens a serem mostrados
     --}}
     @else
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-        {{--
-                        foreach do itens que serâo mostrados
-                    --}}
-        @foreach ($db_url as $f)
-        <div class="col-4 my-3">
-            <div class="card" style="width: 18rem;">
-                <div class="d-flex align-items-center justify-content-center bg-secondary"
-                    style="width: 286px; height: 286px; overflow: hidden;">
-                    {{--
-                                    Verifica se aquele item tem alguma imagem, caso tenha,
-                                    será mostrada no banner.
-                                --}}
-                    @if($f->image===null)
-                    <img src="/default/no image.png" alt="Profile"
-                        style="width: 100%; height: 100%; object-fit: cover;">
-                    @else
-                    <img src="/images/{{$nickname}}/categories/{{$f->category_id}}/items/{{ $f->image }}" alt="Profile"
-                        style="width: 100%; height: 100%; object-fit: cover;">
-                    @endif
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">
-                        {{ $f->name }}
-                    </h5>
-                    <p class="card-text">
-                        {{ $f->description }}
-                    </p>
-                    <div class="d-flex justify-content-center gap-3">
-                        <a href="{{route('item_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $f->name_slug])}}" class="btn btn-primary">Veja!</a>
 
-                        {{--
-                                        Caso tenha um usuário logado, e se esse usuário for o criador da página
-                                    --}}
-                        @if(Auth::check())
-                        @if (Auth::user()->nickname == $nickname)
-                        <form action="{{route('item_edit', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $f->name_slug])}}" method="get">
-                            @csrf
-                            <button type="submit" class="btn btn-warning">Editar</button>
-                        </form>
-                        <form action="{{route('item_destroy', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug])}}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <input type="hidden" name="item_name_slug" value="{{$f->name_slug}}">
-                            <button type="submit" class="btn btn-danger">Excluir</button>
-                        </form>
-
-
-                        @endif
+    <div class="container-fluid px-0 px-md-3">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-4">
+            @foreach ($db_url as $f)
+            <div class="col mb-4">
+                <div class="card h-100 shadow-sm">
+                    <!-- Imagem -->
+                    <div class="bg-light d-flex align-items-center justify-content-center" style="height: 200px; overflow: hidden;">
+                        @if($f->image === null)
+                        <img src="/default/no image.png" alt="Profile" class="img-fluid w-100 h-100 object-fit-cover">
+                        @else
+                        <img src="/images/{{$nickname}}/categories/{{$f->category_id}}/items/{{ $f->image }}" alt="Profile" class="img-fluid w-100 h-100 object-fit-cover">
                         @endif
                     </div>
-                    <!-- <label for="">Likes: {{ count($f->likes) }} Dislikes: {{count($f->dislikes)}}</label><br> -->
-                    {{--
-                                    Verifica se o usuário está logado
-                                --}}
-                    @if (Auth::check())
-                    {{---
 
-                                    like_type:
-                                    0 => nem like nem dislike
-                                    1 => deu like
-                                    2 => deu dislike
-                                    
-                                    ---}}
-                    {{--
-                                    Caso o tipo de like daquele item for 1, ou seja,
-                                    não deu like nem dislike, as cores dos botôes serão mostradas
-                                    de acordo com o like_type.
-                                    Note se essa lógica se aplpica ao resto do ifelse
-                                --}}
-                    @if ($f->like_type === 1)
-                    <div class="d-flex gap-2">
-                        <form action="{{route('item_unlike', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $f->name_slug])}}" method="post">
-                            @csrf
-                            <button type="submit"
-                                class="p-2 bg-transparent border-0 outline-none focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full">
+                    <!-- Corpo do Card -->
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">{{ $f->name }}</h5>
+                        <p class="card-text text-muted mb-3" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">{{ $f->description }}</p>
 
-                                <i class="fa-solid fa-thumbs-up text-gray-700 hover:text-blue-600 transition-all duration-200"></i>
-                                {{--$_COOKIE
-                                            Verifica a quantidade de likes que aquele item em específico tem
-                                        --}}
-                            </button> {{ count($f->likes) }}
-                        </form>
-                        <form action="{{route('item_dislike', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $f->name_slug])}}" method="post">
-                            @csrf
-                            <button type="submit"
-                                class="p-2 bg-transparent border-0 outline-none focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full">
-                                <i class="fa-regular fa-thumbs-down text-gray-700 hover:text-blue-600 transition-all duration-200"></i>
-                                {{--$_COOKIE
-                                            Verifica a quantidade de dislikes que aquele item em especifico tem.
-                                        --}}
-                            </button> {{ count($f->dislikes) }}
-                        </form>
+                        <!-- Botões Principais -->
+                        <div class="mt-auto">
+                            <div class="d-flex justify-content-center flex-wrap gap-2 mb-3">
+                                @if(Auth::check() && Auth::user()->nickname == $nickname)
+                                <form action="{{ route('item_destroy', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug]) }}" method="post" class="flex-grow-1">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="hidden" name="item_name_slug" value="{{ $f->name_slug }}">
+                                    <button type="submit" class="btn btn-outline-secondary btn-sm w-100 border text-dark bg-white hover-bg-gray">
+                                        <i class="fas fa-trash me-1"></i> Excluir
+                                    </button>
+                                </form>
+
+                                <form action="{{ route('item_edit', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $f->name_slug]) }}" method="get" class="flex-grow-1">
+                                    @csrf
+                                    <button type="submit" class="btn btn-outline-secondary btn-sm w-100 border text-dark bg-white hover-bg-gray">
+                                        <i class="fas fa-edit me-1"></i> Editar
+                                    </button>
+                                </form>
+                                @endif
+
+                                <a href="{{ route('item_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $f->name_slug]) }}" class="btn btn-outline-secondary btn-sm flex-grow-1 border text-dark bg-white hover-bg-gray">
+                                    <i class="fas fa-eye me-1"></i> Ver
+                                </a>
+                            </div>
+
+                            <style>
+                                .hover-bg-gray:hover {
+                                    background-color: #e9ecef !important;
+                                    color: #212529 !important;
+                                }
+
+                                .border {
+                                    border: 1px solid #dee2e6 !important;
+                                }
+                            </style>
+                            <!-- Likes -->
+                            @if (Auth::check())
+                            <div class="d-flex justify-content-center gap-2">
+                                {{-- LIKE --}}
+                                @if ($f->like_type === 1)
+                                <form action="{{ route('item_unlike', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $f->name_slug]) }}" method="post" class="flex-grow-1">
+                                    @csrf
+                                    <button type="submit" class="btn btn-outline-secondary btn-sm w-100 border text-dark bg-white hover-bg-gray">
+                                        <i class="fas fa-thumbs-up me-1"></i> {{ count($f->likes) }}
+                                    </button>
+                                </form>
+                                <form action="{{ route('item_dislike', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $f->name_slug]) }}" method="post" class="flex-grow-1">
+                                    @csrf
+                                    <button type="submit" class="btn btn-outline-secondary btn-sm w-100 border text-dark bg-white hover-bg-gray">
+                                        <i class="far fa-thumbs-down me-1"></i> {{ count($f->dislikes) }}
+                                    </button>
+                                </form>
+                                @elseif ($f->like_type === 2)
+                                <form action="{{ route('item_like', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $f->name_slug]) }}" method="post" class="flex-grow-1">
+                                    @csrf
+                                    <button type="submit" class="btn btn-outline-secondary btn-sm w-100 border text-dark bg-white hover-bg-gray">
+                                        <i class="far fa-thumbs-up me-1"></i> {{ count($f->likes) }}
+                                    </button>
+                                </form>
+                                <form action="{{ route('item_undislike', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $f->name_slug]) }}" method="post" class="flex-grow-1">
+                                    @csrf
+                                    <button type="submit" class="btn btn-outline-secondary btn-sm w-100 border text-dark bg-white hover-bg-gray">
+                                        <i class="fas fa-thumbs-down me-1"></i> {{ count($f->dislikes) }}
+                                    </button>
+                                </form>
+                                @else
+                                <form action="{{ route('item_like', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $f->name_slug]) }}" method="post" class="flex-grow-1">
+                                    @csrf
+                                    <button type="submit" class="btn btn-outline-secondary btn-sm w-100 border text-dark bg-white hover-bg-gray">
+                                        <i class="far fa-thumbs-up me-1"></i> {{ count($f->likes) }}
+                                    </button>
+                                </form>
+                                <form action="{{ route('item_dislike', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $f->name_slug]) }}" method="post" class="flex-grow-1">
+                                    @csrf
+                                    <button type="submit" class="btn btn-outline-secondary btn-sm w-100 border text-dark bg-white hover-bg-gray">
+                                        <i class="far fa-thumbs-down me-1"></i> {{ count($f->dislikes) }}
+                                    </button>
+                                </form>
+                                @endif
+                            </div>
+                            @endif
+                        </div>
                     </div>
-                    @elseif ($f->like_type === 2)
-                    <div class="d-flex gap-2">
-                        <form action="{{route('item_like', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $f->name_slug])}}" method="post">
-                            @csrf
-                            <button type="submit"
-                                class="p-2 bg-transparent border-0 outline-none focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full">
-                                <i class="fa-regular fa-thumbs-up text-gray-700 hover:text-blue-600 transition-all duration-200"></i>
-                            </button> {{ count($f->likes) }}
-                        </form>
-                        <form action="{{route('item_undislike', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $f->name_slug])}}" method="post">
-                            @csrf
-                            <button type="submit"
-                                class="p-2 bg-transparent border-0 outline-none focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full">
-                                <i class="fa-solid fa-thumbs-down text-gray-700 hover:text-blue-600 transition-all duration-200"></i>
-                            </button> {{ count($f->dislikes) }}
-                        </form>
-                    </div>
-                    @else
-                    <div class="d-flex gap-2">
-                        <form action="{{route('item_like', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $f->name_slug])}}" method="post">
-                            @csrf
-                            <button type="submit"
-                                class="p-2 bg-transparent border-0 outline-none focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full">
-                                <i class="fa-regular fa-thumbs-up text-gray-700 hover:text-blue-600 transition-all duration-200"></i>
-                            </button> {{ count($f->likes) }}
-                        </form>
-                        <form action="{{route('item_dislike', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $f->name_slug])}}" method="post">
-                            @csrf
-                            <button type="submit"
-                                class="p-2 bg-transparent border-0 outline-none focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full">
-                                <i class="fa-regular fa-thumbs-down text-gray-700 hover:text-blue-600 transition-all duration-200"></i>
-                            </button> {{ count($f->dislikes) }}
-                        </form>
-                    </div>
-
-                    @endif
-
-                    @endif
                 </div>
             </div>
-
+            @endforeach
         </div>
-        @endforeach
-
     </div>
+
+
 
     {{--$_COOKIE
                     Caso tenha um usuário autenticado, e esse usuário for o dono da página,

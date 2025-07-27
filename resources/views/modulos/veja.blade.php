@@ -182,7 +182,9 @@
                 @endforeach
             </div>
 
+            @auth
             <button class="btn btn-primary btn-sm my-3 mt-2" onclick="mostrarResposta(this)">Responder</button>
+            @endauth
 
             <!-- Formulário oculto por padrão -->
             <div class="resposta-form mt-2" style="display: none;">
@@ -242,7 +244,9 @@
                             @endforeach
                         </div>
 
+                        @auth
                         <button class="btn btn-success btn-sm my-3 mt-2" onclick="mostrarResposta(this)">Responder</button>
+                        @endauth
 
                         <!-- Formulário oculto por padrão -->
                         <div class="resposta-form mt-2" style="display: none;">
