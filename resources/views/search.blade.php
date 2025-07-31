@@ -19,7 +19,11 @@
             <i class="fa-solid fa-user-circle fa-2xl text-primary me-3"></i>
             <div class="flex-grow-1">
                 <h5 class="mb-1">{{ '@'.$user->nickname }}</h5>
-                <p class="mb-0 text-muted">Criador de temas interativos e fã de segurança da informação</p>
+                @if (isset($user->description))
+                <p class="mb-0 text-muted">{{$user->description}}</p>
+                @else
+                <p class="mb-0 text-muted">Usuário sem descrição</p>
+                @endif
             </div>
             <a href="{{route('user_index', ['nickname' => $user->nickname])}}" class="btn btn-sm btn-primary">Ver</a>
         </div>

@@ -171,6 +171,11 @@ class IndexController extends Controller
 
         foreach ($users as $key => $value) {
 
+            $search_desc = Main::where('user_id', $value->id)->first();
+            if($search_desc){
+                $value->description = $search_desc->description;
+            }
+
             //verificando se o usuário autenticado já segue aquele criador
             $is_following = Follower::where('id_creator', $value->id)->where('id_user', Auth::id())->first();
 
