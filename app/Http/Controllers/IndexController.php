@@ -41,18 +41,9 @@ class IndexController extends Controller
 
         // foreach de todos os temas!
 
-        $themes_foreach = Category::orderBy('created_at', 'desc')->limit(5)->get();
+        $themes_foreach = Category::orderBy('created_at', 'desc')->limit(10)->get();
 
-        $users_foreach = Main::orderBy('created_at', 'desc')->limit(10)->get();
-
-        foreach ($users_foreach as $key => $value) {
-            $main = Main::where('user_id', $value->id)->first();
-            if ($main) {
-                # code...
-                $value->title = $main->name;
-            }
-        }
-
+        $users_foreach = Main::orderBy('created_at', 'desc')->limit(12)->get();
 
 
         // sistema de feed

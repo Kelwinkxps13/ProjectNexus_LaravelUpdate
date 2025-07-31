@@ -268,8 +268,8 @@
                             {{ '@'.$f->user_nickname }}
                         </a>
                     </h5>
-                    @if ($f->title != "")
-                    <p class="card-text text-muted">{{$f->title}}</p>
+                    @if ($f->name != "")
+                    <p class="card-text text-muted">{{$f->name}}</p>
                     @else
                     <p class="card-text text-muted">Usuário sem descrição</p>
                     @endif

@@ -121,257 +121,257 @@
     <br>
     <br>
     <div class="container my-5">
-        <h4 class="text-center">
-            Seção de Comentários
-        </h4>
-
-        {{---
-
-            Comentários dos usuários ficarão aqui 
-
-            os comentários terão uma hierarquia:
-
-            comentário > resposta > réplica
-
-            consideremos os níveis:
-
-            0 > 1 > 2
-
-            ---}}
-
-        {{--$_COOKIE
-            Adicionar um comentário
-        --}}
-        @if (Auth::check())
-        <form action="{{route('add_comment_0', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $item_name_slug])}}" method="post">
-            @csrf
-            <div class="col">
-                <textarea id="autoTextarea" name="text" class="form-control custom-input" placeholder="Digite aqui..." rows="1" style="overflow:hidden; resize: none;"></textarea>
-                <div class="d-flex flex-row-reverse">
-                    <button class="btn custom-btn" type="submit">Comentar</button>
-                </div>
-            </div>
-        </form>
-        @endif
-
-
-        {{--$_COOKIE
-            Ver os comentários
-        --}}
-        @if (($comments != null))
-
-        <br>
-        <br>
-        <br>
-        @foreach ($comments as $comment)
-        <div class="comentario">
-            <div class="info d-flex justify-content-between">
-                <span><strong>{{ $comment->author_name }}</strong></span>
-                <span>{{ $comment->created_at->format('d \d\e F \d\e Y \à\s H:i:s') }}</span>
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-comments me-2"></i>Seção de Comentários
+                </h4>
             </div>
 
-            <div class="texto">
-                @php
-                $paragraphs = preg_split('/\r\n|\n|\r/', $comment->text);
-                @endphp
-
-                @foreach($paragraphs as $paragraph)
-                <p class="text text-dark">
-                    {{ $paragraph }}
-                </p>
-                @endforeach
+            <div class="card-body">
+                @if (count($comments) <= 0)
+                    <div class="text-center py-5">
+                    <i class="far fa-comment-slash text-muted fa-3x mb-3"></i>
+                    <h4 class="text-muted">Nenhum comentário ainda...</h4>
+                    <p class="text-muted">Seja o primeiro a comentar!</p>
             </div>
+            @endif
 
-            @auth
-            <button class="btn btn-primary btn-sm my-3 mt-2" onclick="mostrarResposta(this)">Responder</button>
-            @endauth
-
-            <!-- Formulário oculto por padrão -->
-            <div class="resposta-form mt-2" style="display: none;">
-                <form action="{{ route('add_comment_1', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $item_name_slug]) }}" method="post">
+            @if (Auth::check())
+            <div class="mb-4 p-3 bg-light rounded">
+                <form action="{{route('add_comment_0', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $item_name_slug])}}" method="post">
                     @csrf
-                    <div class="col">
-                        <textarea id="autoTextarea" name="text" class="form-control custom-input" placeholder="Digite aqui..." rows="1" style="overflow:hidden; resize: none;"></textarea>
-                        <input type="hidden" name="response_to" value="{{$comment->id}}">
-                        <input type="hidden" name="response_to_commenter" value="{{$comment->id_commenter}}">
-                        <div class="d-flex flex-row-reverse mt-2">
-                            <button class="btn custom-btn" type="submit">Comentar</button>
-                        </div>
+                    <div class="mb-3">
+                        <label for="autoTextarea" class="form-label text-muted small">Adicionar comentário</label>
+                        <textarea id="autoTextarea" name="text" class="form-control" placeholder="Digite seu comentário aqui..." rows="3" style="overflow:hidden; resize: none;"></textarea>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fas fa-paper-plane me-1"></i> Enviar
+                        </button>
                     </div>
                 </form>
             </div>
-
-            {{--$_COOKIE
-                Area reservada para mostrar os comentários da galera que responderam ao comentário tal
-            --}}
-
-
-
-
-
-            @if (count($comment->responses) > 0)
-
-            <button class="btn btn-primary btn-sm my-3 mt-2" onclick="mostrarRespostas(this)">Ver respostas</button>
-
             @endif
 
-
-
-
-            <div class="resposta-form mt-2" style="display: none;">
-
-                @foreach ($comment->responses as $responses)
-
-                <div class="row">
-                    <div class="col-2"></div>
-                    <div class="col-10">
-
-
-                        <div class="info d-flex justify-content-between">
-                            <span><strong>{{ $responses->author_name }}</strong></span>
-                            <span>{{ $responses->created_at->format('d \d\e F \d\e Y \à\s H:i:s') }}</span>
+            @if (($comments != null))
+            <div class="comments-section">
+                @foreach ($comments as $comment)
+                <div class="comment mb-4 p-3 border rounded">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <div class="d-flex align-items-center">
+                            <div class="user-avatar me-2">
+                                <i class="fas fa-user-circle fa-2x text-secondary"></i>
+                            </div>
+                            <div>
+                                <a href="{{route('user_index', ['nickname' => $comment->author_name])}}" class="text-decoration-none text-dark"><strong class="d-block">{{ '@'.$comment->author_name }}</strong></a>
+                                <small class="text-muted">{{ $comment->created_at->format('d/m/Y H:i') }}</small>
+                            </div>
                         </div>
-
-                        <div class="texto">
-                            @php
-                            $paragraphs = preg_split('/\r\n|\n|\r/', $responses->text);
-                            @endphp
-
-                            @foreach($paragraphs as $paragraph)
-                            <p class="text text-dark">
-                                {{ $paragraph }}
-                            </p>
-                            @endforeach
+                        <div>
+                            <small class="text-muted">{{ $comment->created_at->diffForHumans() }}</small>
                         </div>
+                    </div>
 
+                    <div class="comment-text mb-3">
+                        @php
+                        $paragraphs = preg_split('/\r\n|\n|\r/', $comment->text);
+                        @endphp
+
+                        @foreach($paragraphs as $paragraph)
+                        <p class="mb-1">{{ $paragraph }}</p>
+                        @endforeach
+                    </div>
+
+                    <div class="comment-actions">
                         @auth
-                        <button class="btn btn-success btn-sm my-3 mt-2" onclick="mostrarResposta(this)">Responder</button>
+                        <button class="btn btn-sm btn-outline-primary me-2" onclick="mostrarResposta(this)">
+                            <i class="fas fa-reply me-1"></i> Responder
+                        </button>
                         @endauth
 
-                        <!-- Formulário oculto por padrão -->
-                        <div class="resposta-form mt-2" style="display: none;">
-                            <form action="{{ route('add_comment_2', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $item_name_slug]) }}" method="post">
-                                @csrf
-                                <div class="col">
-                                    <textarea id="autoTextarea" name="text" class="form-control custom-input" placeholder="Digite aqui..." rows="1" style="overflow:hidden; resize: none;"></textarea>
-                                    <input type="hidden" name="response_to" value="{{$responses->id}}">
-                                    <input type="hidden" name="response_to_commenter" value="{{$responses->id_commenter}}">
-                                    <div class="d-flex flex-row-reverse mt-2">
-                                        <button class="btn custom-btn" type="submit">Comentar</button>
+                        @if (count($comment->responses) > 0)
+                        <button class="btn btn-sm btn-outline-secondary" onclick="mostrarRespostas(this)">
+                            <i class="fas fa-comments me-1"></i> Ver respostas ({{ count($comment->responses) }})
+                        </button>
+                        @endif
+                    </div>
+
+                    <!-- Formulário de resposta -->
+                    <div class="resposta-form mt-3" style="display: none;">
+                        <form action="{{ route('add_comment_1', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $item_name_slug]) }}" method="post">
+                            @csrf
+                            <div class="mb-3">
+                                <textarea name="text" class="form-control" placeholder="Digite sua resposta aqui..." rows="2" style="overflow:hidden; resize: none;"></textarea>
+                                <input type="hidden" name="response_to" value="{{$comment->id}}">
+                                <input type="hidden" name="response_to_commenter" value="{{$comment->id_commenter}}">
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <button class="btn btn-primary btn-sm" type="submit">
+                                    <i class="fas fa-paper-plane me-1"></i> Enviar resposta
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Respostas nível 1 -->
+                    <div class="responses mt-3" style="display: none;">
+                        @foreach ($comment->responses as $responses)
+                        <div class="response mb-3 ps-3 border-start">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div class="d-flex align-items-center">
+                                    <div class="user-avatar me-2">
+                                        <i class="fas fa-user-circle fa-lg text-secondary"></i>
+                                    </div>
+                                    <div>
+                                        <a href="{{route('user_index', ['nickname' => $responses->author_name])}}" class="text-decoration-none text-dark"><strong class="d-block">{{ '@'.$responses->author_name }}</strong></a>
+                                        <small class="text-muted">{{ $responses->created_at->format('d/m/Y H:i') }}</small>
                                     </div>
                                 </div>
-                            </form>
-                        </div>
+                                <div>
+                                    <small class="text-muted">{{ $responses->created_at->diffForHumans() }}</small>
+                                </div>
+                            </div>
 
+                            <div class="response-text mb-3">
+                                @php
+                                $paragraphs = preg_split('/\r\n|\n|\r/', $responses->text);
+                                @endphp
 
-                        {{--$_COOKIE
-                Area reservada para mostrar os comentários da galera que responderam ao comentário tal
-            --}}
+                                @foreach($paragraphs as $paragraph)
+                                <p class="mb-1">{{ $paragraph }}</p>
+                                @endforeach
+                            </div>
 
+                            <div class="response-actions">
+                                @auth
+                                <button class="btn btn-sm btn-outline-success me-2" onclick="mostrarResposta(this)">
+                                    <i class="fas fa-reply me-1"></i> Responder
+                                </button>
+                                @endauth
 
+                                @if (count($responses->responses2) > 0)
+                                <button class="btn btn-sm btn-outline-secondary" onclick="mostrarRespostas(this)">
+                                    <i class="fas fa-comments me-1"></i> Ver respostas ({{ count($responses->responses2) }})
+                                </button>
+                                @endif
+                            </div>
 
+                            <!-- Formulário de resposta nível 2 -->
+                            <div class="resposta-form mt-3" style="display: none;">
+                                <form action="{{ route('add_comment_2', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug, 'item_name_slug' => $item_name_slug]) }}" method="post">
+                                    @csrf
+                                    <div class="mb-3">
+                                        <textarea name="text" class="form-control" placeholder="Digite sua resposta aqui..." rows="2" style="overflow:hidden; resize: none;"></textarea>
+                                        <input type="hidden" name="response_to" value="{{$responses->id}}">
+                                        <input type="hidden" name="response_to_commenter" value="{{$responses->id_commenter}}">
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <button class="btn btn-success btn-sm" type="submit">
+                                            <i class="fas fa-paper-plane me-1"></i> Enviar resposta
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
 
-
-                        @if (count($responses->responses2) > 0)
-
-                        <button class="btn btn-success btn-sm my-3 mt-2" onclick="mostrarRespostas(this)">Ver respostas</button>
-
-                        @endif
-
-
-
-
-                        <div class="resposta-form mt-2" style="display: none;">
-
-                            @foreach ($responses->responses2 as $responses2)
-
-                            <div class="row">
-                                <div class="col-2"></div>
-                                <div class="col-10">
-
-
-                                    <div class="info d-flex justify-content-between">
-                                        <span><strong>{{ $responses2->author_name }}</strong></span>
-                                        <span>{{ $responses2->created_at->format('d \d\e F \d\e Y \à\s H:i:s') }}</span>
+                            <!-- Respostas nível 2 -->
+                            <div class="responses mt-3" style="display: none;">
+                                @foreach ($responses->responses2 as $responses2)
+                                <div class="response mb-3 ps-3 border-start">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <div class="d-flex align-items-center">
+                                            <div class="user-avatar me-2">
+                                                <i class="fas fa-user-circle text-secondary"></i>
+                                            </div>
+                                            <div>
+                                                <a href="{{route('user_index', ['nickname' => $responses2->author_name])}}" class="text-decoration-none text-dark"><strong class="d-block">{{ '@'.$responses2->author_name }}</strong></a>
+                                                <small class="text-muted">{{ $responses2->created_at->format('d/m/Y H:i') }}</small>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <small class="text-muted">{{ $responses2->created_at->diffForHumans() }}</small>
+                                        </div>
                                     </div>
 
-                                    <div class="texto">
+                                    <div class="response-text">
                                         @php
                                         $paragraphs = preg_split('/\r\n|\n|\r/', $responses2->text);
                                         @endphp
 
                                         @foreach($paragraphs as $paragraph)
-                                        <p class="text text-dark">
-                                            {{ $paragraph }}
-                                        </p>
+                                        <p class="mb-1">{{ $paragraph }}</p>
                                         @endforeach
                                     </div>
-
-                                    {{--$_COOKIE
-                                        Area onde ficaria o negocio pra responder esse comentario
-                                    --}}
-
-
                                 </div>
+                                @endforeach
                             </div>
-
-
-
-                            @endforeach
-
                         </div>
-
-
+                        @endforeach
                     </div>
                 </div>
-
-
-
                 @endforeach
-
             </div>
-
-
-
-
-
-
-
+            @endif
         </div>
-
-        <script>
-            function mostrarResposta(botao) {
-                const form = botao.nextElementSibling;
-                if (form.style.display === "none") {
-                    form.style.display = "block";
-                } else {
-                    form.style.display = "none";
-                }
-            }
-
-            function mostrarRespostas(botao) {
-                const form = botao.nextElementSibling;
-                if (form.style.display === "none") {
-                    form.style.display = "block";
-                } else {
-                    form.style.display = "none";
-                }
-            }
-        </script>
-        @endforeach
-
-
-        @endif
-
-
-
     </div>
+</div>
+
+<script>
+    function mostrarResposta(botao) {
+        const form = botao.closest('.comment-actions, .response-actions').nextElementSibling;
+        form.style.display = form.style.display === "none" ? "block" : "none";
+    }
+
+    function mostrarRespostas(botao) {
+        const responsesContainer = botao.closest('.comment-actions, .response-actions').parentElement.querySelector('.responses');
+        responsesContainer.style.display = responsesContainer.style.display === "none" ? "block" : "none";
+
+        // Atualizar ícone do botão
+        const icon = botao.querySelector('i');
+        if (responsesContainer.style.display === "block") {
+            icon.classList.remove('fa-comments');
+            icon.classList.add('fa-comment-slash');
+        } else {
+            icon.classList.remove('fa-comment-slash');
+            icon.classList.add('fa-comments');
+        }
+    }
+
+    // Auto-resize textareas
+    document.querySelectorAll('textarea').forEach(textarea => {
+        textarea.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+        });
+    });
+</script>
+
+<style>
+    .comment,
+    .response {
+        transition: all 0.3s ease;
+    }
+
+    .comment:hover,
+    .response:hover {
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    }
+
+    .border-start {
+        border-left: 3px solid #dee2e6 !important;
+    }
+
+    .user-avatar {
+        width: 32px;
+        text-align: center;
+    }
+</style>
 
 
 
 
 
-    @endif
+@endif
 
 </div>
 @endsection

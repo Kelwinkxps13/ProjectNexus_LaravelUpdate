@@ -13,8 +13,6 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->json('visitors')->nullable();
-            $table->json('followers')->nullable();
-            $table->json('following')->nullable();
         });
     }
 
@@ -24,8 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('followers');
-            $table->dropColumn('following');
+            $table->dropColumn('visitors');
         });
     }
 };

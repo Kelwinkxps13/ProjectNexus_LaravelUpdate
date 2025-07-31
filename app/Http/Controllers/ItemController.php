@@ -58,6 +58,7 @@ class ItemController extends Controller
         // id do item
         $item_name_slug = $item->name_slug;
 
+        $comments = null;
         //comentarios
         $comments = Comment::where('id_item', $item->id)->where('comment_level', 0)->get();
         if ($comments != null) {
@@ -83,6 +84,8 @@ class ItemController extends Controller
                     }
                 }
             };
+        } else {
+            $comments = null;
         }
 
         return view('modulos.veja', [
@@ -293,15 +296,24 @@ class ItemController extends Controller
         $key = array_search(Auth::id(), $dislikes);
 
         // caso tenha dado, ele tira esse dislike, e laika
-        unset($dislikes[$key]);
-        $dislikes = array_values($dislikes);
-        $item->dislikes = $dislikes;
+        if (isset($key) && ($key != false)) {
+            unset($dislikes[$key]);
+            $dislikes = array_values($dislikes);
+            $item->dislikes = $dislikes;
 
-        $likes = $item->likes;
-        $likes[] = Auth::id();
+            $likes = $item->likes;
+            $likes[] = Auth::id();
 
-        $item->likes = $likes;
-        $item->save();
+            $item->likes = $likes;
+            $item->save();
+        } else {
+            $likes = $item->likes;
+            $likes[] = Auth::id();
+
+            $item->likes = $likes;
+            $item->save();
+        }
+
 
         return Redirect::to(route('category_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug]))
             ->with('msg-success', "Item marcado como LIKE com sucesso!");
@@ -324,12 +336,17 @@ class ItemController extends Controller
         $likes = $item->likes;
 
         $key = array_search(Auth::id(), $likes);
-        unset($likes[$key]);
 
-        $likes = array_values($likes);
+        if (isset($key) && ($key != false)) {
+            unset($likes[$key]);
 
-        $item->likes = $likes;
-        $item->save();
+            $likes = array_values($likes);
+
+            $item->likes = $likes;
+            $item->save();
+        }
+
+
 
         return Redirect::to(route('category_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug]))
             ->with('msg-success', "Item desmarcado como LIKE com sucesso!");
@@ -355,17 +372,25 @@ class ItemController extends Controller
         // verifica se o elemento ja deu like anteriormente
         $key = array_search(Auth::id(), $likes);
 
-        // caso tenha dado, ele tira esse like, e dislaika
-        unset($likes[$key]);
-        $likes = array_values($likes);
-        $item->likes = $likes;
+        if (isset($key) && ($key != false)) {
 
-        $dislikes = $item->dislikes;
-        $dislikes[] = Auth::id();
+            // caso tenha dado, ele tira esse like, e dislaika
+            unset($likes[$key]);
+            $likes = array_values($likes);
+            $item->likes = $likes;
 
-        $item->dislikes = $dislikes;
-        $item->save();
+            $dislikes = $item->dislikes;
+            $dislikes[] = Auth::id();
 
+            $item->dislikes = $dislikes;
+            $item->save();
+        } else {
+            $dislikes = $item->dislikes;
+            $dislikes[] = Auth::id();
+
+            $item->dislikes = $dislikes;
+            $item->save();
+        }
         return Redirect::to(route('category_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug]))
             ->with('msg-success', "Item marcado como DISLIKE com sucesso!");
     }
@@ -386,13 +411,15 @@ class ItemController extends Controller
         $dislikes = $item->dislikes;
 
         $key = array_search(Auth::id(), $dislikes);
-        unset($dislikes[$key]);
 
-        $dislikes = array_values($dislikes);
+        if (isset($key) && ($key != false)) {
+            unset($dislikes[$key]);
 
-        $item->dislikes = $dislikes;
-        $item->save();
+            $dislikes = array_values($dislikes);
 
+            $item->dislikes = $dislikes;
+            $item->save();
+        }
         return Redirect::to(route('category_index', ['nickname' => $nickname, 'category_name_slug' => $category_name_slug]))
             ->with('msg-success', "Item desmarcado como LIKE com sucesso!");
     }
@@ -435,14 +462,7 @@ class ItemController extends Controller
 
         //sistema de notificação ao criador
 
-        $c = Comment::
-        where('id_commenter', Auth::id())->
-        where('id_creator', $cat->user_id)->
-        where('id_item', $item->id)->
-        where('response_to', $request->response_to)->
-        where('comment_level', 0)->
-        where('text', $request->text)->
-        first();
+        $c = Comment::where('id_commenter', Auth::id())->where('id_creator', $cat->user_id)->where('id_item', $item->id)->where('response_to', $request->response_to)->where('comment_level', 0)->where('text', $request->text)->first();
 
         $user_creator = User::where('nickname', $nickname)->first();
 
@@ -499,14 +519,7 @@ class ItemController extends Controller
 
         $comment->save();
 
-        $c = Comment::
-        where('id_commenter', Auth::id())->
-        where('id_creator', $cat->user_id)->
-        where('id_item', $item->id)->
-        where('response_to', $request->response_to)->
-        where('comment_level', 1)->
-        where('text', $request->text)->
-        first();
+        $c = Comment::where('id_commenter', Auth::id())->where('id_creator', $cat->user_id)->where('id_item', $item->id)->where('response_to', $request->response_to)->where('comment_level', 1)->where('text', $request->text)->first();
 
         $user_creator = User::where('nickname', $nickname)->first();
 
@@ -565,14 +578,7 @@ class ItemController extends Controller
 
         $comment->save();
 
-        $c = Comment::
-        where('id_commenter', Auth::id())->
-        where('id_creator', $cat->user_id)->
-        where('id_item', $item->id)->
-        where('response_to', $request->response_to)->
-        where('comment_level', 2)->
-        where('text', $request->text)->
-        first();
+        $c = Comment::where('id_commenter', Auth::id())->where('id_creator', $cat->user_id)->where('id_item', $item->id)->where('response_to', $request->response_to)->where('comment_level', 2)->where('text', $request->text)->first();
 
         $user_creator = User::where('nickname', $nickname)->first();
 
